@@ -3,7 +3,7 @@ import {
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@atproto/dev-env'
+} from '@creatonproto/dev-env'
 import { REASONSPAM } from '../dist/lexicon/types/com/atproto/moderation/defs'
 
 describe('moderation', () => {

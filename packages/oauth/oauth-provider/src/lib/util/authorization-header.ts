@@ -2,7 +2,7 @@ import { z } from 'zod'
 import {
   oauthAccessTokenSchema,
   oauthTokenTypeSchema,
-} from '@atproto/oauth-types'
+} from '@creatonproto/oauth-types'
 import { InvalidRequestError } from '../../errors/invalid-request-error.js'
 import { WWWAuthenticateError } from '../../errors/www-authenticate-error.js'
 

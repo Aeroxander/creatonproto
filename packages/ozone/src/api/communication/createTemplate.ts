@@ -1,4 +1,4 @@
-import { AuthRequiredError, InvalidRequestError } from '@atproto/xrpc-server'
+import { AuthRequiredError, InvalidRequestError } from '@creatonproto/xrpc-server'
 import { isDuplicateTemplateNameError } from '../../communication-service/util'
 import { AppContext } from '../../context'
 import { Server } from '../../lexicon'

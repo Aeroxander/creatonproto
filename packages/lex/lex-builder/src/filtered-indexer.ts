@@ -1,4 +1,4 @@
-import { LexiconDocument, LexiconIndexer } from '@atproto/lex-document'
+import { LexiconDocument, LexiconIndexer } from '@creatonproto/lex-document'
 import { Filter } from './filter.js'
 
 /**

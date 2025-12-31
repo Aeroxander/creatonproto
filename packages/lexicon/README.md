@@ -1,14 +1,14 @@
-# @atproto/lexicon: schema validation library
+# @creatonproto/lexicon: schema validation library
 
 TypeScript implementation of the Lexicon data and API schema description language, which is part of [atproto](https://atproto.com).
 
-[![NPM](https://img.shields.io/npm/v/@atproto/lexicon)](https://www.npmjs.com/package/@atproto/lexicon)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/lexicon)](https://www.npmjs.com/package/@creatonproto/lexicon)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 ## Usage
 
 ```typescript
-import { Lexicons } from '@atproto/lexicon'
+import { Lexicons } from '@creatonproto/lexicon'
 
 // create your lexicons collection
 const lex = new Lexicons()

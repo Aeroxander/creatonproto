@@ -1,5 +1,5 @@
 import { TypeOf, z } from 'zod'
-import { atprotoDidSchema } from '@atproto/did'
+import { atprotoDidSchema } from '@creatonproto/did'
 import { atprotoOAuthScopeSchema } from './atproto-oauth-scope'
 import { oauthTokenResponseSchema } from './oauth-token-response.js'
 

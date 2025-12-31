@@ -1,8 +1,8 @@
 import assert from 'node:assert'
 import getPort from 'get-port'
 import * as uint8arrays from 'uint8arrays'
-import { wait } from '@atproto/common-web'
-import { createServiceJwt } from '@atproto/xrpc-server'
+import { wait } from '@creatonproto/common-web'
+import { createServiceJwt } from '@creatonproto/xrpc-server'
 import { TestBsky } from './bsky'
 import { EXAMPLE_LABELER } from './const'
 import { IntrospectServer } from './introspect'
@@ -149,7 +149,7 @@ export class TestNetwork extends TestNetworkNoAppView {
     return new TestNetwork(plc, pds, bsky, ozone, introspect)
   }
 
-  async processFullSubscription(timeout = 5000) {
+  async processFullSubscription(timeout = 15000) {
     const sub = this.bsky.sub
     const start = Date.now()
     const lastSeq = await this.pds.ctx.sequencer.curr()

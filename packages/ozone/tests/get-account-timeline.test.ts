@@ -1,10 +1,10 @@
-import AtpAgent from '@atproto/api'
+import AtpAgent from '@creatonproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@atproto/dev-env'
+} from '@creatonproto/dev-env'
 import { REASONSPAM } from '../dist/lexicon/types/com/atproto/moderation/defs'
 import { ids } from '../src/lexicon/lexicons'
 import { forSnapshot } from './_util'

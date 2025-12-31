@@ -1,8 +1,8 @@
 import * as http from 'node:http'
 import { AddressInfo } from 'node:net'
-import { byteIterableToStream } from '@atproto/common'
-import { LexiconDoc } from '@atproto/lexicon'
-import { XrpcClient } from '@atproto/xrpc'
+import { byteIterableToStream } from '@creatonproto/common'
+import { LexiconDoc } from '@creatonproto/lexicon'
+import { XrpcClient } from '@creatonproto/xrpc'
 import * as xrpcServer from '../src'
 import { closeServer, createServer } from './_util'
 

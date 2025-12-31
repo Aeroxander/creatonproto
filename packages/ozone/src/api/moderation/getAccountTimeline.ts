@@ -1,4 +1,4 @@
-import { ToolsOzoneModerationGetAccountTimeline } from '@atproto/api'
+import { ToolsOzoneModerationGetAccountTimeline } from '@creatonproto/api'
 import { AppContext } from '../../context'
 import { Server } from '../../lexicon'
 import { ids } from '../../lexicon/lexicons'

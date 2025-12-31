@@ -1,7 +1,7 @@
 import { join } from 'node:path'
-import { LexiconDirectoryIndexer } from '@atproto/lex-builder'
-import { cidForLex } from '@atproto/lex-cbor'
-import { Cid, lexEquals } from '@atproto/lex-data'
+import { LexiconDirectoryIndexer } from '@creatonproto/lex-builder'
+import { cidForLex } from '@creatonproto/lex-cbor'
+import { Cid, lexEquals } from '@creatonproto/lex-data'
 import {
   LexiconDocument,
   LexiconParameters,
@@ -11,10 +11,10 @@ import {
   LexiconUnknown,
   MainLexiconDefinition,
   NamedLexiconDefinition,
-} from '@atproto/lex-document'
-import { LexResolver, LexResolverOptions } from '@atproto/lex-resolver'
-import { AtUriString, NsidString } from '@atproto/lex-schema'
-import { AtUri, NSID } from '@atproto/syntax'
+} from '@creatonproto/lex-document'
+import { LexResolver, LexResolverOptions } from '@creatonproto/lex-resolver'
+import { AtUriString, NsidString } from '@creatonproto/lex-schema'
+import { AtUri, NSID } from '@creatonproto/syntax'
 import { isEnoentError, writeJsonFile } from './fs.js'
 import {
   LexiconsManifest,

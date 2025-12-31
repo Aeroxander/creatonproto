@@ -1,4 +1,4 @@
-import { TestNetworkNoAppView } from '@atproto/dev-env'
+import { TestNetworkNoAppView } from '@creatonproto/dev-env'
 import { AtpAgent, ComAtprotoServerCreateAccount } from '..'
 
 describe('errors', () => {

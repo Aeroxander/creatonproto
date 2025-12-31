@@ -1,18 +1,18 @@
 import {
   OAuthProtectedResourceMetadata,
   oauthProtectedResourceMetadataSchema,
-} from '@atproto/oauth-types'
+} from '@creatonproto/oauth-types'
 import {
   Fetch,
   FetchResponseError,
   bindFetch,
   cancelBody,
-} from '@atproto-labs/fetch'
+} from '@creatonproto-labs/fetch'
 import {
   CachedGetter,
   GetCachedOptions,
   SimpleStore,
-} from '@atproto-labs/simple-store'
+} from '@creatonproto-labs/simple-store'
 import { contentMime } from './util.js'
 
 export type { GetCachedOptions, OAuthProtectedResourceMetadata }

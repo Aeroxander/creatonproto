@@ -1,6 +1,6 @@
-export * from '@atproto-labs/handle-resolver-node'
-export * from '@atproto/jwk-webcrypto'
-export * from '@atproto/oauth-client'
-export * from '@atproto/jwk-jose'
+export * from '@creatonproto-labs/handle-resolver-node'
+export * from '@creatonproto/jwk-webcrypto'
+export * from '@creatonproto/oauth-client'
+export * from '@creatonproto/jwk-jose'
 
 export * from './node-oauth-client.js'

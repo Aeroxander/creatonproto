@@ -2,7 +2,7 @@
 
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { build } from '@atproto/lex-builder'
+import { build } from '@creatonproto/lex-builder'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -11,7 +11,7 @@ build({
   out: join(__dirname, '..', 'src', 'lexicons'),
   clear: true,
   include: ['com.atproto.sync.getRecord'],
-  lib: '@atproto/lex-schema',
+  lib: '@creatonproto/lex-schema',
   pretty: true,
   pureAnnotations: true,
   indexFile: true,

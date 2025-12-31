@@ -1,4 +1,4 @@
-import { Did, DidDocument } from '@atproto/did'
+import { Did, DidDocument } from '@creatonproto/did'
 
 export type ResolveDidOptions = {
   signal?: AbortSignal

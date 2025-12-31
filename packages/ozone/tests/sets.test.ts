@@ -1,8 +1,8 @@
 import AtpAgent, {
   ToolsOzoneSetDefs,
   ToolsOzoneSetQuerySets,
-} from '@atproto/api'
-import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
+} from '@creatonproto/api'
+import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
 import { ids } from '../src/lexicon/lexicons'
 import { forSnapshot } from './_util'
 

@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'node:http'
 import { ServerOptions, WebSocket, WebSocketServer } from 'ws'
-import { CloseCode, DisconnectError } from '@atproto/ws-client'
+import { CloseCode, DisconnectError } from '@creatonproto/ws-client'
 import { ErrorFrame, Frame } from './frames'
 import { logger } from './logger'
 

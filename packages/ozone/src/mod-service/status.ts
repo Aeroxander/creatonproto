@@ -1,7 +1,7 @@
 // This may require better organization but for now, just dumping functions here containing DB queries for moderation status
 
-import { HOUR } from '@atproto/common'
-import { AtUri } from '@atproto/syntax'
+import { HOUR } from '@creatonproto/common'
+import { AtUri } from '@creatonproto/syntax'
 import { isAppealReport } from '../api/util'
 import { Database } from '../db'
 import { DatabaseSchema } from '../db/schema'

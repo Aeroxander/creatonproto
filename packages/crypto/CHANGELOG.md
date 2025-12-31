@@ -1,4 +1,4 @@
-# @atproto/crypto
+# @creatonproto/crypto
 
 ## 0.4.5
 

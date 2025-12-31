@@ -5,7 +5,7 @@ import type {
   OAuthProtectedResourceMetadata,
   ResolvedHandle,
   Session,
-} from '@atproto/oauth-client'
+} from '@creatonproto/oauth-client'
 import { ExpoKey } from './expo-key'
 import { MMKVSimpleStoreTTL } from './mmkv-simple-store-ttl'
 

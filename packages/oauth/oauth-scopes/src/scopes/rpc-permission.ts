@@ -1,4 +1,4 @@
-import { AtprotoAudience, isAtprotoAudience } from '@atproto/did'
+import { AtprotoAudience, isAtprotoAudience } from '@creatonproto/did'
 import { Nsid, isNsid } from '../lib/nsid.js'
 import { Parser } from '../lib/parser.js'
 import { ResourcePermission } from '../lib/resource-permission.js'

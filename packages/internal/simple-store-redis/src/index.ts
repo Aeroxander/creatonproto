@@ -4,7 +4,7 @@ import {
   GetOptions,
   SimpleStore,
   Value,
-} from '@atproto-labs/simple-store'
+} from '@creatonproto-labs/simple-store'
 
 export type { Awaitable, GetOptions, SimpleStore, Value }
 

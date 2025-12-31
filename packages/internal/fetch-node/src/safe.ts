@@ -8,8 +8,8 @@ import {
   protocolCheckRequestTransform,
   requireHostHeaderTransform,
   timedFetch,
-} from '@atproto-labs/fetch'
-import { pipe } from '@atproto-labs/pipe'
+} from '@creatonproto-labs/fetch'
+import { pipe } from '@creatonproto-labs/pipe'
 import { UnicastFetchWrapOptions, unicastFetchWrap } from './unicast.js'
 
 export type SafeFetchWrapOptions<C> = UnicastFetchWrapOptions<C> & {

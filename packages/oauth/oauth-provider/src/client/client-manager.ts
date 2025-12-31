@@ -1,4 +1,4 @@
-import { Jwks, Keyset, jwksPubSchema } from '@atproto/jwk'
+import { Jwks, Keyset, jwksPubSchema } from '@creatonproto/jwk'
 import {
   OAuthAuthorizationServerMetadata,
   OAuthClientIdDiscoverable,
@@ -9,20 +9,20 @@ import {
   isOAuthClientIdDiscoverable,
   isOAuthClientIdLoopback,
   oauthClientMetadataSchema,
-} from '@atproto/oauth-types'
+} from '@creatonproto/oauth-types'
 import {
   Fetch,
   bindFetch,
   fetchJsonProcessor,
   fetchJsonZodProcessor,
   fetchOkProcessor,
-} from '@atproto-labs/fetch'
-import { pipe } from '@atproto-labs/pipe'
+} from '@creatonproto-labs/fetch'
+import { pipe } from '@creatonproto-labs/pipe'
 import {
   CachedGetter,
   GetCachedOptions,
   SimpleStore,
-} from '@atproto-labs/simple-store'
+} from '@creatonproto-labs/simple-store'
 import { InvalidClientMetadataError } from '../errors/invalid-client-metadata-error.js'
 import { InvalidRedirectUriError } from '../errors/invalid-redirect-uri-error.js'
 import { callAsync } from '../lib/util/function.js'

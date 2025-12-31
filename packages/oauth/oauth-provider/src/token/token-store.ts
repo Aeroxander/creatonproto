@@ -1,4 +1,4 @@
-import type { Account } from '@atproto/oauth-provider-api'
+import type { Account } from '@creatonproto/oauth-provider-api'
 import { Awaitable, buildInterfaceChecker } from '../lib/util/type.js'
 import { Sub } from '../oidc/sub.js'
 import { Code } from '../request/code.js'

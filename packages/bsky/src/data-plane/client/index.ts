@@ -7,7 +7,7 @@ import {
   createPromiseClient,
   makeAnyClient,
 } from '@connectrpc/connect'
-import { createGrpcTransport } from '@connectrpc/connect-node'
+import { createConnectTransport } from '@connectrpc/connect-node'
 import { Service } from '../../proto/bsky_connect'
 import { HostList } from './hosts'
 import { callerInterceptor } from './util'
@@ -101,10 +101,11 @@ const createBaseClient = (
   opts: { httpVersion?: HttpVersion; rejectUnauthorized?: boolean },
 ): DataPlaneClient => {
   const { httpVersion = '2', rejectUnauthorized = true } = opts
-  const transport = createGrpcTransport({
+  // Use Connect transport instead of gRPC transport for Bun compatibility
+  // gRPC uses HTTP/2 trailers which have compatibility issues in Bun
+  const transport = createConnectTransport({
     baseUrl,
     httpVersion,
-    acceptCompression: [],
     nodeOptions: { rejectUnauthorized },
     interceptors: [callerInterceptor('appview')],
   })

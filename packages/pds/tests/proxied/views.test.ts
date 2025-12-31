@@ -1,5 +1,5 @@
-import { AtUri, AtpAgent } from '@atproto/api'
-import { SeedClient, TestNetwork } from '@atproto/dev-env'
+import { AtUri, AtpAgent } from '@creatonproto/api'
+import { SeedClient, TestNetwork } from '@creatonproto/dev-env'
 import { forSnapshot } from '../_util'
 import basicSeed from '../seeds/basic'
 

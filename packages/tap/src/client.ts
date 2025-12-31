@@ -1,4 +1,4 @@
-import { DidDocument, didDocument } from '@atproto/common'
+import { DidDocument, didDocument } from '@creatonproto/common'
 import { TapChannel, TapHandler, TapWebsocketOptions } from './channel'
 import { RepoInfo, repoInfoSchema } from './types'
 import { formatAdminAuthHeader } from './util'

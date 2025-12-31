@@ -1,4 +1,4 @@
-# @atproto-labs/simple-store
+# @creatonproto-labs/simple-store
 
 ## 0.3.0
 

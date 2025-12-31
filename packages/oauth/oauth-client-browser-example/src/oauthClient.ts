@@ -2,7 +2,7 @@ import {
   BrowserOAuthClient,
   OAuthSession,
   buildAtprotoLoopbackClientMetadata,
-} from '@atproto/oauth-client-browser'
+} from '@creatonproto/oauth-client-browser'
 import {
   ENV,
   HANDLE_RESOLVER_URL,

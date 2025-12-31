@@ -1,4 +1,4 @@
-# @atproto/did
+# @creatonproto/did
 
 ## 0.3.0
 

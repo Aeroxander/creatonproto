@@ -5,7 +5,7 @@ import {
   XrpcClient,
   type FetchHandler,
   type FetchHandlerOptions,
-} from '@atproto/xrpc'
+} from '@creatonproto/xrpc'
 import { schemas } from './lexicons.js'
 import { CID } from 'multiformats/cid'
 import { type OmitKey, type Un$Typed } from './util.js'

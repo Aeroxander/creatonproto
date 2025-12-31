@@ -1,4 +1,4 @@
-# @atproto/lex-cli
+# @creatonproto/lex-cli
 
 ## 0.9.9
 
@@ -13,14 +13,14 @@
 ### Patch Changes
 
 - Updated dependencies [[`d551b0e`](https://github.com/bluesky-social/atproto/commit/d551b0e3527714c111c3ec6e4c90ad7f46369fab)]:
-  - @atproto/lexicon@0.6.0
+  - @creatonproto/lexicon@0.6.0
 
 ## 0.9.7
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @atproto/lexicon@0.5.2
+  - @creatonproto/lexicon@0.5.2
 
 ## 0.9.6
 
@@ -33,29 +33,29 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @atproto/lexicon@0.5.1
+  - @creatonproto/lexicon@0.5.1
 
 ## 0.9.4
 
 ### Patch Changes
 
 - Updated dependencies [[`f9dc9aa4c`](https://github.com/bluesky-social/atproto/commit/f9dc9aa4c9eaf2f82d140fbf011a9015e7f1a00d), [`f9dc9aa4c`](https://github.com/bluesky-social/atproto/commit/f9dc9aa4c9eaf2f82d140fbf011a9015e7f1a00d), [`f9dc9aa4c`](https://github.com/bluesky-social/atproto/commit/f9dc9aa4c9eaf2f82d140fbf011a9015e7f1a00d)]:
-  - @atproto/lexicon@0.5.0
-  - @atproto/syntax@0.4.1
+  - @creatonproto/lexicon@0.5.0
+  - @creatonproto/syntax@0.4.1
 
 ## 0.9.3
 
 ### Patch Changes
 
 - Updated dependencies [[`2104d9033`](https://github.com/bluesky-social/atproto/commit/2104d9033e2e1a3a7b821c1f0c5c8ffac5832d59)]:
-  - @atproto/lexicon@0.4.14
+  - @creatonproto/lexicon@0.4.14
 
 ## 0.9.2
 
 ### Patch Changes
 
 - Updated dependencies [[`331a356ce`](https://github.com/bluesky-social/atproto/commit/331a356ce27ff1d0b24747b0c16f3b54b07a0a12)]:
-  - @atproto/lexicon@0.4.13
+  - @creatonproto/lexicon@0.4.13
 
 ## 0.9.1
 
@@ -72,7 +72,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`8ef976d38`](https://github.com/bluesky-social/atproto/commit/8ef976d3852df4bfa376e515e131cc0810a42f20)]:
-  - @atproto/lexicon@0.4.12
+  - @creatonproto/lexicon@0.4.12
 
 ## 0.8.3
 
@@ -91,7 +91,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`cc485d296`](https://github.com/bluesky-social/atproto/commit/cc485d29638488928b5efec3d4b0627040589812)]:
-  - @atproto/lexicon@0.4.11
+  - @creatonproto/lexicon@0.4.11
 
 ## 0.8.0
 
@@ -104,15 +104,15 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @atproto/lexicon@0.4.10
+  - @creatonproto/lexicon@0.4.10
 
 ## 0.7.1
 
 ### Patch Changes
 
 - Updated dependencies [[`670b6b5de`](https://github.com/bluesky-social/atproto/commit/670b6b5de2bf91e6944761c98eb1126fb6a681ee)]:
-  - @atproto/syntax@0.4.0
-  - @atproto/lexicon@0.4.9
+  - @creatonproto/syntax@0.4.0
+  - @creatonproto/lexicon@0.4.9
 
 ## 0.7.0
 
@@ -125,8 +125,8 @@
 ### Patch Changes
 
 - Updated dependencies [[`850e39843`](https://github.com/bluesky-social/atproto/commit/850e39843cb0ec9ea716675f7568c0c601f45e29)]:
-  - @atproto/syntax@0.3.4
-  - @atproto/lexicon@0.4.8
+  - @creatonproto/syntax@0.3.4
+  - @creatonproto/lexicon@0.4.8
 
 ## 0.6.1
 
@@ -151,8 +151,8 @@
 - [#2999](https://github.com/bluesky-social/atproto/pull/2999) [`c53d943c8`](https://github.com/bluesky-social/atproto/commit/c53d943c8be5b8886254e020970a68c0f745b14c) Thanks [@matthieusieben](https://github.com/matthieusieben)! - Ensures that empty `schemas` arrays are typed as `LexiconDoc[]`.
 
 - Updated dependencies [[`c53d943c8`](https://github.com/bluesky-social/atproto/commit/c53d943c8be5b8886254e020970a68c0f745b14c), [`c53d943c8`](https://github.com/bluesky-social/atproto/commit/c53d943c8be5b8886254e020970a68c0f745b14c), [`c53d943c8`](https://github.com/bluesky-social/atproto/commit/c53d943c8be5b8886254e020970a68c0f745b14c)]:
-  - @atproto/syntax@0.3.3
-  - @atproto/lexicon@0.4.7
+  - @creatonproto/syntax@0.3.3
+  - @creatonproto/lexicon@0.4.7
 
 ## 0.5.7
 
@@ -163,8 +163,8 @@
 - [#3220](https://github.com/bluesky-social/atproto/pull/3220) [`61dc0d60e`](https://github.com/bluesky-social/atproto/commit/61dc0d60e19b88c6427a54c6d95a391b5f4da7bd) Thanks [@matthieusieben](https://github.com/matthieusieben)! - Update NodeJS engine requirement to >=18.7.0
 
 - Updated dependencies [[`61dc0d60e`](https://github.com/bluesky-social/atproto/commit/61dc0d60e19b88c6427a54c6d95a391b5f4da7bd)]:
-  - @atproto/lexicon@0.4.6
-  - @atproto/syntax@0.3.2
+  - @creatonproto/lexicon@0.4.6
+  - @creatonproto/syntax@0.3.2
 
 ## 0.5.6
 
@@ -177,7 +177,7 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @atproto/lexicon@0.4.5
+  - @creatonproto/lexicon@0.4.5
 
 ## 0.5.4
 
@@ -190,7 +190,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`9fd65ba0f`](https://github.com/bluesky-social/atproto/commit/9fd65ba0fa4caca59fd0e6156145e4c2618e3a95)]:
-  - @atproto/lexicon@0.4.4
+  - @creatonproto/lexicon@0.4.4
 
 ## 0.5.2
 
@@ -199,26 +199,26 @@
 - [#2911](https://github.com/bluesky-social/atproto/pull/2911) [`bac9be2d3`](https://github.com/bluesky-social/atproto/commit/bac9be2d3ec904d1f984a871f43cf89aca17289d) Thanks [@matthieusieben](https://github.com/matthieusieben)! - Retain type of `schemas` using definition type instead of obscuring into a `LexiconDoc[]`
 
 - Updated dependencies [[`bac9be2d3`](https://github.com/bluesky-social/atproto/commit/bac9be2d3ec904d1f984a871f43cf89aca17289d), [`bac9be2d3`](https://github.com/bluesky-social/atproto/commit/bac9be2d3ec904d1f984a871f43cf89aca17289d)]:
-  - @atproto/syntax@0.3.1
-  - @atproto/lexicon@0.4.3
+  - @creatonproto/syntax@0.3.1
+  - @creatonproto/lexicon@0.4.3
 
 ## 0.5.1
 
 ### Patch Changes
 
 - Updated dependencies [[`87a1f2426`](https://github.com/bluesky-social/atproto/commit/87a1f24262e0e644b6cf31cc7a0446d9127ffa94)]:
-  - @atproto/lexicon@0.4.2
+  - @creatonproto/lexicon@0.4.2
 
 ## 0.5.0
 
 ### Minor Changes
 
-- [#2707](https://github.com/bluesky-social/atproto/pull/2707) [`2bdf75d7a`](https://github.com/bluesky-social/atproto/commit/2bdf75d7a63924c10e7a311f16cb447d595b933e) Thanks [@matthieusieben](https://github.com/matthieusieben)! - The generated client implementation uses the new `XrpcClient` class from `@atproto/xrpc`, instead of the deprecated `Client` and `ServiceClient` class.
+- [#2707](https://github.com/bluesky-social/atproto/pull/2707) [`2bdf75d7a`](https://github.com/bluesky-social/atproto/commit/2bdf75d7a63924c10e7a311f16cb447d595b933e) Thanks [@matthieusieben](https://github.com/matthieusieben)! - The generated client implementation uses the new `XrpcClient` class from `@creatonproto/xrpc`, instead of the deprecated `Client` and `ServiceClient` class.
 
 ### Patch Changes
 
 - Updated dependencies [[`b934b396b`](https://github.com/bluesky-social/atproto/commit/b934b396b13ba32bf2bf7e75ecdf6871e5f310dd), [`2bdf75d7a`](https://github.com/bluesky-social/atproto/commit/2bdf75d7a63924c10e7a311f16cb447d595b933e)]:
-  - @atproto/lexicon@0.4.1
+  - @creatonproto/lexicon@0.4.1
 
 ## 0.4.1
 
@@ -235,24 +235,24 @@
 ### Patch Changes
 
 - Updated dependencies [[`f689bd51a`](https://github.com/bluesky-social/atproto/commit/f689bd51a2f4e02d4eca40eb2568a1fcb95494e9)]:
-  - @atproto/lexicon@0.4.0
-  - @atproto/syntax@0.3.0
+  - @creatonproto/lexicon@0.4.0
+  - @creatonproto/syntax@0.3.0
 
 ## 0.3.2
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @atproto/lexicon@0.3.3
-  - @atproto/syntax@0.2.1
+  - @creatonproto/lexicon@0.3.3
+  - @creatonproto/syntax@0.2.1
 
 ## 0.3.1
 
 ### Patch Changes
 
 - Updated dependencies [[`0c815b964`](https://github.com/bluesky-social/atproto/commit/0c815b964c030aa0f277c40bf9786f130dc320f4)]:
-  - @atproto/syntax@0.2.0
-  - @atproto/lexicon@0.3.2
+  - @creatonproto/syntax@0.2.0
+  - @creatonproto/lexicon@0.3.2
 
 ## 0.3.0
 
@@ -265,8 +265,8 @@
 ### Patch Changes
 
 - Updated dependencies [[`3c0ef382`](https://github.com/bluesky-social/atproto/commit/3c0ef382c12a413cc971ae47ffb341236c545f60)]:
-  - @atproto/syntax@0.1.5
-  - @atproto/lexicon@0.3.1
+  - @creatonproto/syntax@0.1.5
+  - @creatonproto/lexicon@0.3.1
 
 ## 0.2.4
 
@@ -275,29 +275,29 @@
 - [#1788](https://github.com/bluesky-social/atproto/pull/1788) [`84e2d4d2`](https://github.com/bluesky-social/atproto/commit/84e2d4d2b6694f344d80c18672c78b650189d423) Thanks [@bnewbold](https://github.com/bnewbold)! - update license to "MIT or Apache2"
 
 - Updated dependencies [[`ce49743d`](https://github.com/bluesky-social/atproto/commit/ce49743d7f8800d33116b88001d7b512553c2c89), [`84e2d4d2`](https://github.com/bluesky-social/atproto/commit/84e2d4d2b6694f344d80c18672c78b650189d423)]:
-  - @atproto/lexicon@0.3.0
-  - @atproto/syntax@0.1.4
+  - @creatonproto/lexicon@0.3.0
+  - @creatonproto/syntax@0.1.4
 
 ## 0.2.3
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @atproto/lexicon@0.2.3
-  - @atproto/syntax@0.1.3
+  - @creatonproto/lexicon@0.2.3
+  - @creatonproto/syntax@0.1.3
 
 ## 0.2.2
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @atproto/lexicon@0.2.2
-  - @atproto/syntax@0.1.2
+  - @creatonproto/lexicon@0.2.2
+  - @creatonproto/syntax@0.1.2
 
 ## 0.2.1
 
 ### Patch Changes
 
 - Updated dependencies [[`b1dc3555`](https://github.com/bluesky-social/atproto/commit/b1dc355504f9f2e047093dc56682b8034518cf80)]:
-  - @atproto/syntax@0.1.1
-  - @atproto/lexicon@0.2.1
+  - @creatonproto/syntax@0.1.1
+  - @creatonproto/lexicon@0.2.1

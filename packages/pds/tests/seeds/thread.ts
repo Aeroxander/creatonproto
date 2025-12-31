@@ -1,4 +1,4 @@
-import { RecordRef, SeedClient } from '@atproto/dev-env'
+import { RecordRef, SeedClient } from '@creatonproto/dev-env'
 
 export default async (sc: SeedClient, did, threads: Item[]) => {
   const refByItemId: Record<string, RecordRef> = {}

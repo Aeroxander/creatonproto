@@ -1,5 +1,5 @@
 import getPort from 'get-port'
-import * as bsync from '@atproto/bsync'
+import * as bsync from '@creatonproto/bsync'
 import { BsyncConfig } from './types'
 
 export class TestBsync {

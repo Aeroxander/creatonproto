@@ -1,4 +1,4 @@
-import { isValidRecordKey } from '@atproto/syntax'
+import { isValidRecordKey } from '@creatonproto/syntax'
 
 /**
  * The valid record key constraint types in a lexicon definition.

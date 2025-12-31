@@ -3,7 +3,7 @@ import {
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@atproto/dev-env'
+} from '@creatonproto/dev-env'
 import { forSnapshot } from './_util'
 
 describe('age assurance events', () => {

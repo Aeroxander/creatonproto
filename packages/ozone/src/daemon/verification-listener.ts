@@ -1,4 +1,4 @@
-import { lexicons } from '@atproto/api'
+import { lexicons } from '@creatonproto/api'
 import { BackgroundQueue } from '../background'
 import { Database } from '../db'
 import { CommitCreateEvent, Jetstream } from '../jetstream/service'

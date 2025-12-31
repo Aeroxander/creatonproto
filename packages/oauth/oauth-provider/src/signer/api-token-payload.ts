@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { jwtPayloadSchema } from '@atproto/jwk'
+import { jwtPayloadSchema } from '@creatonproto/jwk'
 import { deviceIdSchema } from '../oauth-store.js'
 import { subSchema } from '../oidc/sub.js'
 import { requestUriSchema } from '../request/request-uri.js'

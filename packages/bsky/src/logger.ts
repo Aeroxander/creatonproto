@@ -1,7 +1,7 @@
 import { IncomingMessage } from 'node:http'
 import { stdSerializers } from 'pino'
 import { pinoHttp } from 'pino-http'
-import { obfuscateHeaders, subsystemLogger } from '@atproto/common'
+import { obfuscateHeaders, subsystemLogger } from '@creatonproto/common'
 
 export const dbLogger: ReturnType<typeof subsystemLogger> =
   subsystemLogger('bsky:db')

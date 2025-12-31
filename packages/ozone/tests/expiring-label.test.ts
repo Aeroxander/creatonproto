@@ -1,10 +1,10 @@
-import AtpAgent from '@atproto/api'
+import AtpAgent from '@creatonproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@atproto/dev-env'
+} from '@creatonproto/dev-env'
 import { ids } from '../src/lexicon/lexicons'
 
 describe('expiring label', () => {

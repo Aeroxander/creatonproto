@@ -1,4 +1,4 @@
-import { ForbiddenError } from '@atproto/xrpc-server'
+import { ForbiddenError } from '@creatonproto/xrpc-server'
 import { AppContext } from '../../context'
 import { Server } from '../../lexicon'
 import { ReasonType } from '../../lexicon/types/com/atproto/moderation/defs'

@@ -1,5 +1,10 @@
-import { ClientOptions, WebSocket, createWebSocketStream } from 'ws'
-import { SECOND, isErrnoException, wait } from '@atproto/common'
+import { ClientOptions, WebSocket } from 'ws'
+import {
+  SECOND,
+  createWebSocketStream,
+  isErrnoException,
+  wait,
+} from '@creatonproto/common'
 
 export class WebSocketKeepAlive {
   public ws: WebSocket | null = null
@@ -56,12 +61,26 @@ export class WebSocketKeepAlive {
       })
 
       try {
+        // Use Bun-compatible createWebSocketStream polyfill
         const wsStream = createWebSocketStream(this.ws, {
-          signal: ac.signal,
           readableObjectMode: true, // Ensures frame bytes don't get buffered/combined together
         })
-        for await (const chunk of wsStream) {
-          yield chunk
+
+        // Set up abort handling
+        const onAbort = () => {
+          const err = new Error('Aborted')
+          ;(err as NodeJS.ErrnoException).code = 'ABORT_ERR'
+          ;(err as NodeJS.ErrnoException).cause = ac.signal.reason
+          wsStream.destroy(err)
+        }
+        ac.signal.addEventListener('abort', onAbort)
+
+        try {
+          for await (const chunk of wsStream) {
+            yield chunk
+          }
+        } finally {
+          ac.signal.removeEventListener('abort', onAbort)
         }
       } catch (_err) {
         const err =

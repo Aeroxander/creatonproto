@@ -1,4 +1,4 @@
-import { InvalidRequestError } from '@atproto/xrpc-server'
+import { InvalidRequestError } from '@creatonproto/xrpc-server'
 import {
   AccountPreference,
   PreferenceReader,

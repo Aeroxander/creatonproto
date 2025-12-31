@@ -2,7 +2,7 @@
 
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { build } from '@atproto/lex-builder'
+import { build } from '@creatonproto/lex-builder'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -21,7 +21,7 @@ Promise.all([
       'com.atproto.repo.uploadBlob',
       'com.atproto.sync.getBlob',
     ],
-    lib: '@atproto/lex-schema',
+    lib: '@creatonproto/lex-schema',
     pretty: true,
     pureAnnotations: true,
     indexFile: true,
@@ -39,7 +39,7 @@ Promise.all([
       'com.atproto.repo.uploadBlob',
       'com.atproto.sync.getBlob',
     ],
-    lib: '@atproto/lex-schema',
+    lib: '@creatonproto/lex-schema',
     pretty: true,
     indexFile: true,
   }),

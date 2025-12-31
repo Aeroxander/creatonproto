@@ -1,11 +1,11 @@
 import express from 'express'
 import * as ui8 from 'uint8arrays'
-import { IdResolver } from '@atproto/identity'
+import { IdResolver } from '@creatonproto/identity'
 import {
   AuthRequiredError,
   parseReqNsid,
   verifyJwt,
-} from '@atproto/xrpc-server'
+} from '@creatonproto/xrpc-server'
 import { TeamService } from './team'
 
 type ReqCtx = {

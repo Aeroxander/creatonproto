@@ -1,5 +1,5 @@
-import { AtprotoDid, isAtprotoDid } from '@atproto/did'
-export type { AtprotoDid, AtprotoIdentityDidMethods } from '@atproto/did'
+import { AtprotoDid, isAtprotoDid } from '@creatonproto/did'
+export type { AtprotoDid, AtprotoIdentityDidMethods } from '@creatonproto/did'
 
 export type ResolveHandleOptions = {
   signal?: AbortSignal

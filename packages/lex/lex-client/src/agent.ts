@@ -1,4 +1,4 @@
-import { DidString } from '@atproto/lex-schema'
+import { DidString } from '@creatonproto/lex-schema'
 
 /**
  * A function that performs HTTP requests towards a service endpoint.

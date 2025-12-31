@@ -1,5 +1,5 @@
-import { AtpAgent, BlobRef } from '@atproto/api'
-import { SeedClient, TestNetworkNoAppView } from '@atproto/dev-env'
+import { AtpAgent, BlobRef } from '@creatonproto/api'
+import { SeedClient, TestNetworkNoAppView } from '@creatonproto/dev-env'
 import { AppContext } from '../src'
 
 describe('blob deletes', () => {

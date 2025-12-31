@@ -1,11 +1,11 @@
-import { AtprotoDid } from '@atproto/did'
-import { Key } from '@atproto/jwk'
+import { AtprotoDid } from '@creatonproto/did'
+import { Key } from '@creatonproto/jwk'
 import {
   CachedGetter,
   GetCachedOptions,
   GetOptions,
   SimpleStore,
-} from '@atproto-labs/simple-store'
+} from '@creatonproto-labs/simple-store'
 import { AuthMethodUnsatisfiableError } from './errors/auth-method-unsatisfiable-error.js'
 import { TokenInvalidError } from './errors/token-invalid-error.js'
 import { TokenRefreshError } from './errors/token-refresh-error.js'

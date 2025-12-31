@@ -1,10 +1,10 @@
-import { AtpAgent } from '@atproto/api'
+import { AtpAgent } from '@creatonproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   usersBulkSeed,
-} from '@atproto/dev-env'
+} from '@creatonproto/dev-env'
 import { ids } from '../src/lexicon/lexicons'
 import { OutputSchema as SearchReposOutputSchema } from '../src/lexicon/types/tools/ozone/moderation/searchRepos'
 import { paginateAll } from './_util'

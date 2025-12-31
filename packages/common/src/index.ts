@@ -1,5 +1,6 @@
-export * from '@atproto/common-web'
+export * from '@creatonproto/common-web'
 export * from './buffers'
+export * from './create-websocket-stream'
 export * from './dates'
 export * from './env'
 export * from './fs'

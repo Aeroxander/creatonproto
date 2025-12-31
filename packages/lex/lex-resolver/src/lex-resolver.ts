@@ -1,16 +1,16 @@
 import { resolveTxt } from 'node:dns/promises'
-import * as crypto from '@atproto/crypto'
-import { buildAgent, xrpc } from '@atproto/lex-client'
-import { Cid } from '@atproto/lex-data'
-import { LexiconDocument, lexiconDocumentSchema } from '@atproto/lex-document'
+import * as crypto from '@creatonproto/crypto'
+import { buildAgent, xrpc } from '@creatonproto/lex-client'
+import { Cid } from '@creatonproto/lex-data'
+import { LexiconDocument, lexiconDocumentSchema } from '@creatonproto/lex-document'
 import {
   MST,
   MemoryBlockstore,
   def as repoDef,
   readCarWithRoot,
   verifyCommitSig,
-} from '@atproto/repo'
-import { AtUri, NSID, NsidString } from '@atproto/syntax'
+} from '@creatonproto/repo'
+import { AtUri, NSID, NsidString } from '@creatonproto/syntax'
 import {
   AtprotoVerificationMethod,
   CreateDidResolverOptions,
@@ -20,7 +20,7 @@ import {
   assertDid,
   createDidResolver,
   extractAtprotoData,
-} from '@atproto-labs/did-resolver'
+} from '@creatonproto-labs/did-resolver'
 import { LexResolverError } from './lex-resolver-error.js'
 import { com } from './lexicons/index.js'
 

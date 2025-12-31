@@ -4,8 +4,8 @@ import {
   SourceFile,
   VariableDeclarationKind,
 } from 'ts-morph'
-import { type LexRecord, type LexiconDoc, Lexicons } from '@atproto/lexicon'
-import { NSID } from '@atproto/syntax'
+import { type LexRecord, type LexiconDoc, Lexicons } from '@creatonproto/lexicon'
+import { NSID } from '@creatonproto/syntax'
 import { type GeneratedAPI } from '../types'
 import { gen, lexiconsTs, utilTs } from './common'
 import {
@@ -61,9 +61,9 @@ const indexTs = (
   nsidTokens: Record<string, string[]>,
 ) =>
   gen(project, '/index.ts', async (file) => {
-    //= import { XrpcClient, type FetchHandler, type FetchHandlerOptions } from '@atproto/xrpc'
+    //= import { XrpcClient, type FetchHandler, type FetchHandlerOptions } from '@creatonproto/xrpc'
     const xrpcImport = file.addImportDeclaration({
-      moduleSpecifier: '@atproto/xrpc',
+      moduleSpecifier: '@creatonproto/xrpc',
     })
     xrpcImport.addNamedImports([
       { name: 'XrpcClient' },
@@ -442,9 +442,9 @@ const lexiconTs = (project, lexicons: Lexicons, lexiconDoc: LexiconDoc) =>
         main?.type === 'subscription' ||
         main?.type === 'procedure'
       ) {
-        //= import {HeadersMap, XRPCError} from '@atproto/xrpc'
+        //= import {HeadersMap, XRPCError} from '@creatonproto/xrpc'
         const xrpcImport = file.addImportDeclaration({
-          moduleSpecifier: '@atproto/xrpc',
+          moduleSpecifier: '@creatonproto/xrpc',
         })
         xrpcImport.addNamedImports([
           { name: 'HeadersMap' },

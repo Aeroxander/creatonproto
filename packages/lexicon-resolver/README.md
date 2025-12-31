@@ -1,8 +1,8 @@
-# @atproto/lexicon-resolver
+# @creatonproto/lexicon-resolver
 
 ATProto Lexicon resolution
 
-[![NPM](https://img.shields.io/npm/v/@atproto/lexicon-resolver)](https://www.npmjs.com/package/@atproto/lexicon-resolver)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/lexicon-resolver)](https://www.npmjs.com/package/@creatonproto/lexicon-resolver)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 ## Usage
@@ -13,7 +13,7 @@ This package may be used to determine the DID authority for a Lexicon based on i
 import {
   resolveLexicon,
   resolveLexiconDidAuthority,
-} from '@atproto/lexicon-resolver'
+} from '@creatonproto/lexicon-resolver'
 
 // Which DID is the authority over this Lexicon?
 const didAuthority = await resolveLexiconDidAuthority('app.bsky.feed.post')
@@ -42,11 +42,11 @@ const resolved = await resolveLexicon('app.bsky.feed.post')
 
 ### With identity caching
 
-Identity data is used in order to fetch and verify record contents. The @atproto/identity package can be used to offer more control over caching and other behaviors of identity lookups.
+Identity data is used in order to fetch and verify record contents. The @creatonproto/identity package can be used to offer more control over caching and other behaviors of identity lookups.
 
 ```ts
-import { IdResolver, MemoryCache } from '@atproto/identity'
-import { buildLexiconResolver } from '@atproto/lexicon-resolver'
+import { IdResolver, MemoryCache } from '@creatonproto/identity'
+import { buildLexiconResolver } from '@creatonproto/lexicon-resolver'
 
 const resolveLexicon = buildLexiconResolver({
   idResolver: new IdResolver({
@@ -62,7 +62,7 @@ const resolved = await resolveLexicon('app.bsky.feed.post')
 You may specify a specific DID authority you'd like to use to perform a Lexicon resolution, overriding ATProto's DNS-based authority over Lexicons. This is described in some more detail in [Authority and Control](https://atproto.com/specs/lexicon#authority-and-control).
 
 ```ts
-import { resolveLexicon } from '@atproto/lexicon-resolver'
+import { resolveLexicon } from '@creatonproto/lexicon-resolver'
 
 const resolved = await resolveLexicon('app.bsky.feed.post', {
   didAuthority: 'did:plc:...',

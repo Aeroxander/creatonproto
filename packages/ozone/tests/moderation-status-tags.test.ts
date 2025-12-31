@@ -1,11 +1,11 @@
 import assert from 'node:assert'
-import { ComAtprotoAdminDefs } from '@atproto/api'
+import { ComAtprotoAdminDefs } from '@creatonproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@atproto/dev-env'
+} from '@creatonproto/dev-env'
 import { REASONSPAM } from '../src/lexicon/types/com/atproto/moderation/defs'
 
 describe('moderation-status-tags', () => {

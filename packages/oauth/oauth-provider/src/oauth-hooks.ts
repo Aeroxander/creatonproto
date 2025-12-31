@@ -1,5 +1,5 @@
-import { Jwks } from '@atproto/jwk'
-import type { Account } from '@atproto/oauth-provider-api'
+import { Jwks } from '@creatonproto/jwk'
+import type { Account } from '@creatonproto/oauth-provider-api'
 import {
   OAuthAccessToken,
   OAuthAuthorizationDetails,
@@ -7,7 +7,7 @@ import {
   OAuthClientMetadata,
   OAuthTokenResponse,
   OAuthTokenType,
-} from '@atproto/oauth-types'
+} from '@creatonproto/oauth-types'
 import {
   ResetPasswordConfirmInput,
   ResetPasswordRequestInput,

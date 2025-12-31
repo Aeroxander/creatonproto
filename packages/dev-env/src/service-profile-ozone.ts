@@ -1,5 +1,5 @@
-import { AtpAgent } from '@atproto/api'
-import { Secp256k1Keypair } from '@atproto/crypto'
+import { AtpAgent } from '@creatonproto/api'
+import { Secp256k1Keypair } from '@creatonproto/crypto'
 import { TestPds } from './pds'
 import {
   ServiceMigrationOptions,

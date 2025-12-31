@@ -3,7 +3,7 @@ import {
   AppBskyFeedGenerator,
   AppBskyFeedPost,
   AppBskyGraphList,
-} from '@atproto/api'
+} from '@creatonproto/api'
 import { langLogger as log } from '../logger'
 import { ContentTagger } from './content-tagger'
 import { code3ToCode2 } from './language-data'

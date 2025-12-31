@@ -1,11 +1,11 @@
 import type { Redis, RedisOptions } from 'ioredis'
-import { Key, Keyset, isSignedJwt } from '@atproto/jwk'
+import { Key, Keyset, isSignedJwt } from '@creatonproto/jwk'
 import {
   OAuthAccessToken,
   OAuthIssuerIdentifier,
   OAuthTokenType,
   oauthIssuerIdentifierSchema,
-} from '@atproto/oauth-types'
+} from '@creatonproto/oauth-types'
 import { DpopManager, DpopManagerOptions } from './dpop/dpop-manager.js'
 import { DpopNonce } from './dpop/dpop-nonce.js'
 import { DpopProof } from './dpop/dpop-proof.js'

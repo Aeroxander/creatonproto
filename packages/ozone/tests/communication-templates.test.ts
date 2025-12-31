@@ -1,5 +1,5 @@
-import { AtpAgent } from '@atproto/api'
-import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
+import { AtpAgent } from '@creatonproto/api'
+import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
 import { ids } from '../src/lexicon/lexicons'
 
 describe('communication-templates', () => {

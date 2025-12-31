@@ -4,14 +4,14 @@ This package provides a browser specific OAuth client implementation for
 atproto. It implements all the OAuth features required by [ATPROTO] (PKCE, DPoP,
 etc.).
 
-`@atproto/oauth-client-browser` is designed for front-end applications that do
+`@creatonproto/oauth-client-browser` is designed for front-end applications that do
 not have a backend server to manage OAuth sessions, a.k.a "Single Page
 Applications" (SPA).
 
 > [!IMPORTANT]
 >
 > When a backend server is available, it is recommended to use
-> [`@atproto/oauth-client-node`](https://www.npmjs.com/package/@atproto/oauth-client-node)
+> [`@creatonproto/oauth-client-node`](https://www.npmjs.com/package/@creatonproto/oauth-client-node)
 > to manage OAuth sessions from the server side and use a session cookie to map
 > the OAuth session to the front-end. Because this mechanism allows the backend
 > to invalidate OAuth credentials at scale, this method is more secure than
@@ -60,7 +60,7 @@ of doing this:
 1. Either you "burn" the metadata into your application:
 
    ```typescript
-   import { BrowserOAuthClient } from '@atproto/oauth-client-browser'
+   import { BrowserOAuthClient } from '@creatonproto/oauth-client-browser'
 
    const client = new BrowserOAuthClient({
      clientMetadata: {
@@ -73,7 +73,7 @@ of doing this:
 2. Or you load it asynchronously from the URL:
 
    ```typescript
-   import { OAuthClient } from '@atproto/oauth-client-browser'
+   import { OAuthClient } from '@creatonproto/oauth-client-browser'
 
    const client = await BrowserOAuthClient.load({
      clientId: 'https://my-app.com/client-metadata.json',
@@ -112,7 +112,7 @@ expect this value to be the URL of a service running the
 > If you host your own PDS, you can use its URL as a handle resolver.
 
 ```typescript
-import { BrowserOAuthClient } from '@atproto/oauth-client-browser'
+import { BrowserOAuthClient } from '@creatonproto/oauth-client-browser'
 
 const client = new BrowserOAuthClient({
   handleResolver: 'https://my-pds.example.com',
@@ -128,7 +128,7 @@ with a `AtprotoDohHandleResolver` instance:
 import {
   BrowserOAuthClient,
   AtprotoDohHandleResolver,
-} from '@atproto/oauth-client-browser'
+} from '@creatonproto/oauth-client-browser'
 
 const client = new BrowserOAuthClient({
   handleResolver: new AtprotoDohHandleResolver('https://my-doh.example.com'),
@@ -260,15 +260,15 @@ client.addEventListener(
 )
 ```
 
-## Usage with `@atproto/api`
+## Usage with `@creatonproto/api`
 
-The `@atproto/api` package provides a way to interact with multiple Bluesky
+The `@creatonproto/api` package provides a way to interact with multiple Bluesky
 specific XRPC lexicons (`com.atproto`, `app.bsky`, `chat.bsky`, `tools.ozone`)
 through the `Agent` interface. The `oauthSession` returned by the
 `BrowserOAuthClient` can be used to instantiate an `Agent` instance.
 
 ```typescript
-import { Agent } from '@atproto/api'
+import { Agent } from '@creatonproto/api'
 
 const session = await client.restore('did:plc:alice')
 
@@ -312,7 +312,7 @@ Using a loopback client is only recommended for development purposes. A loopback
 client can be instantiated like this:
 
 ```typescript
-import { BrowserOAuthClient } from '@atproto/oauth-client-browser'
+import { BrowserOAuthClient } from '@creatonproto/oauth-client-browser'
 
 const client = new BrowserOAuthClient({
   handleResolver: 'https://bsky.social',
@@ -324,7 +324,7 @@ const client = new BrowserOAuthClient({
 If you need to use a special `redirect_uris`, you can configure them like this:
 
 ```typescript
-import { BrowserOAuthClient } from '@atproto/oauth-client-browser'
+import { BrowserOAuthClient } from '@creatonproto/oauth-client-browser'
 
 const client = new BrowserOAuthClient({
   handleResolver: 'https://bsky.social',

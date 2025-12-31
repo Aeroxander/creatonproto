@@ -1,6 +1,6 @@
-import { LexiconPermissionSet } from '@atproto/lex-document'
-import { LexResolver, LexResolverError } from '@atproto/lex-resolver'
-import { IncludeScope, Nsid } from '@atproto/oauth-scopes'
+import { LexiconPermissionSet } from '@creatonproto/lex-document'
+import { LexResolver, LexResolverError } from '@creatonproto/lex-resolver'
+import { IncludeScope, Nsid } from '@creatonproto/oauth-scopes'
 import { LexiconGetter } from './lexicon-getter.js'
 import { LexiconStore } from './lexicon-store.js'
 

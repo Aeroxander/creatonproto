@@ -1,4 +1,4 @@
-import { ensureValidDid } from '@atproto/syntax'
+import { ensureValidDid } from '@creatonproto/syntax'
 
 export function isValidDid(did: string) {
   try {

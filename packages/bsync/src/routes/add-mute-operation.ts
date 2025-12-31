@@ -1,6 +1,6 @@
 import { Code, ConnectError, ServiceImpl } from '@connectrpc/connect'
 import { sql } from 'kysely'
-import { AtUri } from '@atproto/syntax'
+import { AtUri } from '@creatonproto/syntax'
 import { AppContext } from '../context'
 import { Database } from '../db'
 import { createMuteOpChannel } from '../db/schema/mute_op'

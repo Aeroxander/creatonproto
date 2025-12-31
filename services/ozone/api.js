@@ -2,23 +2,12 @@
 
 'use strict'
 
-require('dd-trace') // Only works with commonjs
-  .init({ logInjection: true })
-  .tracer.use('express', {
-    hooks: {
-      request: (span, req) => {
-        maintainXrpcResource(span, req)
-      },
-    },
-  })
-
-// Tracer code above must come before anything else
 const path = require('node:path')
 const {
   BunnyInvalidator,
   CloudfrontInvalidator,
   MultiImageInvalidator,
-} = require('@atproto/aws')
+} = require('@creatonproto/aws')
 const {
   Database,
   OzoneService,
@@ -26,7 +15,7 @@ const {
   envToSecrets,
   httpLogger,
   readEnv,
-} = require('@atproto/ozone')
+} = require('@creatonproto/ozone')
 
 const main = async () => {
   const env = readEnv()
@@ -87,21 +76,6 @@ const main = async () => {
 
     httpLogger.info('ozone is stopped')
   })
-}
-
-const maintainXrpcResource = (span, req) => {
-  // Show actual xrpc method as resource rather than the route pattern
-  if (span && req.originalUrl?.startsWith('/xrpc/')) {
-    span.setTag(
-      'resource.name',
-      [
-        req.method,
-        path.posix.join(req.baseUrl || '', req.path || '', '/').slice(0, -1), // Ensures no trailing slash
-      ]
-        .filter(Boolean)
-        .join(' '),
-    )
-  }
 }
 
 main()

@@ -1,20 +1,20 @@
-# @atproto/tap
+# @creatonproto/tap
 
 TypeScript client library for [Tap](https://github.com/bluesky-social/indigo/tree/main/cmd/tap/README.md), a sync utility for the AT Protocol network.
 
 Tap handles firehose connections, cryptographic verification, backfill, and filtering. This client library lets you connect to a Tap instance and receive simple JSON events for the repos you care about.
 
-[![NPM](https://img.shields.io/npm/v/@atproto/tap)](https://www.npmjs.com/package/@atproto/tap)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/tap)](https://www.npmjs.com/package/@creatonproto/tap)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 ## Quick Start
 
 ```bash
-npm install @atproto/tap
+npm install @creatonproto/tap
 ```
 
 ```ts
-import { Tap, SimpleIndexer } from '@atproto/tap'
+import { Tap, SimpleIndexer } from '@creatonproto/tap'
 
 const tap = new Tap('http://localhost:2480', { adminPassword: 'secret' })
 
@@ -208,7 +208,7 @@ If your Tap server is configured for webhook delivery, you can use `parseTapEven
 
 ```ts
 import express from 'express'
-import { parseTapEvent, assureAdminAuth } from '@atproto/tap'
+import { parseTapEvent, assureAdminAuth } from '@creatonproto/tap'
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
 
@@ -242,7 +242,7 @@ import {
   formatAdminAuthHeader,
   parseAdminAuthHeader,
   assureAdminAuth,
-} from '@atproto/tap'
+} from '@creatonproto/tap'
 
 // Format a password into a Basic auth header value
 const header = formatAdminAuthHeader('secret')
@@ -258,7 +258,7 @@ assureAdminAuth('secret', req.headers.authorization)
 ### Event parsing
 
 ```ts
-import { parseTapEvent } from '@atproto/tap'
+import { parseTapEvent } from '@creatonproto/tap'
 
 const evt = parseTapEvent(jsonData) // validates and returns typed TapEvent
 ```

@@ -1,4 +1,4 @@
-import { NSID } from '@atproto/syntax'
+import { NSID } from '@creatonproto/syntax'
 
 /**
  * A Set implementation that maps values of type K to an internal representation I.

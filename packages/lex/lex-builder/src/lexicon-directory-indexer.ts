@@ -4,7 +4,7 @@ import {
   LexiconDocument,
   LexiconIterableIndexer,
   lexiconDocumentSchema,
-} from '@atproto/lex-document'
+} from '@creatonproto/lex-document'
 
 /**
  * Options for the {@link LexiconDirectoryIndexer}.

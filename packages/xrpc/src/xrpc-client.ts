@@ -1,4 +1,4 @@
-import { LexiconDoc, Lexicons, ValidationError } from '@atproto/lexicon'
+import { LexiconDoc, Lexicons, ValidationError } from '@creatonproto/lexicon'
 import {
   FetchHandler,
   FetchHandlerObject,

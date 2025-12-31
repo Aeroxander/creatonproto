@@ -1,4 +1,4 @@
-import { Key, Keyset } from '@atproto/jwk'
+import { Key, Keyset } from '@creatonproto/jwk'
 import {
   OAuthAuthorizationRequestParameters,
   OAuthClientIdDiscoverable,
@@ -6,18 +6,18 @@ import {
   OAuthClientMetadataInput,
   OAuthResponseMode,
   oauthClientMetadataSchema,
-} from '@atproto/oauth-types'
+} from '@creatonproto/oauth-types'
 import {
   AtprotoDid,
   DidCache,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type DidResolverCommonOptions,
   assertAtprotoDid,
-} from '@atproto-labs/did-resolver'
-import { Fetch } from '@atproto-labs/fetch'
-import { HandleCache, HandleResolver } from '@atproto-labs/handle-resolver'
-import { HANDLE_INVALID } from '@atproto-labs/identity-resolver'
-import { SimpleStoreMemory } from '@atproto-labs/simple-store-memory'
+} from '@creatonproto-labs/did-resolver'
+import { Fetch } from '@creatonproto-labs/fetch'
+import { HandleCache, HandleResolver } from '@creatonproto-labs/handle-resolver'
+import { HANDLE_INVALID } from '@creatonproto-labs/identity-resolver'
+import { SimpleStoreMemory } from '@creatonproto-labs/simple-store-memory'
 import { FALLBACK_ALG } from './constants.js'
 import { AuthMethodUnsatisfiableError } from './errors/auth-method-unsatisfiable-error.js'
 import { TokenRevokedError } from './errors/token-revoked-error.js'

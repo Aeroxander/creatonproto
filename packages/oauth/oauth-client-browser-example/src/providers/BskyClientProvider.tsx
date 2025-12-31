@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo } from 'react'
-import { Client } from '@atproto/lex'
-import { asDid } from '@atproto/oauth-client-browser'
+import { Client } from '@creatonproto/lex'
+import { asDid } from '@creatonproto/oauth-client-browser'
 import { BSKY_API_DID, BSKY_API_URL } from '../constants.ts'
 import { useAuthenticationContext } from './AuthenticationProvider.tsx'
 

@@ -1,6 +1,6 @@
 import { Sender, WebSocketServer } from 'ws'
-import { AppBskyGraphVerification, AtpAgent } from '@atproto/api'
-import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
+import { AppBskyGraphVerification, AtpAgent } from '@creatonproto/api'
+import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
 import { forSnapshot } from './_util'
 
 describe('verification-listener', () => {

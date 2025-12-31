@@ -1,4 +1,4 @@
-import { isPlainObject } from '@atproto/lex-data'
+import { isPlainObject } from '@creatonproto/lex-data'
 import {
   InferInput,
   InferOutput,

@@ -1,6 +1,6 @@
 import { Kysely } from 'kysely'
-import { HOUR } from '@atproto/common'
-import { ClientId, DeviceId } from '@atproto/oauth-provider'
+import { HOUR } from '@creatonproto/common'
+import { ClientId, DeviceId } from '@creatonproto/oauth-provider'
 import { DateISO, JsonEncoded, toDateISO } from '../../../db'
 
 // @NOTE this migration has been updated to be idempotent through

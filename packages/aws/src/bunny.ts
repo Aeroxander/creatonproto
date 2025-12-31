@@ -1,4 +1,4 @@
-import { allFulfilled } from '@atproto/common'
+import { allFulfilled } from '@creatonproto/common'
 import { ImageInvalidator } from './types'
 
 export type BunnyConfig = {

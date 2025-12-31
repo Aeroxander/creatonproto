@@ -1,4 +1,4 @@
-# @atproto-labs/pipe
+# @creatonproto-labs/pipe
 
 ## 0.1.1
 

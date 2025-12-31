@@ -1,8 +1,8 @@
-# @atproto/sync: atproto sync tools
+# @creatonproto/sync: atproto sync tools
 
 TypeScript library for syncing data from the [atproto](https://atproto.com) network. Currently only supports firehose (relay) subscriptions
 
-[![NPM](https://img.shields.io/npm/v/@atproto/sync)](https://www.npmjs.com/package/@atproto/sync)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/sync)](https://www.npmjs.com/package/@creatonproto/sync)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 ## Usage
@@ -20,8 +20,8 @@ Non-fatal errors that are encountered will be passed to the required `onError` h
 When using the firehose class, events are processed serially. Each event must be finished being handled before the next one is parsed and authenticated.
 
 ```ts
-import { Firehose } from '@atproto/sync'
-import { IdResolver } from '@atproto/identity'
+import { Firehose } from '@creatonproto/sync'
+import { IdResolver } from '@creatonproto/identity'
 
 const idResolver = new IdResolver()
 const firehose = new Firehose({
@@ -56,8 +56,8 @@ For more robust indexing pipelines, it's recommended to use the supplied `Memory
 The `MemoryRunner` also tracks an internal cursor based on the last finished consecutive work. This ensures that no events are dropped, although it does mean that some events may occassionally be replayed (if the websocket drops and reconnects) and therefore it's recommended that any indexing logic is idempotent. An optional `setCursor` parameter may be supplied to the `MemoryRunner` which can be used to persistently store the most recently processed cursor.
 
 ```ts
-import { Firehose, MemoryRunner } from '@atproto/sync'
-import { IdResolver } from '@atproto/identity'
+import { Firehose, MemoryRunner } from '@creatonproto/sync'
+import { IdResolver } from '@creatonproto/identity'
 
 const idResolver = new IdResolver()
 const runner = new MemoryRunner({

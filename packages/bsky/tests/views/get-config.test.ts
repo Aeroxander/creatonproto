@@ -1,5 +1,5 @@
-import AtpAgent from '@atproto/api'
-import { TestNetwork } from '@atproto/dev-env'
+import AtpAgent from '@creatonproto/api'
+import { TestNetwork } from '@creatonproto/dev-env'
 
 describe('get config', () => {
   describe('when live now is NOT configured', () => {

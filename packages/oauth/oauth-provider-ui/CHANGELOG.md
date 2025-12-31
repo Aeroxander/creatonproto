@@ -1,4 +1,4 @@
-# @atproto/oauth-provider-ui
+# @creatonproto/oauth-provider-ui
 
 ## 0.5.1
 

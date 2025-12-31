@@ -1,4 +1,4 @@
-import { OAuthScope } from '@atproto/oauth-types'
+import { OAuthScope } from '@creatonproto/oauth-types'
 import { ClientId } from '../client/client-id.js'
 import { TokenId } from './token-id.js'
 

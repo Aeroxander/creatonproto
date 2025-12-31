@@ -1,0 +1,22 @@
+# Bun configuration for atproto monorepo
+
+[install]
+# Use frozen lockfile in CI
+# frozen = true
+
+[install.lockfile]
+# Save the lockfile
+save = true
+
+[test]
+# Test timeout in milliseconds
+timeout = 60000
+# Preload dotenv for tests
+preload = ["dotenv/config"]
+
+# Override jose to use Node.js paths instead of browser paths
+# This is needed because jose exports browser code for Bun by default,
+# but this codebase uses Node.js crypto keys (SecretKeyObject, etc.)
+[[override]]
+name = "jose"
+exportConditions = ["node", "import"]

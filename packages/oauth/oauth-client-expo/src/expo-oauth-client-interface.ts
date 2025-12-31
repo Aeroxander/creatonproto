@@ -2,7 +2,7 @@ import type {
   AuthorizeOptions,
   OAuthClient,
   OAuthSession,
-} from '@atproto/oauth-client'
+} from '@creatonproto/oauth-client'
 
 export interface ExpoOAuthClientInterface extends OAuthClient, AsyncDisposable {
   signIn(input: string, options?: AuthorizeOptions): Promise<OAuthSession>

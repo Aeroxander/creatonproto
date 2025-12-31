@@ -1,5 +1,5 @@
 import { Insertable } from 'kysely'
-import { LEXICON_REFRESH_FREQUENCY, LexiconData } from '@atproto/oauth-provider'
+import { LEXICON_REFRESH_FREQUENCY, LexiconData } from '@creatonproto/oauth-provider'
 import { fromDateISO, fromJson, toDateISO, toJson } from '../../db'
 import { AccountDb, Lexicon } from '../db'
 

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { signedJwtSchema } from '@atproto/jwk'
+import { signedJwtSchema } from '@creatonproto/jwk'
 import { CLIENT_ASSERTION_TYPE_JWT_BEARER } from './constants.js'
 import { oauthClientIdSchema } from './oauth-client-id.js'
 

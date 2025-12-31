@@ -1,4 +1,4 @@
-import { isValidNsid } from '@atproto/syntax'
+import { isValidNsid } from '@creatonproto/syntax'
 
 export type Nsid = `${string}.${string}.${string}`
 export const isNsid = (v: unknown): v is Nsid =>

@@ -1,4 +1,4 @@
-import { MINUTE } from '@atproto/common'
+import { MINUTE } from '@creatonproto/common'
 import { Database } from '../db'
 import { dbLogger } from '../logger'
 import { ModerationServiceCreator, ReversalSubject } from '../mod-service'

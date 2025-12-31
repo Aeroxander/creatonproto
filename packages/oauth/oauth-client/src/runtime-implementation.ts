@@ -1,4 +1,4 @@
-import { Key } from '@atproto/jwk'
+import { Key } from '@creatonproto/jwk'
 import { Awaitable } from './util.js'
 
 export type { Key }

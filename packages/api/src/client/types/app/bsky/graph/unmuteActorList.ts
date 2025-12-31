@@ -1,8 +1,8 @@
 /**
  * GENERATED CODE - DO NOT MODIFY
  */
-import { HeadersMap, XRPCError } from '@atproto/xrpc'
-import { type ValidationResult, BlobRef } from '@atproto/lexicon'
+import { HeadersMap, XRPCError } from '@creatonproto/xrpc'
+import { type ValidationResult, BlobRef } from '@creatonproto/lexicon'
 import { CID } from 'multiformats/cid'
 import { validate as _validate } from '../../../../lexicons'
 import {

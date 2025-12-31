@@ -19,9 +19,11 @@ const MOCK_SITEMAP_PAGE = `<?xml version="1.0" encoding="UTF-8"?>
 
 export default (): Partial<ServiceImpl<typeof Service>> => ({
   async getSitemapIndex() {
-    return {
-      sitemap: gzipSync(Buffer.from(MOCK_SITEMAP_INDEX)),
-    }
+    const compressed = gzipSync(Buffer.from(MOCK_SITEMAP_INDEX))
+    // Create a fresh Buffer with ArrayBuffer backing to satisfy strict types
+    const sitemap = Buffer.alloc(compressed.byteLength)
+    sitemap.set(compressed)
+    return { sitemap }
   },
   async getSitemapPage(req: GetSitemapPageRequest) {
     const date = req.date?.toDate()
@@ -36,8 +38,10 @@ export default (): Partial<ServiceImpl<typeof Service>> => ({
       throw new ConnectError('Sitemap page not found', Code.NotFound)
     }
 
-    return {
-      sitemap: gzipSync(Buffer.from(MOCK_SITEMAP_PAGE)),
-    }
+    const compressed = gzipSync(Buffer.from(MOCK_SITEMAP_PAGE))
+    // Create a fresh Buffer with ArrayBuffer backing to satisfy strict types
+    const sitemap = Buffer.alloc(compressed.byteLength)
+    sitemap.set(compressed)
+    return { sitemap }
   },
 })

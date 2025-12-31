@@ -1,5 +1,5 @@
 import assert from 'node:assert'
-import { envBool, envInt, envList, envStr } from '@atproto/common'
+import { envBool, envInt, envList, envStr } from '@creatonproto/common'
 
 export const envToCfg = (env: ServerEnvironment): ServerConfig => {
   const serviceCfg: ServerConfig['service'] = {

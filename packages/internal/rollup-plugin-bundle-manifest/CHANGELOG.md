@@ -1,4 +1,4 @@
-# @atproto-labs/rollup-plugin-bundle-manifest
+# @creatonproto-labs/rollup-plugin-bundle-manifest
 
 ## 0.2.0
 

@@ -2,16 +2,12 @@
 
 'use strict'
 
-require('dd-trace') // Only works with commonjs
-  .init({ logInjection: true })
-
-// Tracer code above must come before anything else
 const {
   default: BsyncService,
   envToCfg,
   httpLogger,
   readEnv,
-} = require('@atproto/bsync')
+} = require('@creatonproto/bsync')
 
 const main = async () => {
   const env = readEnv()

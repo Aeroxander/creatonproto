@@ -2,7 +2,7 @@ import events from 'node:events'
 import http from 'node:http'
 import { expressConnectMiddleware } from '@connectrpc/connect-express'
 import express from 'express'
-import { IdResolver, MemoryCache } from '@atproto/identity'
+import { IdResolver, MemoryCache } from '@creatonproto/identity'
 import { Database, DatabaseSchema } from './db'
 import createRoutes from './routes'
 

@@ -1,4 +1,4 @@
-import { OAuthAuthorizationRequestParameters } from '@atproto/oauth-types'
+import { OAuthAuthorizationRequestParameters } from '@creatonproto/oauth-types'
 import { AuthorizationRedirectParameters } from './authorization-redirect-parameters.js'
 
 export type AuthorizationResultRedirect = {

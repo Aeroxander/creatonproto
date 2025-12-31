@@ -1,4 +1,4 @@
-import { $Typed, ToolsOzoneModerationDefs } from '@atproto/api'
+import { $Typed, ToolsOzoneModerationDefs } from '@creatonproto/api'
 import { addAccountInfoToRepoViewDetail, getPdsAccountInfos } from '../api/util'
 import { AppContext } from '../context'
 import { ModerationService } from '../mod-service'

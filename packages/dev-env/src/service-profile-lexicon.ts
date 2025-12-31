@@ -1,4 +1,4 @@
-import { LexiconDoc } from '@atproto/lexicon'
+import { LexiconDoc } from '@creatonproto/lexicon'
 import { TestPds } from './pds'
 import { ServiceProfile } from './service-profile'
 

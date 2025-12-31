@@ -10,7 +10,7 @@ const {
   envToCfg,
   envToSecrets,
   readEnv,
-} = require('@atproto/ozone')
+} = require('@creatonproto/ozone')
 
 const main = async () => {
   const env = readEnv()

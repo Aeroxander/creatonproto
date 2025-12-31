@@ -1,6 +1,6 @@
 import './polyfill'
 
-export * from '@atproto/oauth-client'
+export * from '@creatonproto/oauth-client'
 
 export type { ExpoOAuthClientInterface } from './expo-oauth-client-interface'
 export type { ExpoOAuthClientOptions } from './expo-oauth-client-options'

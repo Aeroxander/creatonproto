@@ -1,4 +1,4 @@
-import { HOUR } from '@atproto/common'
+import { HOUR } from '@creatonproto/common'
 import { Database } from '../db'
 import { dbLogger } from '../logger'
 import { StrikeServiceCreator } from '../mod-service/strike'

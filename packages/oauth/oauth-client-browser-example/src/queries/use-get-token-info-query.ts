@@ -1,5 +1,5 @@
 import { Query, useQuery } from '@tanstack/react-query'
-import { TokenInfo } from '@atproto/oauth-client-browser'
+import { TokenInfo } from '@creatonproto/oauth-client-browser'
 import { useOAuthSession } from '../providers/OAuthProvider.tsx'
 
 export function useGetTokenInfoQuery() {

@@ -1,4 +1,4 @@
-import { WebSocketKeepAlive } from '@atproto/ws-client'
+import { WebSocketKeepAlive } from '@creatonproto/ws-client'
 
 type JetstreamRecord = Record<string, unknown>
 type OnCreateCallback<T extends JetstreamRecord> = (

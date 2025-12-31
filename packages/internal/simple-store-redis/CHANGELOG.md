@@ -1,4 +1,4 @@
-# @atproto-labs/simple-store-redis
+# @creatonproto-labs/simple-store-redis
 
 ## 0.0.1
 

@@ -1,4 +1,4 @@
-# @atproto/jwk
+# @creatonproto/jwk
 
 ## 0.6.0
 

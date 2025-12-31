@@ -1,4 +1,4 @@
-import { wait } from '@atproto/common'
+import { wait } from '@creatonproto/common'
 import { Redis } from '../src/'
 import { ReadThroughCache } from '../src/cache/read-through'
 

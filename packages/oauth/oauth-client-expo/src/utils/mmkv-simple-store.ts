@@ -1,5 +1,5 @@
 import { Configuration, MMKV } from 'react-native-mmkv'
-import type { SimpleStore, Value } from '@atproto-labs/simple-store'
+import type { SimpleStore, Value } from '@creatonproto-labs/simple-store'
 
 export type MMKVSimpleStoreOptions<V extends Value> = {
   decode: (value: string) => V

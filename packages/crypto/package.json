@@ -1,5 +1,5 @@
 {
-  "name": "@atproto/crypto",
+  "name": "@creatonproto/crypto",
   "version": "0.4.5",
   "license": "MIT",
   "description": "Library for cryptographic keys and signing in atproto",
@@ -16,7 +16,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest ",
+    "test": "bun test ",
     "build": "tsc --build tsconfig.build.json"
   },
   "engines": {
@@ -28,7 +28,7 @@
     "uint8arrays": "3.0.0"
   },
   "devDependencies": {
-    "@atproto/common": "workspace:^",
+    "@creatonproto/common": "workspace:^",
     "jest": "^28.1.2",
     "typescript": "^5.6.3"
   }

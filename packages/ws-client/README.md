@@ -1,8 +1,8 @@
-# @atproto/ws-client: WebSocket Client Library
+# @creatonproto/ws-client: WebSocket Client Library
 
 Shared Typescript library for managing a long-lived WebSocket client connection, including a heartbeat mechanism to ensure the connection remains active.
 
-[![NPM](https://img.shields.io/npm/v/@atproto/ws-client)](https://www.npmjs.com/package/@atproto/ws-client)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/ws-client)](https://www.npmjs.com/package/@creatonproto/ws-client)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 ## License

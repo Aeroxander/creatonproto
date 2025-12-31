@@ -1,5 +1,5 @@
 {
-  "name": "@atproto/xrpc",
+  "name": "@creatonproto/xrpc",
   "version": "0.7.7",
   "license": "MIT",
   "description": "atproto HTTP API (XRPC) client library",
@@ -19,7 +19,7 @@
     "build": "tsc --build tsconfig.build.json"
   },
   "dependencies": {
-    "@atproto/lexicon": "workspace:^",
+    "@creatonproto/lexicon": "workspace:^",
     "zod": "^3.23.8"
   },
   "devDependencies": {

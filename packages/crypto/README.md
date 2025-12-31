@@ -1,8 +1,8 @@
-# @atproto/crypto
+# @creatonproto/crypto
 
 TypeScript library providing basic cryptographic helpers as needed in [atproto](https://atproto.com).
 
-[![NPM](https://img.shields.io/npm/v/@atproto/crypto)](https://www.npmjs.com/package/@atproto/crypto)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/crypto)](https://www.npmjs.com/package/@creatonproto/crypto)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 This package implements the two currently supported cryptographic systems:
@@ -15,7 +15,7 @@ The details of cryptography in atproto are described in [the specification](http
 ## Usage
 
 ```typescript
-import { verifySignature, Secp256k1Keypair, P256Keypair } from '@atproto/crypto'
+import { verifySignature, Secp256k1Keypair, P256Keypair } from '@creatonproto/crypto'
 
 // generate a new random K-256 private key
 const keypair = await Secp256k1Keypair.create({ exportable: true })

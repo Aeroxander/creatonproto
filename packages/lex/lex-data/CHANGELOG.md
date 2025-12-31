@@ -1,4 +1,4 @@
-# @atproto/lex-data
+# @creatonproto/lex-data
 
 ## 0.0.15
 
@@ -129,7 +129,7 @@
 - [#4397](https://github.com/bluesky-social/atproto/pull/4397) [`688f9d6`](https://github.com/bluesky-social/atproto/commit/688f9d67597ba96d6e9c4a4aec4d394d42f4cbf4) Thanks [@matthieusieben](https://github.com/matthieusieben)! - Add `CHANGELOG.md` to npm package
 
 - Updated dependencies [[`bcae2b7`](https://github.com/bluesky-social/atproto/commit/bcae2b77b68da6dc2ec202651c8bf41fd5769f69)]:
-  - @atproto/syntax@0.4.2
+  - @creatonproto/syntax@0.4.2
 
 ## 0.0.1
 

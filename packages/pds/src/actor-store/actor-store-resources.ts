@@ -1,4 +1,4 @@
-import { BlobStore } from '@atproto/repo'
+import { BlobStore } from '@creatonproto/repo'
 import { BackgroundQueue } from '../background'
 
 export type ActorStoreResources = {

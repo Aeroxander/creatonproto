@@ -1,6 +1,6 @@
 import { errors } from 'jose'
 import { ZodError } from 'zod'
-import { JwtVerifyError } from '@atproto/jwk'
+import { JwtVerifyError } from '@creatonproto/jwk'
 import { formatZodError } from '../lib/util/zod-error.js'
 import { OAuthError } from './oauth-error.js'
 

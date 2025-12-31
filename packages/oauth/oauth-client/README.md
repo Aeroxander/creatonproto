@@ -1,18 +1,18 @@
-# @atproto/oauth-client: atproto flavoured OAuth client
+# @creatonproto/oauth-client: atproto flavoured OAuth client
 
 Core library for implementing [atproto][ATPROTO] OAuth clients.
 
-For a browser specific implementation, see [@atproto/oauth-client-browser](https://www.npmjs.com/package/@atproto/oauth-client-browser).
+For a browser specific implementation, see [@creatonproto/oauth-client-browser](https://www.npmjs.com/package/@creatonproto/oauth-client-browser).
 For a node specific implementation, see
-[@atproto/oauth-client-node](https://www.npmjs.com/package/@atproto/oauth-client-node).
+[@creatonproto/oauth-client-node](https://www.npmjs.com/package/@creatonproto/oauth-client-node).
 
 ## Usage
 
 ### Configuration
 
 ```ts
-import { OAuthClient, Key, Session } from '@atproto/oauth-client'
-import { JoseKey } from '@atproto/jwk-jose' // NodeJS/Browser only
+import { OAuthClient, Key, Session } from '@creatonproto/oauth-client'
+import { JoseKey } from '@creatonproto/jwk-jose' // NodeJS/Browser only
 
 const client = new OAuthClient({
   handleResolver: 'https://my-backend.example', // backend instances should use a DNS based resolver
@@ -27,7 +27,7 @@ const client = new OAuthClient({
 
   runtimeImplementation: {
     // A runtime specific implementation of the crypto operations needed by the
-    // OAuth client. See "@atproto/oauth-client-browser" for a browser specific
+    // OAuth client. See "@creatonproto/oauth-client-browser" for a browser specific
     // implementation. The following example is suitable for use in NodeJS.
 
     createKey(algs: string[]): Promise<Key> {
@@ -35,7 +35,7 @@ const client = new OAuthClient({
 
       // Note, in browser environments, it is better to use non extractable keys
       // to prevent the private key from being stolen. This can be done using
-      // the WebcryptoKey class from the "@atproto/jwk-webcrypto" package. The
+      // the WebcryptoKey class from the "@creatonproto/jwk-webcrypto" package. The
       // inconvenient of these keys (which is also what makes them stronger) is
       // that the only way to persist them across browser reloads is to save
       // them in the indexed DB.
@@ -173,13 +173,13 @@ authenticated requests to the user's PDS. There are two main use-cases:
 
 #### Making authenticated requests to Bluesky's AppView
 
-The `@atproto/oauth-client` package provides a `OAuthSession` class that can be
+The `@creatonproto/oauth-client` package provides a `OAuthSession` class that can be
 used to make authenticated requests to Bluesky's AppView. This can be achieved
-by constructing an `Agent` (from `@atproto/api`) instance using the
+by constructing an `Agent` (from `@creatonproto/api`) instance using the
 `OAuthSession` instance.
 
 ```ts
-import { Agent } from '@atproto/api'
+import { Agent } from '@creatonproto/api'
 
 const agent = new Agent(oauthSession)
 
@@ -196,12 +196,12 @@ await agent.signOut()
 #### Making authenticated requests to your own AppView
 
 The `OAuthSession` instance obtained after signing in can be used to instantiate
-the `XrpcClient` class from the `@atproto/xrpc` package.
+the `XrpcClient` class from the `@creatonproto/xrpc` package.
 
 ```ts
-import { Lexicons } from '@atproto/lexicon'
-import { OAuthClient } from '@atproto/oauth-client' // or "@atproto/oauth-client-browser" or "@atproto/oauth-client-node"
-import { XrpcClient } from '@atproto/xrpc'
+import { Lexicons } from '@creatonproto/lexicon'
+import { OAuthClient } from '@creatonproto/oauth-client' // or "@creatonproto/oauth-client-browser" or "@creatonproto/oauth-client-node"
+import { XrpcClient } from '@creatonproto/xrpc'
 
 // Define your lexicons
 const myLexicon = new Lexicons([
@@ -300,7 +300,7 @@ import {
   Session,
   TokenRefreshError,
   TokenRevokedError,
-} from '@atproto/oauth-client'
+} from '@creatonproto/oauth-client'
 
 client.addEventListener('updated', (event: CustomEvent<Session>) => {
   console.log('Refreshed tokens were saved in the store:', event.detail)

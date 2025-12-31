@@ -1,5 +1,5 @@
 import { Selectable } from 'kysely'
-import { DeviceId, SessionId } from '@atproto/oauth-provider'
+import { DeviceId, SessionId } from '@creatonproto/oauth-provider'
 import { DateISO } from '../../../db'
 
 export interface Device {

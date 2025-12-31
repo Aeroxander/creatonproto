@@ -1,8 +1,8 @@
 {
-  "name": "@atproto/jwk",
+  "name": "@creatonproto/jwk",
   "version": "0.6.0",
   "license": "MIT",
-  "description": "A library for working with JSON Web Keys (JWKs) in TypeScript. This is meant to be extended by environment-specific libraries like @atproto/jwk-jose.",
+  "description": "A library for working with JSON Web Keys (JWKs) in TypeScript. This is meant to be extended by environment-specific libraries like @creatonproto/jwk-jose.",
   "keywords": [
     "atproto",
     "jwk",

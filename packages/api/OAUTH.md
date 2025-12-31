@@ -92,8 +92,8 @@ all. In this example, we will use TypeScript and Parcel, with plain JavaScript.
 
 ```bash
 npm init -y
-npm install --save-dev @atproto/oauth-client-browser
-npm install --save-dev @atproto/api
+npm install --save-dev @creatonproto/oauth-client-browser
+npm install --save-dev @creatonproto/api
 npm install --save-dev parcel
 npm install --save-dev parcel-reporter-static-files-copy
 mkdir -p src
@@ -167,8 +167,8 @@ ngrok as the `client_id`:
 Replace the content of the `src/app.ts` file, with the following content:
 
 ```typescript
-import { Agent } from '@atproto/api'
-import { BrowserOAuthClient } from '@atproto/oauth-client-browser'
+import { Agent } from '@creatonproto/api'
+import { BrowserOAuthClient } from '@creatonproto/oauth-client-browser'
 
 async function main() {
   const oauthClient = await BrowserOAuthClient.load({
@@ -245,7 +245,7 @@ if (!session) {
 
 At this point in the script, the user **will** be authenticated. Authenticated
 API calls can be made using the `session`. The `session` can be used to instantiate the
-`Agent` class from `@atproto/api`. Let's make a simple call to the API to
+`Agent` class from `@creatonproto/api`. Let's make a simple call to the API to
 retrieve the user's profile. Replace the `// TO BE CONTINUED` comment with the
 following code:
 

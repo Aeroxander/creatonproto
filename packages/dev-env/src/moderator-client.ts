@@ -6,7 +6,7 @@ import {
   ToolsOzoneModerationQueryStatuses as QueryModerationStatuses,
   ToolsOzoneSettingRemoveOptions,
   ToolsOzoneSettingUpsertOption,
-} from '@atproto/api'
+} from '@creatonproto/api'
 import { TestOzone } from './ozone'
 
 type TakeActionInput = EmitModerationEvent.InputSchema

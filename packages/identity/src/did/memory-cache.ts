@@ -1,4 +1,4 @@
-import { DAY, HOUR } from '@atproto/common-web'
+import { DAY, HOUR } from '@creatonproto/common-web'
 import { CacheResult, DidCache, DidDocument } from '../types'
 
 type CacheVal = {

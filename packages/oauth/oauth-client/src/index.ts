@@ -1,16 +1,16 @@
 import 'core-js/modules/es.symbol.dispose'
 
-export * from '@atproto-labs/did-resolver'
+export * from '@creatonproto-labs/did-resolver'
 export {
   FetchError,
   FetchRequestError,
   FetchResponseError,
-} from '@atproto-labs/fetch'
-export * from '@atproto-labs/handle-resolver'
+} from '@creatonproto-labs/fetch'
+export * from '@creatonproto-labs/handle-resolver'
 
-export * from '@atproto/did'
-export * from '@atproto/jwk'
-export * from '@atproto/oauth-types'
+export * from '@creatonproto/did'
+export * from '@creatonproto/jwk'
+export * from '@creatonproto/oauth-types'
 
 export * from './lock.js'
 export * from './oauth-authorization-server-metadata-resolver.js'

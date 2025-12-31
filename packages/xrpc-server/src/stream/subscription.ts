@@ -1,6 +1,6 @@
 import { ClientOptions } from 'ws'
-import { isPlainObject } from '@atproto/lex-data'
-import { WebSocketKeepAlive } from '@atproto/ws-client'
+import { isPlainObject } from '@creatonproto/lex-data'
+import { WebSocketKeepAlive } from '@creatonproto/ws-client'
 import { ensureChunkIsMessage } from './stream'
 
 export class Subscription<T = unknown> {

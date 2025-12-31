@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
-import { bundleManifest } from '@atproto-labs/rollup-plugin-bundle-manifest'
+import { bundleManifest } from '@creatonproto-labs/rollup-plugin-bundle-manifest'
 
 export default defineConfig({
   plugins: [
@@ -44,8 +44,8 @@ export default defineConfig({
     include: [
       // @NOTEs Only explicit dependencies of this package should be included
       // here
-      '@atproto/lex',
-      '@atproto/oauth-client-browser',
+      '@creatonproto/lex',
+      '@creatonproto/oauth-client-browser',
     ],
   },
 })

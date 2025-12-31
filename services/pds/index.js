@@ -8,8 +8,8 @@ const {
   envToSecrets,
   httpLogger,
   readEnv,
-} = require('@atproto/pds')
-const pkg = require('@atproto/pds/package.json')
+} = require('@creatonproto/pds')
+const pkg = require('@creatonproto/pds/package.json')
 
 const main = async () => {
   const env = readEnv()

@@ -1,4 +1,4 @@
-import { RefreshToken } from '@atproto/oauth-provider'
+import { RefreshToken } from '@creatonproto/oauth-provider'
 import { AccountDb } from '../db'
 
 /**

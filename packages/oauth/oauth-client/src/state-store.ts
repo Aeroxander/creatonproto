@@ -1,5 +1,5 @@
-import { Key } from '@atproto/jwk'
-import { SimpleStore } from '@atproto-labs/simple-store'
+import { Key } from '@creatonproto/jwk'
+import { SimpleStore } from '@creatonproto-labs/simple-store'
 import { ClientAuthMethod } from './oauth-client-auth.js'
 
 export type InternalStateData = {

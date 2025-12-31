@@ -1,4 +1,4 @@
-import { envBool, envInt, envList, envStr } from '@atproto/common'
+import { envBool, envInt, envList, envStr } from '@creatonproto/common'
 
 export const readEnv = (): OzoneEnvironment => {
   return {

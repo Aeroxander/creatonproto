@@ -1,4 +1,4 @@
-# @atproto/oauth-client-browser-example
+# @creatonproto/oauth-client-browser-example
 
 ## 0.0.10
 

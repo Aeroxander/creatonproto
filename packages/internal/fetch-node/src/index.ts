@@ -1,4 +1,4 @@
-export * from '@atproto-labs/fetch'
+export * from '@creatonproto-labs/fetch'
 
 export * from './safe.js'
 export * from './unicast.js'

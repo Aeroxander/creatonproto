@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { CID } from '@atproto/lex-data'
+import { CID } from '@creatonproto/lex-data'
 import { Def } from './check'
 
 const cidSchema = z.unknown().transform((obj, ctx): CID => {

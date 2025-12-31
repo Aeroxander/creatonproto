@@ -27,7 +27,7 @@ import {
   jwkSchema,
   jwtHeaderSchema,
   jwtPayloadSchema,
-} from '@atproto/jwk'
+} from '@creatonproto/jwk'
 import { RequiredKey, either } from './util.js'
 
 const { JOSEError } = errors
@@ -217,7 +217,7 @@ export class JoseKey<J extends Jwk = Jwk> extends Key<J> {
       if (!jwk.alg) jwk.alg = alg
       else if (jwk.alg !== alg) throw new JwkError('Invalid "alg" in JWK')
     }
-    return this.fromJWK(jwk, kid)
+    return this.fromJWK(jwk as unknown as Record<string, unknown>, kid)
   }
 
   /**

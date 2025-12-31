@@ -1,4 +1,4 @@
-# @atproto-labs/rollup-plugin-bundle-manifest
+# @creatonproto-labs/rollup-plugin-bundle-manifest
 
 This Rollup plugin allows to generate a (JSON) manifest containing the output
 files of a Rollup build. The manifest will look as follows:
@@ -42,7 +42,7 @@ themselves.
 ```js
 // rollup.config.js
 
-import bundleManifest from '@atproto-labs/rollup-plugin-bundle-manifest'
+import bundleManifest from '@creatonproto-labs/rollup-plugin-bundle-manifest'
 
 export default {
   input: 'src/index.js',

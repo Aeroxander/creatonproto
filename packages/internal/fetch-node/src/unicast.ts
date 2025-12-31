@@ -8,7 +8,7 @@ import {
   FetchRequestError,
   asRequest,
   extractUrl,
-} from '@atproto-labs/fetch'
+} from '@creatonproto-labs/fetch'
 import { isUnicastIp } from './util.js'
 
 const { IPv4, IPv6 } = ipaddr

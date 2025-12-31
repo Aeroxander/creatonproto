@@ -1,5 +1,5 @@
 {
-  "name": "@atproto-labs/simple-store",
+  "name": "@creatonproto-labs/simple-store",
   "version": "0.3.0",
   "license": "MIT",
   "description": "Simple store interfaces & utilities",

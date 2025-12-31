@@ -2,7 +2,7 @@ import {
   AuthorizeOptions,
   BrowserOAuthClient,
   OAuthSession,
-} from '@atproto/oauth-client-browser'
+} from '@creatonproto/oauth-client-browser'
 import { ExpoOAuthClientInterface } from './expo-oauth-client-interface'
 import { ExpoOAuthClientOptions } from './expo-oauth-client-options'
 

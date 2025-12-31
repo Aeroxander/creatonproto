@@ -1,8 +1,8 @@
-# @atproto/bsync: Synchronizing Service for the Bluesky AppView
+# @creatonproto/bsync: Synchronizing Service for the Bluesky AppView
 
 This is an optional service that may be used to synchronize certain state between otherwise independent AppViews.
 
-[![NPM](https://img.shields.io/npm/v/@atproto/bsync)](https://www.npmjs.com/package/@atproto/bsync)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/bsync)](https://www.npmjs.com/package/@creatonproto/bsync)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 ## License

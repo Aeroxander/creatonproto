@@ -1,13 +1,13 @@
 import {
   ComAtprotoModerationDefs,
   ToolsOzoneModerationDefs,
-} from '@atproto/api'
+} from '@creatonproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@atproto/dev-env'
+} from '@creatonproto/dev-env'
 import {
   REASONMISLEADING,
   REASONSPAM,

@@ -1,4 +1,4 @@
-import { DeviceId } from '@atproto/oauth-provider'
+import { DeviceId } from '@creatonproto/oauth-provider'
 import { DateISO } from '../../../db'
 
 export interface AccountDevice {

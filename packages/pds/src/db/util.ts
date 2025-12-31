@@ -10,7 +10,7 @@ import {
   SqliteQueryCompiler,
   sql,
 } from 'kysely'
-import { retry } from '@atproto/common'
+import { retry } from '@creatonproto/common'
 
 // Applies to repo_root or record table
 export const notSoftDeletedClause = (alias: DbRef) => {

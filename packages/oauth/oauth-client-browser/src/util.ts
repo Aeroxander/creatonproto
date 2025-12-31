@@ -1,4 +1,4 @@
-import { isLoopbackHost } from '@atproto/oauth-types'
+import { isLoopbackHost } from '@creatonproto/oauth-types'
 
 export type Simplify<T> = { [K in keyof T]: T[K] } & NonNullable<unknown>
 export type TupleUnion<U extends string, R extends any[] = []> = {

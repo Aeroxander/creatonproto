@@ -1,15 +1,15 @@
-# @atproto/xrpc: atproto HTTP API Client
+# @creatonproto/xrpc: atproto HTTP API Client
 
 TypeScript client library for talking to [atproto](https://atproto.com) services, with Lexicon schema validation.
 
-[![NPM](https://img.shields.io/npm/v/@atproto/xrpc)](https://www.npmjs.com/package/@atproto/xrpc)
+[![NPM](https://img.shields.io/npm/v/@creatonproto/xrpc)](https://www.npmjs.com/package/@creatonproto/xrpc)
 [![Github CI Status](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml/badge.svg)](https://github.com/bluesky-social/atproto/actions/workflows/repo.yaml)
 
 ## Usage
 
 ```typescript
-import { LexiconDoc } from '@atproto/lexicon'
-import { XrpcClient } from '@atproto/xrpc'
+import { LexiconDoc } from '@creatonproto/lexicon'
+import { XrpcClient } from '@creatonproto/xrpc'
 
 const pingLexicon = {
   lexicon: 1,
@@ -49,7 +49,7 @@ res1.body // => {message: 'hello world'}
 ### With a custom fetch handler
 
 ```typescript
-import { XrpcClient } from '@atproto/xrpc'
+import { XrpcClient } from '@creatonproto/xrpc'
 
 const session = {
   serviceUrl: 'https://ping.example.com',

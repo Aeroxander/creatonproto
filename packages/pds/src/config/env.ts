@@ -1,4 +1,4 @@
-import { envBool, envInt, envList, envStr } from '@atproto/common'
+import { envBool, envInt, envList, envStr } from '@creatonproto/common'
 
 export function readEnv() {
   return {

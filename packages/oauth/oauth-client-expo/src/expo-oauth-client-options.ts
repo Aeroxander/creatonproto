@@ -2,7 +2,7 @@ import type {
   OAuthClientMetadataInput,
   OAuthClientOptions,
   OAuthResponseMode,
-} from '@atproto/oauth-client'
+} from '@creatonproto/oauth-client'
 
 export type Simplify<T> = { [K in keyof T]: T[K] } & NonNullable<unknown>
 

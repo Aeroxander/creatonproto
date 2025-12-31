@@ -1,4 +1,4 @@
-import { OAuthAuthorizationRequestParameters } from '@atproto/oauth-types'
+import { OAuthAuthorizationRequestParameters } from '@creatonproto/oauth-types'
 import { ClientAuth, ClientAuthLegacy } from '../client/client-auth.js'
 import { ClientId } from '../client/client-id.js'
 import { DeviceId } from '../device/device-id.js'

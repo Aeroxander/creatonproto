@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { Client, DidString } from '@atproto/lex'
+import { Client, DidString } from '@creatonproto/lex'
 import { AtmosphereSignInDialog } from '../components/AtmosphereSignInDialog.tsx'
 import { Layout } from '../components/Layout.tsx'
 import { Spinner } from '../components/Spinner.tsx'

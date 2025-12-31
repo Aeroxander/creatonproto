@@ -11,7 +11,7 @@ before continuing.
 
 ## Installation
 
-Once you have satisfied the prerequisites, you can simply install the library with `npm install --save @atproto/oauth-client-expo`.
+Once you have satisfied the prerequisites, you can simply install the library with `npm install --save @creatonproto/oauth-client-expo`.
 
 ## Usage
 

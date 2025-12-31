@@ -1,7 +1,7 @@
 import { createReadStream } from 'node:fs'
 import { join } from 'node:path'
 import { Readable } from 'node:stream'
-import type { Manifest } from '@atproto-labs/rollup-plugin-bundle-manifest'
+import type { Manifest } from '@creatonproto-labs/rollup-plugin-bundle-manifest'
 import { AssetRef } from '../../lib/html/build-document.js'
 import {
   Middleware,

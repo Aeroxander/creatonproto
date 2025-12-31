@@ -1,4 +1,4 @@
-import { TestNetworkNoAppView } from '@atproto/dev-env'
+import { TestNetworkNoAppView } from '@creatonproto/dev-env'
 import { DEFAULT_LABEL_SETTINGS } from '../src'
 import { isContentLabelPref } from '../src/client/types/app/bsky/actor/defs'
 import './util/moderation-behavior'

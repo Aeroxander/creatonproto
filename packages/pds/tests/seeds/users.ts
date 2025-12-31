@@ -1,4 +1,4 @@
-import { SeedClient } from '@atproto/dev-env'
+import { SeedClient } from '@creatonproto/dev-env'
 
 export default async (sc: SeedClient, opts?: { inviteCode?: string }) => {
   await sc.createAccount('alice', {

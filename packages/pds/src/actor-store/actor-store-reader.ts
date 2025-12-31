@@ -1,4 +1,4 @@
-import { Keypair } from '@atproto/crypto'
+import { Keypair } from '@creatonproto/crypto'
 import { ActorStoreResources } from './actor-store-resources'
 import { ActorStoreTransactor } from './actor-store-transactor'
 import { ActorDb } from './db'
