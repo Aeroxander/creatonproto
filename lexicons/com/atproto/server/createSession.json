@@ -9,13 +9,17 @@
         "encoding": "application/json",
         "schema": {
           "type": "object",
-          "required": ["identifier", "password"],
+          "required": ["identifier"],
           "properties": {
             "identifier": {
               "type": "string",
               "description": "Handle or other identifier supported by the server for the authenticating user."
             },
             "password": { "type": "string" },
+            "siweSignature": {
+              "type": "string",
+              "description": "SIWE signature for wallet-based authentication. Either password or siweSignature must be provided."
+            },
             "authFactorToken": { "type": "string" },
             "allowTakendown": {
               "type": "boolean",

@@ -20,7 +20,9 @@ export const verifyAccountPassword = async (
     .selectAll()
     .where('did', '=', did)
     .executeTakeFirst()
-  return found ? await scrypt.verify(password, found.passwordScrypt) : false
+  // SIWE-only accounts may not have a password
+  if (!found || !found.passwordScrypt) return false
+  return await scrypt.verify(password, found.passwordScrypt)
 }
 
 export const verifyAppPassword = async (

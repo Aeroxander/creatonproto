@@ -8,6 +8,8 @@ import createAppPassword from './createAppPassword'
 import createInviteCode from './createInviteCode'
 import createInviteCodes from './createInviteCodes'
 import createSession from './createSession'
+import createSIWELogin from './createSIWELogin'
+import createSIWERegistration from './createSIWERegistration'
 import deactivateAccount from './deactivateAccount'
 import deleteAccount from './deleteAccount'
 import deleteSession from './deleteSession'
@@ -42,6 +44,8 @@ export default function (server: Server, ctx: AppContext) {
   requestEmailUpdate(server, ctx)
   updateEmail(server, ctx)
   createSession(server, ctx)
+  createSIWELogin(server, ctx)
+  createSIWERegistration(server, ctx)
   deleteSession(server, ctx)
   getSession(server, ctx)
   refreshSession(server, ctx)

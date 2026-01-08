@@ -20,7 +20,9 @@ export type QueryParams = {}
 export interface InputSchema {
   /** Handle or other identifier supported by the server for the authenticating user. */
   identifier: string
-  password: string
+  password?: string
+  /** SIWE signature for wallet-based authentication. Either password or siweSignature must be provided. */
+  siweSignature?: string
   authFactorToken?: string
   /** When true, instead of throwing error for takendown accounts, a valid response with a narrow scoped token will be returned */
   allowTakendown?: boolean

@@ -76,10 +76,15 @@ function decodeQueryParams(
 ): Params {
   const decoded: Params = {}
   for (const k in params) {
-    const val = params[k]
+    let val: string | string[] | undefined = params[k] as string | string[]
     const property = def.parameters?.properties?.[k]
     if (property) {
       if (property.type === 'array') {
+        // Handle qs library returning objects with numeric keys when arrayLimit is exceeded
+        // e.g. {0: 'a', 1: 'b', 2: 'c'} instead of ['a', 'b', 'c']
+        if (val && typeof val === 'object' && !Array.isArray(val)) {
+          val = Object.values(val) as string[]
+        }
         const vals: (typeof val)[] = []
         decoded[k] = val
           ? vals

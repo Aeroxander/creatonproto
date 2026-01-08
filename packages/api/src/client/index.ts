@@ -250,6 +250,8 @@ import * as ComAtprotoServerCreateAccount from './types/com/atproto/server/creat
 import * as ComAtprotoServerCreateAppPassword from './types/com/atproto/server/createAppPassword.js'
 import * as ComAtprotoServerCreateInviteCode from './types/com/atproto/server/createInviteCode.js'
 import * as ComAtprotoServerCreateInviteCodes from './types/com/atproto/server/createInviteCodes.js'
+import * as ComAtprotoServerCreateSIWELogin from './types/com/atproto/server/createSIWELogin.js'
+import * as ComAtprotoServerCreateSIWERegistration from './types/com/atproto/server/createSIWERegistration.js'
 import * as ComAtprotoServerCreateSession from './types/com/atproto/server/createSession.js'
 import * as ComAtprotoServerDeactivateAccount from './types/com/atproto/server/deactivateAccount.js'
 import * as ComAtprotoServerDefs from './types/com/atproto/server/defs.js'
@@ -590,6 +592,8 @@ export * as ComAtprotoServerCreateAccount from './types/com/atproto/server/creat
 export * as ComAtprotoServerCreateAppPassword from './types/com/atproto/server/createAppPassword.js'
 export * as ComAtprotoServerCreateInviteCode from './types/com/atproto/server/createInviteCode.js'
 export * as ComAtprotoServerCreateInviteCodes from './types/com/atproto/server/createInviteCodes.js'
+export * as ComAtprotoServerCreateSIWELogin from './types/com/atproto/server/createSIWELogin.js'
+export * as ComAtprotoServerCreateSIWERegistration from './types/com/atproto/server/createSIWERegistration.js'
 export * as ComAtprotoServerCreateSession from './types/com/atproto/server/createSession.js'
 export * as ComAtprotoServerDeactivateAccount from './types/com/atproto/server/deactivateAccount.js'
 export * as ComAtprotoServerDefs from './types/com/atproto/server/defs.js'
@@ -4897,6 +4901,29 @@ export class ComAtprotoServerNS {
   ): Promise<ComAtprotoServerCreateInviteCodes.Response> {
     return this._client.call(
       'com.atproto.server.createInviteCodes',
+      opts?.qp,
+      data,
+      opts,
+    )
+  }
+
+  createSIWELogin(
+    data?: ComAtprotoServerCreateSIWELogin.InputSchema,
+    opts?: ComAtprotoServerCreateSIWELogin.CallOptions,
+  ): Promise<ComAtprotoServerCreateSIWELogin.Response> {
+    return this._client
+      .call('com.atproto.server.createSIWELogin', opts?.qp, data, opts)
+      .catch((e) => {
+        throw ComAtprotoServerCreateSIWELogin.toKnownErr(e)
+      })
+  }
+
+  createSIWERegistration(
+    data?: ComAtprotoServerCreateSIWERegistration.InputSchema,
+    opts?: ComAtprotoServerCreateSIWERegistration.CallOptions,
+  ): Promise<ComAtprotoServerCreateSIWERegistration.Response> {
+    return this._client.call(
+      'com.atproto.server.createSIWERegistration',
       opts?.qp,
       data,
       opts,

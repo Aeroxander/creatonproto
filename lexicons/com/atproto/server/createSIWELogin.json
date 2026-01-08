@@ -1,0 +1,41 @@
+{
+  "lexicon": 1,
+  "id": "com.atproto.server.createSIWELogin",
+  "defs": {
+    "main": {
+      "type": "procedure",
+      "description": "Create a SIWE (Sign-In With Ethereum) login challenge message for an existing account.",
+      "input": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["identifier"],
+          "properties": {
+            "identifier": {
+              "type": "string",
+              "description": "Handle or other identifier supported by the server for the authenticating user."
+            }
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["siweMessage"],
+          "properties": {
+            "siweMessage": {
+              "type": "string",
+              "description": "The SIWE message to be signed by the user's wallet."
+            }
+          }
+        }
+      },
+      "errors": [
+        { "name": "InvalidHandle" },
+        { "name": "AccountNotFound" },
+        { "name": "NoevmAddress" }
+      ]
+    }
+  }
+}

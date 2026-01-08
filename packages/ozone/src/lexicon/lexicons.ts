@@ -15401,6 +15401,16 @@ export const schemaDict = {
                 description:
                   'A signed DID PLC operation to be submitted as part of importing an existing account to this instance. NOTE: this optional field may be updated when full account migration is implemented.',
               },
+              evmAddress: {
+                type: 'string',
+                description:
+                  'Ethereum/EVM wallet address for SIWE authentication.',
+              },
+              siweSignature: {
+                type: 'string',
+                description:
+                  'SIWE signature from the wallet, proving ownership of the evmAddress.',
+              },
             },
           },
         },
@@ -15455,6 +15465,9 @@ export const schemaDict = {
           },
           {
             name: 'IncompatibleDidDoc',
+          },
+          {
+            name: 'InvalidSiweSignature',
           },
         ],
       },
@@ -15622,6 +15635,96 @@ export const schemaDict = {
       },
     },
   },
+  ComAtprotoServerCreateSIWELogin: {
+    lexicon: 1,
+    id: 'com.atproto.server.createSIWELogin',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          'Create a SIWE (Sign-In With Ethereum) login challenge message for an existing account.',
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['identifier'],
+            properties: {
+              identifier: {
+                type: 'string',
+                description:
+                  'Handle or other identifier supported by the server for the authenticating user.',
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['siweMessage'],
+            properties: {
+              siweMessage: {
+                type: 'string',
+                description:
+                  "The SIWE message to be signed by the user's wallet.",
+              },
+            },
+          },
+        },
+        errors: [
+          {
+            name: 'InvalidHandle',
+          },
+          {
+            name: 'AccountNotFound',
+          },
+          {
+            name: 'NoevmAddress',
+          },
+        ],
+      },
+    },
+  },
+  ComAtprotoServerCreateSIWERegistration: {
+    lexicon: 1,
+    id: 'com.atproto.server.createSIWERegistration',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          'Create a SIWE (Sign-In With Ethereum) registration challenge message for a new account.',
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['evmAddress'],
+            properties: {
+              evmAddress: {
+                type: 'string',
+                description:
+                  'The Ethereum address the user wants to register with.',
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['siweMessage'],
+            properties: {
+              siweMessage: {
+                type: 'string',
+                description:
+                  "The SIWE message to be signed by the user's wallet.",
+              },
+            },
+          },
+        },
+        errors: [],
+      },
+    },
+  },
   ComAtprotoServerCreateSession: {
     lexicon: 1,
     id: 'com.atproto.server.createSession',
@@ -15633,7 +15736,7 @@ export const schemaDict = {
           encoding: 'application/json',
           schema: {
             type: 'object',
-            required: ['identifier', 'password'],
+            required: ['identifier'],
             properties: {
               identifier: {
                 type: 'string',
@@ -15642,6 +15745,11 @@ export const schemaDict = {
               },
               password: {
                 type: 'string',
+              },
+              siweSignature: {
+                type: 'string',
+                description:
+                  'SIWE signature for wallet-based authentication. Either password or siweSignature must be provided.',
               },
               authFactorToken: {
                 type: 'string',
@@ -23182,6 +23290,9 @@ export const ids = {
   ComAtprotoServerCreateAppPassword: 'com.atproto.server.createAppPassword',
   ComAtprotoServerCreateInviteCode: 'com.atproto.server.createInviteCode',
   ComAtprotoServerCreateInviteCodes: 'com.atproto.server.createInviteCodes',
+  ComAtprotoServerCreateSIWELogin: 'com.atproto.server.createSIWELogin',
+  ComAtprotoServerCreateSIWERegistration:
+    'com.atproto.server.createSIWERegistration',
   ComAtprotoServerCreateSession: 'com.atproto.server.createSession',
   ComAtprotoServerDeactivateAccount: 'com.atproto.server.deactivateAccount',
   ComAtprotoServerDefs: 'com.atproto.server.defs',

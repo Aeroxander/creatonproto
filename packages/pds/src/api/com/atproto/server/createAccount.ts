@@ -43,6 +43,7 @@ export default function (server: Server, ctx: AppContext) {
         signingKey,
         plcOp,
         deactivated,
+        evmAddress,
       } = ctx.entrywayClient
         ? await validateInputsForEntrywayPds(ctx, input.body)
         : await validateInputsForLocalPds(ctx, input.body, requester)
@@ -79,6 +80,7 @@ export default function (server: Server, ctx: AppContext) {
           repoRev: commit.rev,
           inviteCode,
           deactivated,
+          evmAddress,
         })
 
         if (!deactivated) {
@@ -169,6 +171,7 @@ const validateInputsForEntrywayPds = async (
     signingKey,
     plcOp,
     deactivated: false,
+    evmAddress: undefined,
   }
 }
 
@@ -177,9 +180,35 @@ const validateInputsForLocalPds = async (
   input: com.atproto.server.createAccount.$InputBody,
   requester: string | null,
 ) => {
-  const { email, password, inviteCode } = input
+  const { email, password, inviteCode, evmAddress, siweSignature } = input
   if (input.plcOp) {
     throw new InvalidRequestError('Unsupported input: "plcOp"')
+  }
+
+  // Require either password or SIWE signature
+  if (!password && !siweSignature) {
+    throw new InvalidRequestError(
+      'Either password or siweSignature must be provided',
+    )
+  }
+
+  // Verify SIWE signature if provided
+  if (siweSignature) {
+    if (!evmAddress) {
+      throw new InvalidRequestError(
+        'evmAddress is required when using siweSignature',
+      )
+    }
+    const validSiwe = await ctx.accountManager.verifySIWERegistration(
+      evmAddress,
+      siweSignature as `0x${string}`,
+    )
+    if (!validSiwe) {
+      throw new InvalidRequestError(
+        'Invalid SIWE signature',
+        'InvalidSiweSignature',
+      )
+    }
   }
 
   if (password && password.length > NEW_PASSWORD_MAX_LENGTH) {
@@ -195,9 +224,10 @@ const validateInputsForLocalPds = async (
     )
   }
 
-  if (!email) {
+  // Email is only required if not using SIWE
+  if (!email && !siweSignature) {
     throw new InvalidRequestError('Email is required')
-  } else if (!isEmailValid(email) || isDisposableEmail(email)) {
+  } else if (email && (!isEmailValid(email) || isDisposableEmail(email))) {
     throw new InvalidRequestError(
       'This email address is not supported, please use a different email.',
     )
@@ -217,7 +247,7 @@ const validateInputsForLocalPds = async (
   // check that the handle and email are available
   const [handleAccnt, emailAcct] = await Promise.all([
     ctx.accountManager.getAccount(handle),
-    ctx.accountManager.getAccountByEmail(email),
+    email ? ctx.accountManager.getAccountByEmail(email) : undefined,
   ])
   if (handleAccnt) {
     throw new InvalidRequestError(`Handle already taken: ${handle}`)
@@ -256,6 +286,7 @@ const validateInputsForLocalPds = async (
     signingKey,
     plcOp,
     deactivated,
+    evmAddress,
   }
 }
 

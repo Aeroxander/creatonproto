@@ -138,18 +138,20 @@ export const registerAccount = async (
   db: AccountDb,
   opts: {
     did: string
-    email: string
-    passwordScrypt: string
+    email?: string
+    passwordScrypt?: string
+    evmAddress?: string
   },
 ) => {
-  const { did, email, passwordScrypt } = opts
+  const { did, email, passwordScrypt, evmAddress } = opts
   const [registered] = await db.executeWithRetry(
     db.db
       .insertInto('account')
       .values({
         did,
-        email: email.toLowerCase(),
-        passwordScrypt,
+        email: email?.toLowerCase() ?? null,
+        passwordScrypt: passwordScrypt ?? null,
+        evmAddress: evmAddress ?? null,
       })
       .onConflict((oc) => oc.doNothing())
       .returning('did'),

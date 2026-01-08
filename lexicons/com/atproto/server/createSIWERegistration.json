@@ -1,0 +1,37 @@
+{
+  "lexicon": 1,
+  "id": "com.atproto.server.createSIWERegistration",
+  "defs": {
+    "main": {
+      "type": "procedure",
+      "description": "Create a SIWE (Sign-In With Ethereum) registration challenge message for a new account.",
+      "input": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["evmAddress"],
+          "properties": {
+            "evmAddress": {
+              "type": "string",
+              "description": "The Ethereum address the user wants to register with."
+            }
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["siweMessage"],
+          "properties": {
+            "siweMessage": {
+              "type": "string",
+              "description": "The SIWE message to be signed by the user's wallet."
+            }
+          }
+        }
+      },
+      "errors": []
+    }
+  }
+}

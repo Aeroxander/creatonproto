@@ -31,6 +31,10 @@ export interface InputSchema {
   recoveryKey?: string
   /** A signed DID PLC operation to be submitted as part of importing an existing account to this instance. NOTE: this optional field may be updated when full account migration is implemented. */
   plcOp?: { [_ in string]: unknown }
+  /** Ethereum/EVM wallet address for SIWE authentication. */
+  evmAddress?: string
+  /** SIWE signature from the wallet, proving ownership of the evmAddress. */
+  siweSignature?: string
 }
 
 /** Account login session returned on successful account creation. */
@@ -66,6 +70,7 @@ export interface HandlerError {
     | 'UnsupportedDomain'
     | 'UnresolvableDid'
     | 'IncompatibleDidDoc'
+    | 'InvalidSiweSignature'
 }
 
 export type HandlerOutput = HandlerError | HandlerSuccess

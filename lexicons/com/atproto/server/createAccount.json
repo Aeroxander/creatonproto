@@ -36,6 +36,14 @@
             "plcOp": {
               "type": "unknown",
               "description": "A signed DID PLC operation to be submitted as part of importing an existing account to this instance. NOTE: this optional field may be updated when full account migration is implemented."
+            },
+            "evmAddress": {
+              "type": "string",
+              "description": "Ethereum/EVM wallet address for SIWE authentication."
+            },
+            "siweSignature": {
+              "type": "string",
+              "description": "SIWE signature from the wallet, proving ownership of the evmAddress."
             }
           }
         }
@@ -69,7 +77,8 @@
         { "name": "HandleNotAvailable" },
         { "name": "UnsupportedDomain" },
         { "name": "UnresolvableDid" },
-        { "name": "IncompatibleDidDoc" }
+        { "name": "IncompatibleDidDoc" },
+        { "name": "InvalidSiweSignature" }
       ]
     }
   }

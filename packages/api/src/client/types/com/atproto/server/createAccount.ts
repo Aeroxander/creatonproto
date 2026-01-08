@@ -32,6 +32,10 @@ export interface InputSchema {
   recoveryKey?: string
   /** A signed DID PLC operation to be submitted as part of importing an existing account to this instance. NOTE: this optional field may be updated when full account migration is implemented. */
   plcOp?: { [_ in string]: unknown }
+  /** Ethereum/EVM wallet address for SIWE authentication. */
+  evmAddress?: string
+  /** SIWE signature from the wallet, proving ownership of the evmAddress. */
+  siweSignature?: string
 }
 
 /** Account login session returned on successful account creation. */
@@ -100,6 +104,12 @@ export class IncompatibleDidDocError extends XRPCError {
   }
 }
 
+export class InvalidSiweSignatureError extends XRPCError {
+  constructor(src: XRPCError) {
+    super(src.status, src.error, src.message, src.headers, { cause: src })
+  }
+}
+
 export function toKnownErr(e: any) {
   if (e instanceof XRPCError) {
     if (e.error === 'InvalidHandle') return new InvalidHandleError(e)
@@ -109,6 +119,8 @@ export function toKnownErr(e: any) {
     if (e.error === 'UnsupportedDomain') return new UnsupportedDomainError(e)
     if (e.error === 'UnresolvableDid') return new UnresolvableDidError(e)
     if (e.error === 'IncompatibleDidDoc') return new IncompatibleDidDocError(e)
+    if (e.error === 'InvalidSiweSignature')
+      return new InvalidSiweSignatureError(e)
   }
 
   return e

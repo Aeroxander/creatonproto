@@ -77,16 +77,22 @@ export async function up(db: Kysely<unknown>): Promise<void> {
   await db.schema
     .createTable('account')
     .addColumn('did', 'varchar', (col) => col.primaryKey())
-    .addColumn('email', 'varchar', (col) => col.notNull())
-    .addColumn('passwordScrypt', 'varchar', (col) => col.notNull())
+    .addColumn('email', 'varchar')
+    .addColumn('passwordScrypt', 'varchar')
     .addColumn('emailConfirmedAt', 'varchar')
     .addColumn('invitesDisabled', 'int2', (col) => col.notNull().defaultTo(0))
+    .addColumn('evmAddress', 'varchar')
     .execute()
   await db.schema
     .createIndex(`account_email_lower_idx`)
     .unique()
     .on('account')
     .expression(sql`lower("email")`)
+    .execute()
+  await db.schema
+    .createIndex(`account_eth_address_lower_idx`)
+    .on('account')
+    .expression(sql`lower("evmAddress")`)
     .execute()
 
   await db.schema
@@ -101,9 +107,25 @@ export async function up(db: Kysely<unknown>): Promise<void> {
       'token',
     ])
     .execute()
+
+  await db.schema
+    .createTable('siwe_login')
+    .addColumn('did', 'varchar', (col) => col.primaryKey())
+    .addColumn('createdAt', 'varchar', (col) => col.notNull())
+    .addColumn('siweMessage', 'varchar', (col) => col.notNull())
+    .execute()
+
+  await db.schema
+    .createTable('siwe_registration')
+    .addColumn('evmAddress', 'varchar', (col) => col.primaryKey())
+    .addColumn('createdAt', 'varchar', (col) => col.notNull())
+    .addColumn('siweMessage', 'varchar', (col) => col.notNull())
+    .execute()
 }
 
 export async function down(db: Kysely<unknown>): Promise<void> {
+  await db.schema.dropTable('siwe_registration').execute()
+  await db.schema.dropTable('siwe_login').execute()
   await db.schema.dropTable('email_token').execute()
   await db.schema.dropTable('account').execute()
   await db.schema.dropTable('actor').execute()

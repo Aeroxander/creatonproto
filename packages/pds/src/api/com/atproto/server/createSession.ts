@@ -2,6 +2,7 @@ import { DAY, MINUTE } from '@atproto/common'
 import { DidString, HandleString, INVALID_HANDLE } from '@atproto/syntax'
 import {
   AuthRequiredError,
+  InvalidRequestError,
   MethodRateLimit,
   Server,
 } from '@atproto/xrpc-server'
@@ -48,14 +49,24 @@ export default function (server: Server, ctx: AppContext) {
       handler: async ({
         input: { body },
       }): Promise<com.atproto.server.createSession.$Output> => {
-        if (body.password.length > OLD_PASSWORD_MAX_LENGTH) {
+        if (!body.password && !body.siweSignature) {
+          throw new InvalidRequestError(
+            'Either password or siweSignature must be provided',
+          )
+        }
+
+        if (body.password && body.password.length > OLD_PASSWORD_MAX_LENGTH) {
           throw new AuthRequiredError(
             'Password too long. Consider resetting your password.',
           )
         }
 
         const { user, isSoftDeleted, appPassword } =
-          await ctx.accountManager.login(body)
+          await ctx.accountManager.login({
+            identifier: body.identifier,
+            password: body.password,
+            siweSignature: body.siweSignature,
+          })
 
         if (!body.allowTakendown && isSoftDeleted) {
           throw new AuthRequiredError(

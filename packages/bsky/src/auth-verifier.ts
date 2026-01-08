@@ -465,29 +465,21 @@ export const createPublicKeyObject = (publicKeyHex: string): KeyObject => {
   return crypto.createPublicKey({ format: 'pem', key })
 }
 
-const verifySig = (
+// Use @noble/curves for secp256k1 signature verification
+// Node.js crypto's secp256k1 support is incomplete in Bun
+import { secp256k1 as k256 } from '@noble/curves/secp256k1'
+import { sha256 } from '@noble/hashes/sha256'
+
+const verifySig = async (
   publicKey: Uint8Array,
   data: Uint8Array,
   sig: Uint8Array,
-) => {
-  const keyEncoder = new KeyEncoder('secp256k1')
-
-  const pemKey = keyEncoder.encodePublic(
-    ui8.toString(publicKey, 'hex'),
-    'raw',
-    'pem',
-  )
-  const key = crypto.createPublicKey({ format: 'pem', key: pemKey })
-
-  return crypto.verify(
-    'sha256',
-    data,
-    {
-      key,
-      dsaEncoding: 'ieee-p1363',
-    },
-    sig,
-  )
+): Promise<boolean> => {
+  const msgHash = sha256(data)
+  return k256.verify(sig, msgHash, publicKey, {
+    format: undefined, // allow DER-encoded signatures
+    lowS: false, // allow malleable signatures
+  })
 }
 
 export const verifySignatureWithKey: VerifySignatureWithKeyFn = async (

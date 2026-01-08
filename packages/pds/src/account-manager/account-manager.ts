@@ -28,6 +28,7 @@ import * as invite from './helpers/invite'
 import * as password from './helpers/password'
 import * as repo from './helpers/repo'
 import * as scrypt from './helpers/scrypt'
+import * as siwe from './helpers/siwe'
 import * as token from './helpers/token'
 
 export { AccountStatus, formatAccountStatus } from './helpers/account'
@@ -190,6 +191,7 @@ export class AccountManager {
     inviteCode,
     deactivated,
     refreshJwt,
+    evmAddress,
   }: {
     did: DidString
     handle: HandleString
@@ -200,6 +202,7 @@ export class AccountManager {
     inviteCode?: string
     deactivated?: boolean
     refreshJwt?: string
+    evmAddress?: string
   }) {
     if (password && password.length > scrypt.NEW_PASSWORD_MAX_LENGTH) {
       throw new InvalidRequestError('Password too long')
@@ -216,8 +219,9 @@ export class AccountManager {
       }
       await Promise.all([
         account.registerActor(dbTxn, { did, handle, deactivated }),
-        email && passwordScrypt
-          ? account.registerAccount(dbTxn, { did, email, passwordScrypt })
+        // Register account if we have email+password OR evmAddress
+        (email && passwordScrypt) || evmAddress
+          ? account.registerAccount(dbTxn, { did, email, passwordScrypt, evmAddress })
           : Promise.resolve(),
         invite.recordInviteUse(dbTxn, {
           did,
@@ -244,6 +248,7 @@ export class AccountManager {
     repoRev: string
     inviteCode?: string
     deactivated?: boolean
+    evmAddress?: string
   }) {
     const { accessJwt, refreshJwt } = await auth.createTokens({
       did: opts.did,
@@ -383,10 +388,12 @@ export class AccountManager {
 
   async login({
     identifier,
+    siweSignature,
     password,
   }: {
     identifier: string
-    password: string
+    siweSignature?: string
+    password?: string
   }): Promise<{
     user: ActorAccount
     appPassword: password.AppPassDescript | null
@@ -414,11 +421,19 @@ export class AccountManager {
       const isSoftDeleted = softDeleted(user)
 
       let appPassword: password.AppPassDescript | null = null
-      const validAccountPass = await this.verifyAccountPassword(
-        user.did,
-        password,
-      )
-      if (!validAccountPass) {
+
+      // Check SIWE signature first if provided
+      const validSiwe = siweSignature
+        ? await this.verifySIWELogin(user.did, siweSignature as Hex)
+        : false
+
+      // Then check password if provided and SIWE not valid
+      const validAccountPass =
+        !validSiwe && password
+          ? await this.verifyAccountPassword(user.did, password)
+          : false
+
+      if (!validSiwe && !validAccountPass && password) {
         // takendown/suspended accounts cannot login with app password
         if (isSoftDeleted) {
           throw new InvalidPasswordError(user.did)
@@ -427,6 +442,8 @@ export class AccountManager {
         if (appPassword === null) {
           throw new InvalidPasswordError(user.did)
         }
+      } else if (!validSiwe && !validAccountPass && !password) {
+        throw new AuthRequiredError('Invalid identifier or password')
       }
 
       return { user, appPassword, isSoftDeleted }
@@ -468,6 +485,36 @@ export class AccountManager {
         auth.revokeAppPasswordRefreshToken(dbTxn, did, name),
       ]),
     )
+  }
+
+  // SIWE (Sign-In With Ethereum)
+  // ----------
+
+  async siweLogin(did: string): Promise<string> {
+    return siwe.siweLogin(this.db, did)
+  }
+
+  async siweRegistration(evmAddress: string): Promise<string> {
+    return siwe.siweRegistration(this.db, evmAddress)
+  }
+
+  async verifySIWELogin(did: string, siweSignature: Hex): Promise<boolean> {
+    return siwe.verifySIWELogin(this.db, did, siweSignature)
+  }
+
+  async verifySIWERegistration(
+    evmAddress: string,
+    siweSignature: Hex,
+  ): Promise<boolean> {
+    return siwe.verifySIWERegistration(this.db, evmAddress, siweSignature)
+  }
+
+  async getAccountByevmAddress(evmAddress: string) {
+    return siwe.getAccountByevmAddress(this.db, evmAddress)
+  }
+
+  async setAccountevmAddress(did: string, evmAddress: string) {
+    return siwe.setAccountevmAddress(this.db, did, evmAddress)
   }
 
   // Invites

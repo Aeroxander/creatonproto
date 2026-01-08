@@ -205,6 +205,8 @@ import * as ComAtprotoServerCreateAccount from './types/com/atproto/server/creat
 import * as ComAtprotoServerCreateAppPassword from './types/com/atproto/server/createAppPassword.js'
 import * as ComAtprotoServerCreateInviteCode from './types/com/atproto/server/createInviteCode.js'
 import * as ComAtprotoServerCreateInviteCodes from './types/com/atproto/server/createInviteCodes.js'
+import * as ComAtprotoServerCreateSIWELogin from './types/com/atproto/server/createSIWELogin.js'
+import * as ComAtprotoServerCreateSIWERegistration from './types/com/atproto/server/createSIWERegistration.js'
 import * as ComAtprotoServerCreateSession from './types/com/atproto/server/createSession.js'
 import * as ComAtprotoServerDeactivateAccount from './types/com/atproto/server/deactivateAccount.js'
 import * as ComAtprotoServerDeleteAccount from './types/com/atproto/server/deleteAccount.js'
@@ -3052,6 +3054,30 @@ export class ComAtprotoServerNS {
     >,
   ) {
     const nsid = 'com.atproto.server.createInviteCodes' // @ts-ignore
+    return this._server.xrpc.method(nsid, cfg)
+  }
+
+  createSIWELogin<A extends Auth = void>(
+    cfg: MethodConfigOrHandler<
+      A,
+      ComAtprotoServerCreateSIWELogin.QueryParams,
+      ComAtprotoServerCreateSIWELogin.HandlerInput,
+      ComAtprotoServerCreateSIWELogin.HandlerOutput
+    >,
+  ) {
+    const nsid = 'com.atproto.server.createSIWELogin' // @ts-ignore
+    return this._server.xrpc.method(nsid, cfg)
+  }
+
+  createSIWERegistration<A extends Auth = void>(
+    cfg: MethodConfigOrHandler<
+      A,
+      ComAtprotoServerCreateSIWERegistration.QueryParams,
+      ComAtprotoServerCreateSIWERegistration.HandlerInput,
+      ComAtprotoServerCreateSIWERegistration.HandlerOutput
+    >,
+  ) {
+    const nsid = 'com.atproto.server.createSIWERegistration' // @ts-ignore
     return this._server.xrpc.method(nsid, cfg)
   }
 

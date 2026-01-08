@@ -4,6 +4,7 @@ import { Options } from './util'
 // @NOTE if there are any additions here, ensure to include them on ImageUriBuilder.presets
 export type ImagePreset =
   | 'avatar'
+  | 'avatar_thumbnail'
   | 'banner'
   | 'feed_thumbnail'
   | 'feed_fullsize'
@@ -22,6 +23,7 @@ export class ImageUriBuilder {
 
   static presets: ImagePreset[] = [
     'avatar',
+    'avatar_thumbnail',
     'banner',
     'feed_thumbnail',
     'feed_fullsize',
@@ -88,6 +90,13 @@ export const presets: Record<ImagePreset, Options> = {
     fit: 'cover',
     height: 1000,
     width: 1000,
+    min: true,
+  },
+  avatar_thumbnail: {
+    format: 'jpeg',
+    fit: 'cover',
+    height: 250,
+    width: 250,
     min: true,
   },
   banner: {
