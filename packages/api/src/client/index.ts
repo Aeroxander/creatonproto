@@ -154,6 +154,13 @@ import * as AppBskyVideoDefs from './types/app/bsky/video/defs.js'
 import * as AppBskyVideoGetJobStatus from './types/app/bsky/video/getJobStatus.js'
 import * as AppBskyVideoGetUploadLimits from './types/app/bsky/video/getUploadLimits.js'
 import * as AppBskyVideoUploadVideo from './types/app/bsky/video/uploadVideo.js'
+import * as AppCreatonCommunityCreate from './types/app/creaton/community/create.js'
+import * as AppCreatonCommunityDetails from './types/app/creaton/community/details.js'
+import * as AppCreatonCommunityGetMembership from './types/app/creaton/community/getMembership.js'
+import * as AppCreatonCommunityJoin from './types/app/creaton/community/join.js'
+import * as AppCreatonCommunityLeave from './types/app/creaton/community/leave.js'
+import * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenVotes.js'
+import * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
 import * as ChatBskyActorDeclaration from './types/chat/bsky/actor/declaration.js'
 import * as ChatBskyActorDefs from './types/chat/bsky/actor/defs.js'
 import * as ChatBskyActorDeleteAccount from './types/chat/bsky/actor/deleteAccount.js'
@@ -496,6 +503,13 @@ export * as AppBskyVideoDefs from './types/app/bsky/video/defs.js'
 export * as AppBskyVideoGetJobStatus from './types/app/bsky/video/getJobStatus.js'
 export * as AppBskyVideoGetUploadLimits from './types/app/bsky/video/getUploadLimits.js'
 export * as AppBskyVideoUploadVideo from './types/app/bsky/video/uploadVideo.js'
+export * as AppCreatonCommunityCreate from './types/app/creaton/community/create.js'
+export * as AppCreatonCommunityDetails from './types/app/creaton/community/details.js'
+export * as AppCreatonCommunityGetMembership from './types/app/creaton/community/getMembership.js'
+export * as AppCreatonCommunityJoin from './types/app/creaton/community/join.js'
+export * as AppCreatonCommunityLeave from './types/app/creaton/community/leave.js'
+export * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenVotes.js'
+export * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
 export * as ChatBskyActorDeclaration from './types/chat/bsky/actor/declaration.js'
 export * as ChatBskyActorDefs from './types/chat/bsky/actor/defs.js'
 export * as ChatBskyActorDeleteAccount from './types/chat/bsky/actor/deleteAccount.js'
@@ -824,10 +838,12 @@ export class AtpBaseClient extends XrpcClient {
 export class AppNS {
   _client: XrpcClient
   bsky: AppBskyNS
+  creaton: AppCreatonNS
 
   constructor(client: XrpcClient) {
     this._client = client
     this.bsky = new AppBskyNS(client)
+    this.creaton = new AppCreatonNS(client)
   }
 }
 
@@ -3629,6 +3645,259 @@ export class AppBskyVideoNS {
     opts?: AppBskyVideoUploadVideo.CallOptions,
   ): Promise<AppBskyVideoUploadVideo.Response> {
     return this._client.call('app.bsky.video.uploadVideo', opts?.qp, data, opts)
+  }
+}
+
+export class AppCreatonNS {
+  _client: XrpcClient
+  community: AppCreatonCommunityNS
+  feed: AppCreatonFeedNS
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.community = new AppCreatonCommunityNS(client)
+    this.feed = new AppCreatonFeedNS(client)
+  }
+}
+
+export class AppCreatonCommunityNS {
+  _client: XrpcClient
+  details: AppCreatonCommunityDetailsRecord
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.details = new AppCreatonCommunityDetailsRecord(client)
+  }
+
+  create(
+    data?: AppCreatonCommunityCreate.InputSchema,
+    opts?: AppCreatonCommunityCreate.CallOptions,
+  ): Promise<AppCreatonCommunityCreate.Response> {
+    return this._client.call(
+      'app.creaton.community.create',
+      opts?.qp,
+      data,
+      opts,
+    )
+  }
+
+  getMembership(
+    params?: AppCreatonCommunityGetMembership.QueryParams,
+    opts?: AppCreatonCommunityGetMembership.CallOptions,
+  ): Promise<AppCreatonCommunityGetMembership.Response> {
+    return this._client.call(
+      'app.creaton.community.getMembership',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  join(
+    data?: AppCreatonCommunityJoin.InputSchema,
+    opts?: AppCreatonCommunityJoin.CallOptions,
+  ): Promise<AppCreatonCommunityJoin.Response> {
+    return this._client.call('app.creaton.community.join', opts?.qp, data, opts)
+  }
+
+  leave(
+    data?: AppCreatonCommunityLeave.InputSchema,
+    opts?: AppCreatonCommunityLeave.CallOptions,
+  ): Promise<AppCreatonCommunityLeave.Response> {
+    return this._client.call(
+      'app.creaton.community.leave',
+      opts?.qp,
+      data,
+      opts,
+    )
+  }
+}
+
+export class AppCreatonCommunityDetailsRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonCommunityDetails.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.community.details',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonCommunityDetails.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.community.details',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonCommunityDetails.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.community.details'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonCommunityDetails.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.community.details'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.community.details', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonFeedNS {
+  _client: XrpcClient
+  tokenVote: AppCreatonFeedTokenVoteRecord
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.tokenVote = new AppCreatonFeedTokenVoteRecord(client)
+  }
+
+  getTokenVotes(
+    params?: AppCreatonFeedGetTokenVotes.QueryParams,
+    opts?: AppCreatonFeedGetTokenVotes.CallOptions,
+  ): Promise<AppCreatonFeedGetTokenVotes.Response> {
+    return this._client.call(
+      'app.creaton.feed.getTokenVotes',
+      params,
+      undefined,
+      opts,
+    )
+  }
+}
+
+export class AppCreatonFeedTokenVoteRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonFeedTokenVote.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.feed.tokenVote',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonFeedTokenVote.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.feed.tokenVote',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonFeedTokenVote.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.feed.tokenVote'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonFeedTokenVote.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.feed.tokenVote'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.feed.tokenVote', ...params },
+      { headers },
+    )
   }
 }
 

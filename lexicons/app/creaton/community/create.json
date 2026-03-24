@@ -1,0 +1,52 @@
+{
+    "lexicon": 1,
+    "id": "app.creaton.community.create",
+    "defs": {
+        "main": {
+            "type": "procedure",
+            "description": "Initialize a community on the PDS. Creates a canonical member list in the PDS service repo.",
+            "input": {
+                "encoding": "application/json",
+                "schema": {
+                    "type": "object",
+                    "required": [
+                        "daoAddress",
+                        "name",
+                        "symbol"
+                    ],
+                    "properties": {
+                        "daoAddress": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "symbol": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "output": {
+                "encoding": "application/json",
+                "schema": {
+                    "type": "object",
+                    "required": [
+                        "communityUri",
+                        "listUri"
+                    ],
+                    "properties": {
+                        "communityUri": {
+                            "type": "string",
+                            "format": "at-uri"
+                        },
+                        "listUri": {
+                            "type": "string",
+                            "format": "at-uri"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

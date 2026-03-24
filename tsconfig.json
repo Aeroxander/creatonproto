@@ -55,6 +55,7 @@
     { "path": "./packages/sync" },
     { "path": "./packages/syntax" },
     { "path": "./packages/tap" },
+    { "path": "./packages/token-vote-appview" },
     { "path": "./packages/ws-client" },
     { "path": "./packages/xrpc" },
     { "path": "./packages/xrpc-server" }

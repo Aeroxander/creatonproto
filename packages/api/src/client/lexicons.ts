@@ -9648,6 +9648,375 @@ export const schemaDict = {
       },
     },
   },
+  AppCreatonCommunityCreate: {
+    lexicon: 1,
+    id: 'app.creaton.community.create',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          'Initialize a community on the PDS. Creates a canonical member list in the PDS service repo.',
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['daoAddress', 'name', 'symbol'],
+            properties: {
+              daoAddress: {
+                type: 'string',
+              },
+              name: {
+                type: 'string',
+              },
+              symbol: {
+                type: 'string',
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['communityUri', 'listUri'],
+            properties: {
+              communityUri: {
+                type: 'string',
+                format: 'at-uri',
+              },
+              listUri: {
+                type: 'string',
+                format: 'at-uri',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonCommunityDetails: {
+    lexicon: 1,
+    id: 'app.creaton.community.details',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'Details of a community/DAO. Typically owned by the PDS service DID.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['daoAddress', 'name', 'symbol', 'listUri', 'createdAt'],
+          properties: {
+            daoAddress: {
+              type: 'string',
+              description: 'Ethereum address of the DAO',
+            },
+            name: {
+              type: 'string',
+            },
+            symbol: {
+              type: 'string',
+            },
+            listUri: {
+              type: 'string',
+              format: 'at-uri',
+              description:
+                'URI of the canonical member list for this community',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonCommunityGetMembership: {
+    lexicon: 1,
+    id: 'app.creaton.community.getMembership',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Check if the authenticated user is a member of a community.',
+        parameters: {
+          type: 'params',
+          required: ['daoAddress'],
+          properties: {
+            daoAddress: {
+              type: 'string',
+              description: 'The Ethereum address of the DAO/community',
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['isMember'],
+            properties: {
+              isMember: {
+                type: 'boolean',
+                description: 'Whether the user is a member of this community',
+              },
+              listUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: 'URI of the community list, if it exists',
+              },
+              listItemUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: "URI of the user's list item record, if member",
+              },
+              memberCount: {
+                type: 'integer',
+                description: 'Number of members in the community',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonCommunityJoin: {
+    lexicon: 1,
+    id: 'app.creaton.community.join',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          "Join a community. Adds the requester to the community's member list. Requires auth.",
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['daoAddress'],
+            properties: {
+              daoAddress: {
+                type: 'string',
+                description:
+                  'The Ethereum address of the DAO/community to join',
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['listUri', 'listItemUri'],
+            properties: {
+              listUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: 'URI of the community list',
+              },
+              listItemUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: 'URI of the created list item record',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonCommunityLeave: {
+    lexicon: 1,
+    id: 'app.creaton.community.leave',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          "Leave a community. Removes the requester from the community's member list. Requires auth.",
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['daoAddress'],
+            properties: {
+              daoAddress: {
+                type: 'string',
+                description:
+                  'The Ethereum address of the DAO/community to leave',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonFeedGetTokenVotes: {
+    lexicon: 1,
+    id: 'app.creaton.feed.getTokenVotes',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Get token vote records which reference a subject (by AT-URI and CID).',
+        parameters: {
+          type: 'params',
+          required: ['uri'],
+          properties: {
+            uri: {
+              type: 'string',
+              format: 'at-uri',
+              description: 'AT-URI of the subject (eg, a post record).',
+            },
+            cid: {
+              type: 'string',
+              format: 'cid',
+              description: 'CID of the subject record.',
+            },
+            limit: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 100,
+              default: 50,
+            },
+            cursor: {
+              type: 'string',
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['uri', 'votes', 'upvoteWeight', 'downvoteWeight'],
+            properties: {
+              uri: {
+                type: 'string',
+                format: 'at-uri',
+              },
+              cid: {
+                type: 'string',
+                format: 'cid',
+              },
+              cursor: {
+                type: 'string',
+              },
+              upvoteWeight: {
+                type: 'string',
+                description: 'Sum of decay-weighted upvotes',
+              },
+              downvoteWeight: {
+                type: 'string',
+                description: 'Sum of decay-weighted downvotes',
+              },
+              votes: {
+                type: 'array',
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.feed.getTokenVotes#vote',
+                },
+              },
+            },
+          },
+        },
+      },
+      vote: {
+        type: 'object',
+        required: [
+          'indexedAt',
+          'createdAt',
+          'actor',
+          'tokenContract',
+          'claimedAmount',
+          'effectiveWeight',
+          'direction',
+        ],
+        properties: {
+          indexedAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+          createdAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+          actor: {
+            type: 'ref',
+            ref: 'lex:app.bsky.actor.defs#profileView',
+          },
+          tokenContract: {
+            type: 'string',
+          },
+          claimedAmount: {
+            type: 'string',
+          },
+          effectiveWeight: {
+            type: 'string',
+          },
+          direction: {
+            type: 'integer',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonFeedTokenVote: {
+    lexicon: 1,
+    id: 'app.creaton.feed.tokenVote',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'Record declaring a token-weighted vote on subject content.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: [
+            'subject',
+            'walletAddress',
+            'tokenContract',
+            'tokenAmount',
+            'chainId',
+            'direction',
+            'signature',
+            'createdAt',
+          ],
+          properties: {
+            subject: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            walletAddress: {
+              type: 'string',
+              description: '0x-prefixed ETH address for balance check',
+            },
+            tokenContract: {
+              type: 'string',
+              description: 'ERC-20 contract address',
+            },
+            tokenAmount: {
+              type: 'string',
+              description: 'Token amount as string (for precision)',
+            },
+            chainId: {
+              type: 'integer',
+              description: 'EVM chain ID',
+            },
+            direction: {
+              type: 'integer',
+              description: '1 = upvote, -1 = downvote',
+            },
+            signature: {
+              type: 'bytes',
+              description: 'Signature proving wallet ownership',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
   ChatBskyActorDeclaration: {
     lexicon: 1,
     id: 'chat.bsky.actor.declaration',
@@ -23256,6 +23625,13 @@ export const ids = {
   AppBskyVideoGetJobStatus: 'app.bsky.video.getJobStatus',
   AppBskyVideoGetUploadLimits: 'app.bsky.video.getUploadLimits',
   AppBskyVideoUploadVideo: 'app.bsky.video.uploadVideo',
+  AppCreatonCommunityCreate: 'app.creaton.community.create',
+  AppCreatonCommunityDetails: 'app.creaton.community.details',
+  AppCreatonCommunityGetMembership: 'app.creaton.community.getMembership',
+  AppCreatonCommunityJoin: 'app.creaton.community.join',
+  AppCreatonCommunityLeave: 'app.creaton.community.leave',
+  AppCreatonFeedGetTokenVotes: 'app.creaton.feed.getTokenVotes',
+  AppCreatonFeedTokenVote: 'app.creaton.feed.tokenVote',
   ChatBskyActorDeclaration: 'chat.bsky.actor.declaration',
   ChatBskyActorDefs: 'chat.bsky.actor.defs',
   ChatBskyActorDeleteAccount: 'chat.bsky.actor.deleteAccount',

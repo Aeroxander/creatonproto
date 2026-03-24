@@ -311,6 +311,7 @@ export class CredentialSession implements SessionManager {
       const res = await this.server.createSession({
         identifier: opts.identifier,
         password: opts.password,
+        siweSignature: opts.siweSignature,
         authFactorToken: opts.authFactorToken,
         allowTakendown: opts.allowTakendown,
       })

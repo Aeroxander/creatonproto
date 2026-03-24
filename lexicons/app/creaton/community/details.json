@@ -1,0 +1,42 @@
+{
+    "lexicon": 1,
+    "id": "app.creaton.community.details",
+    "defs": {
+        "main": {
+            "type": "record",
+            "description": "Details of a community/DAO. Typically owned by the PDS service DID.",
+            "key": "tid",
+            "record": {
+                "type": "object",
+                "required": [
+                    "daoAddress",
+                    "name",
+                    "symbol",
+                    "listUri",
+                    "createdAt"
+                ],
+                "properties": {
+                    "daoAddress": {
+                        "type": "string",
+                        "description": "Ethereum address of the DAO"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "symbol": {
+                        "type": "string"
+                    },
+                    "listUri": {
+                        "type": "string",
+                        "format": "at-uri",
+                        "description": "URI of the canonical member list for this community"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                }
+            }
+        }
+    }
+}

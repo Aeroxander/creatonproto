@@ -1,0 +1,47 @@
+{
+    "lexicon": 1,
+    "id": "app.creaton.community.join",
+    "defs": {
+        "main": {
+            "type": "procedure",
+            "description": "Join a community. Adds the requester to the community's member list. Requires auth.",
+            "input": {
+                "encoding": "application/json",
+                "schema": {
+                    "type": "object",
+                    "required": [
+                        "daoAddress"
+                    ],
+                    "properties": {
+                        "daoAddress": {
+                            "type": "string",
+                            "description": "The Ethereum address of the DAO/community to join"
+                        }
+                    }
+                }
+            },
+            "output": {
+                "encoding": "application/json",
+                "schema": {
+                    "type": "object",
+                    "required": [
+                        "listUri",
+                        "listItemUri"
+                    ],
+                    "properties": {
+                        "listUri": {
+                            "type": "string",
+                            "format": "at-uri",
+                            "description": "URI of the community list"
+                        },
+                        "listItemUri": {
+                            "type": "string",
+                            "format": "at-uri",
+                            "description": "URI of the created list item record"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

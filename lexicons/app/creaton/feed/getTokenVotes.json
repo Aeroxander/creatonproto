@@ -1,0 +1,115 @@
+{
+    "lexicon": 1,
+    "id": "app.creaton.feed.getTokenVotes",
+    "defs": {
+        "main": {
+            "type": "query",
+            "description": "Get token vote records which reference a subject (by AT-URI and CID).",
+            "parameters": {
+                "type": "params",
+                "required": [
+                    "uri"
+                ],
+                "properties": {
+                    "uri": {
+                        "type": "string",
+                        "format": "at-uri",
+                        "description": "AT-URI of the subject (eg, a post record)."
+                    },
+                    "cid": {
+                        "type": "string",
+                        "format": "cid",
+                        "description": "CID of the subject record."
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 100,
+                        "default": 50
+                    },
+                    "cursor": {
+                        "type": "string"
+                    }
+                }
+            },
+            "output": {
+                "encoding": "application/json",
+                "schema": {
+                    "type": "object",
+                    "required": [
+                        "uri",
+                        "votes",
+                        "upvoteWeight",
+                        "downvoteWeight"
+                    ],
+                    "properties": {
+                        "uri": {
+                            "type": "string",
+                            "format": "at-uri"
+                        },
+                        "cid": {
+                            "type": "string",
+                            "format": "cid"
+                        },
+                        "cursor": {
+                            "type": "string"
+                        },
+                        "upvoteWeight": {
+                            "type": "string",
+                            "description": "Sum of decay-weighted upvotes"
+                        },
+                        "downvoteWeight": {
+                            "type": "string",
+                            "description": "Sum of decay-weighted downvotes"
+                        },
+                        "votes": {
+                            "type": "array",
+                            "items": {
+                                "type": "ref",
+                                "ref": "#vote"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "vote": {
+            "type": "object",
+            "required": [
+                "indexedAt",
+                "createdAt",
+                "actor",
+                "tokenContract",
+                "claimedAmount",
+                "effectiveWeight",
+                "direction"
+            ],
+            "properties": {
+                "indexedAt": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "actor": {
+                    "type": "ref",
+                    "ref": "app.bsky.actor.defs#profileView"
+                },
+                "tokenContract": {
+                    "type": "string"
+                },
+                "claimedAmount": {
+                    "type": "string"
+                },
+                "effectiveWeight": {
+                    "type": "string"
+                },
+                "direction": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

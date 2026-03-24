@@ -43,6 +43,16 @@ export type OzoneConfig = Partial<ozone.OzoneEnvironment> & {
   imgInvalidator?: ozone.ImageInvalidator
 }
 
+export type TapConfig = {
+  enabled?: boolean
+  port?: number
+}
+
+export type TokenVoteConfig = {
+  enabled?: boolean
+  port?: number
+}
+
 export type TestServerParams = {
   dbPostgresUrl: string
   dbPostgresSchema: string
@@ -51,6 +61,8 @@ export type TestServerParams = {
   bsky: Partial<BskyConfig>
   ozone: Partial<OzoneConfig>
   introspect: Partial<IntrospectConfig>
+  tap: Partial<TapConfig>
+  tokenVote: Partial<TokenVoteConfig>
 }
 
 export type DidAndKey = {

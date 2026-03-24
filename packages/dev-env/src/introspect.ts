@@ -5,12 +5,14 @@ import { TestBsky } from './bsky'
 import { TestOzone } from './ozone'
 import { TestPds } from './pds'
 import { TestPlc } from './plc'
+import { TestTokenVoteFeedGen } from './token-vote-feed-gen'
+import { TestTokenVoteAppview } from './token-vote-appview'
 
 export class IntrospectServer {
   constructor(
     public port: number,
     public server: http.Server,
-  ) {}
+  ) { }
 
   static async start(
     port: number,
@@ -18,8 +20,19 @@ export class IntrospectServer {
     pds: TestPds,
     bsky: TestBsky,
     ozone: TestOzone,
+    tokenVoteFeedGen?: TestTokenVoteFeedGen,
+    tokenVoteAppview?: TestTokenVoteAppview,
   ) {
     const app = express()
+
+    // Enable CORS for introspection endpoint
+    app.use((_req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*')
+      res.header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+      res.header('Access-Control-Allow-Headers', 'Content-Type')
+      next()
+    })
+
     app.get('/', (_req, res) => {
       res.status(200).send({
         plc: {
@@ -40,6 +53,13 @@ export class IntrospectServer {
         db: {
           url: ozone.ctx.cfg.db.postgresUrl,
         },
+        tokenVoteFeedGen: tokenVoteFeedGen ? {
+          url: `http://localhost:${tokenVoteFeedGen.port}`,
+          did: tokenVoteFeedGen.did,
+        } : undefined,
+        tokenVoteAppview: tokenVoteAppview ? {
+          url: tokenVoteAppview.url,
+        } : undefined,
       })
     })
     const server = app.listen(port)

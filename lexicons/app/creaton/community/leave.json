@@ -1,0 +1,25 @@
+{
+    "lexicon": 1,
+    "id": "app.creaton.community.leave",
+    "defs": {
+        "main": {
+            "type": "procedure",
+            "description": "Leave a community. Removes the requester from the community's member list. Requires auth.",
+            "input": {
+                "encoding": "application/json",
+                "schema": {
+                    "type": "object",
+                    "required": [
+                        "daoAddress"
+                    ],
+                    "properties": {
+                        "daoAddress": {
+                            "type": "string",
+                            "description": "The Ethereum address of the DAO/community to leave"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

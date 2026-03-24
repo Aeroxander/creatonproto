@@ -1,0 +1,58 @@
+{
+    "lexicon": 1,
+    "id": "app.creaton.feed.tokenVote",
+    "defs": {
+        "main": {
+            "type": "record",
+            "description": "Record declaring a token-weighted vote on subject content.",
+            "key": "tid",
+            "record": {
+                "type": "object",
+                "required": [
+                    "subject",
+                    "walletAddress",
+                    "tokenContract",
+                    "tokenAmount",
+                    "chainId",
+                    "direction",
+                    "signature",
+                    "createdAt"
+                ],
+                "properties": {
+                    "subject": {
+                        "type": "ref",
+                        "ref": "com.atproto.repo.strongRef"
+                    },
+                    "walletAddress": {
+                        "type": "string",
+                        "description": "0x-prefixed ETH address for balance check"
+                    },
+                    "tokenContract": {
+                        "type": "string",
+                        "description": "ERC-20 contract address"
+                    },
+                    "tokenAmount": {
+                        "type": "string",
+                        "description": "Token amount as string (for precision)"
+                    },
+                    "chainId": {
+                        "type": "integer",
+                        "description": "EVM chain ID"
+                    },
+                    "direction": {
+                        "type": "integer",
+                        "description": "1 = upvote, -1 = downvote"
+                    },
+                    "signature": {
+                        "type": "bytes",
+                        "description": "Signature proving wallet ownership"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                }
+            }
+        }
+    }
+}

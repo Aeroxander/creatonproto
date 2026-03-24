@@ -1,0 +1,51 @@
+{
+    "lexicon": 1,
+    "id": "app.creaton.community.getMembership",
+    "defs": {
+        "main": {
+            "type": "query",
+            "description": "Check if the authenticated user is a member of a community.",
+            "parameters": {
+                "type": "params",
+                "required": [
+                    "daoAddress"
+                ],
+                "properties": {
+                    "daoAddress": {
+                        "type": "string",
+                        "description": "The Ethereum address of the DAO/community"
+                    }
+                }
+            },
+            "output": {
+                "encoding": "application/json",
+                "schema": {
+                    "type": "object",
+                    "required": [
+                        "isMember"
+                    ],
+                    "properties": {
+                        "isMember": {
+                            "type": "boolean",
+                            "description": "Whether the user is a member of this community"
+                        },
+                        "listUri": {
+                            "type": "string",
+                            "format": "at-uri",
+                            "description": "URI of the community list, if it exists"
+                        },
+                        "listItemUri": {
+                            "type": "string",
+                            "format": "at-uri",
+                            "description": "URI of the user's list item record, if member"
+                        },
+                        "memberCount": {
+                            "type": "integer",
+                            "description": "Number of members in the community"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
