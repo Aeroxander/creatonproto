@@ -1,3 +1,4 @@
+import type { Chain } from 'viem'
 import {
   Hex,
   createPublicClient,
@@ -5,13 +6,18 @@ import {
   defineChain,
   getAddress,
 } from 'viem'
-import { abstract } from 'viem/chains'
+import { abstract, abstractTestnet } from 'viem/chains'
 import { createSiweMessage, generateSiweNonce } from 'viem/siwe'
 import { InvalidRequestError } from '@creatonproto/xrpc-server'
 import { AccountDb } from '../db'
 
+// Use abstractTestnet in development so the SIWE message chain ID matches
+// the wallet's connected chain (AGW defaults to testnet in dev).
+const activeChain: Chain =
+  process.env.NODE_ENV === 'development' ? abstractTestnet : abstract
+
 export const publicClient = createPublicClient({
-  chain: abstract,
+  chain: activeChain,
   transport: http(),
 })
 
@@ -156,7 +162,7 @@ export const siweLogin = async (
 
     siweMessage = createSiweMessage({
       address: address,
-      chainId: abstract.id,
+      chainId: activeChain.id,
       domain: SIWE_DOMAIN,
       nonce: nonce,
       uri: SIWE_URI,
@@ -206,7 +212,7 @@ export const siweRegistration = async (
 
   const siweMessage = createSiweMessage({
     address: normalizedAddress,
-    chainId: abstract.id,
+    chainId: activeChain.id,
     domain: SIWE_DOMAIN,
     nonce: nonce,
     uri: SIWE_URI,

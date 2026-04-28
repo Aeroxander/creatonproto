@@ -1,0 +1,46 @@
+{
+  "lexicon": 1,
+  "id": "com.creaton.discussionTopic",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Defines a discussion topic. Owned by the PDS service DID. Links to a member list for tracking participants.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["topicId", "title", "listUri", "createdAt"],
+        "properties": {
+          "topicId": {
+            "type": "string",
+            "description": "Unique identifier for this topic. Typically a chain reference like 'task:42' or 'proposal:7', but can be any string.",
+            "maxLength": 200
+          },
+          "title": {
+            "type": "string",
+            "description": "Human-readable title for this discussion topic.",
+            "maxLength": 500
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description or context for the topic.",
+            "maxLength": 5000
+          },
+          "listUri": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "URI of the canonical participant list for this topic."
+          },
+          "creator": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the user who created this topic."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

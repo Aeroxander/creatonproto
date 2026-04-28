@@ -1,0 +1,117 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.getTasks",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Fetch tasks for a conviction market, optionally filtered by milestone index and/or status. Returns hydrated task views including author profile and attestation count.",
+      "parameters": {
+        "type": "params",
+        "required": ["communityId"],
+        "properties": {
+          "communityId": {
+            "type": "string",
+            "description": "The 0x-prefixed keccak256 communityId of the conviction market."
+          },
+          "milestoneIdx": {
+            "type": "integer",
+            "description": "When provided, only return tasks for this milestone index. Pass -1 to fetch backlog tasks."
+          },
+          "status": {
+            "type": "string",
+            "description": "When provided, filter by task status.",
+            "knownValues": ["open", "in_progress", "in_review", "done", "cancelled"]
+          },
+          "authorDid": {
+            "type": "string",
+            "format": "did",
+            "description": "When provided, only return tasks created by this DID."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          "cursor": {
+            "type": "string"
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["tasks"],
+          "properties": {
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "ref",
+                "ref": "#taskView"
+              }
+            },
+            "cursor": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "taskView": {
+      "type": "object",
+      "required": ["uri", "cid", "author", "record", "attestationCount", "indexedAt"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "at-uri"
+        },
+        "cid": {
+          "type": "string",
+          "format": "cid"
+        },
+        "author": {
+          "type": "ref",
+          "ref": "app.bsky.actor.defs#profileViewBasic",
+          "description": "Hydrated profile of the DID who created this task record."
+        },
+        "record": {
+          "type": "unknown",
+          "description": "The raw app.creaton.market.task record."
+        },
+        "assigneeProfile": {
+          "type": "ref",
+          "ref": "app.bsky.actor.defs#profileViewBasic",
+          "description": "Hydrated profile of the assignee DID, if set on the record."
+        },
+        "attestationCount": {
+          "type": "integer",
+          "description": "Total number of social attestations on this task."
+        },
+        "viewerAttestation": {
+          "type": "ref",
+          "ref": "#viewerAttestation",
+          "description": "The authenticated viewer's own attestation on this task, if it exists."
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    },
+    "viewerAttestation": {
+      "type": "object",
+      "required": ["uri", "type"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "at-uri"
+        },
+        "type": {
+          "type": "string",
+          "knownValues": ["completed", "reviewed", "contributed", "blocked"]
+        }
+      }
+    }
+  }
+}

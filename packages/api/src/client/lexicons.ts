@@ -10017,6 +10017,857 @@ export const schemaDict = {
       },
     },
   },
+  AppCreatonMarketGetTaskAttestations: {
+    lexicon: 1,
+    id: 'app.creaton.market.getTaskAttestations',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Fetch social attestations on a specific task, ordered by most recent first.',
+        parameters: {
+          type: 'params',
+          required: ['taskUri'],
+          properties: {
+            taskUri: {
+              type: 'string',
+              format: 'at-uri',
+              description: 'AT-URI of the task record.',
+            },
+            limit: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 100,
+              default: 50,
+            },
+            cursor: {
+              type: 'string',
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['attestations'],
+            properties: {
+              attestations: {
+                type: 'array',
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.market.getTaskAttestations#attestationView',
+                },
+              },
+              cursor: {
+                type: 'string',
+              },
+            },
+          },
+        },
+      },
+      attestationView: {
+        type: 'object',
+        required: ['uri', 'cid', 'author', 'record', 'indexedAt'],
+        properties: {
+          uri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          cid: {
+            type: 'string',
+            format: 'cid',
+          },
+          author: {
+            type: 'ref',
+            ref: 'lex:app.bsky.actor.defs#profileViewBasic',
+            description: 'Hydrated profile of the attestor.',
+          },
+          record: {
+            type: 'unknown',
+            description: 'The raw app.creaton.market.taskAttestation record.',
+          },
+          indexedAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonMarketGetTasks: {
+    lexicon: 1,
+    id: 'app.creaton.market.getTasks',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Fetch tasks for a conviction market, optionally filtered by milestone index and/or status. Returns hydrated task views including author profile and attestation count.',
+        parameters: {
+          type: 'params',
+          required: ['communityId'],
+          properties: {
+            communityId: {
+              type: 'string',
+              description:
+                'The 0x-prefixed keccak256 communityId of the conviction market.',
+            },
+            milestoneIdx: {
+              type: 'integer',
+              description:
+                'When provided, only return tasks for this milestone index. Pass -1 to fetch backlog tasks.',
+            },
+            status: {
+              type: 'string',
+              description: 'When provided, filter by task status.',
+              knownValues: [
+                'open',
+                'in_progress',
+                'in_review',
+                'done',
+                'cancelled',
+              ],
+            },
+            authorDid: {
+              type: 'string',
+              format: 'did',
+              description:
+                'When provided, only return tasks created by this DID.',
+            },
+            limit: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 100,
+              default: 50,
+            },
+            cursor: {
+              type: 'string',
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['tasks'],
+            properties: {
+              tasks: {
+                type: 'array',
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.market.getTasks#taskView',
+                },
+              },
+              cursor: {
+                type: 'string',
+              },
+            },
+          },
+        },
+      },
+      taskView: {
+        type: 'object',
+        required: [
+          'uri',
+          'cid',
+          'author',
+          'record',
+          'attestationCount',
+          'indexedAt',
+        ],
+        properties: {
+          uri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          cid: {
+            type: 'string',
+            format: 'cid',
+          },
+          author: {
+            type: 'ref',
+            ref: 'lex:app.bsky.actor.defs#profileViewBasic',
+            description:
+              'Hydrated profile of the DID who created this task record.',
+          },
+          record: {
+            type: 'unknown',
+            description: 'The raw app.creaton.market.task record.',
+          },
+          assigneeProfile: {
+            type: 'ref',
+            ref: 'lex:app.bsky.actor.defs#profileViewBasic',
+            description:
+              'Hydrated profile of the assignee DID, if set on the record.',
+          },
+          attestationCount: {
+            type: 'integer',
+            description: 'Total number of social attestations on this task.',
+          },
+          viewerAttestation: {
+            type: 'ref',
+            ref: 'lex:app.creaton.market.getTasks#viewerAttestation',
+            description:
+              "The authenticated viewer's own attestation on this task, if it exists.",
+          },
+          indexedAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+        },
+      },
+      viewerAttestation: {
+        type: 'object',
+        required: ['uri', 'type'],
+        properties: {
+          uri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          type: {
+            type: 'string',
+            knownValues: ['completed', 'reviewed', 'contributed', 'blocked'],
+          },
+        },
+      },
+    },
+  },
+  AppCreatonMarketIpOffer: {
+    lexicon: 1,
+    id: 'app.creaton.market.ipOffer',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          "An offer to contribute existing IP (art, music, code, brand assets, etc.) to an active conviction market, in exchange for a portion of the market's contributor token pool.",
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: [
+            'communityId',
+            'title',
+            'description',
+            'ipType',
+            'assetUri',
+            'requestedBps',
+            'status',
+            'contributorDid',
+            'contributorWallet',
+            'createdAt',
+          ],
+          properties: {
+            communityId: {
+              type: 'string',
+              description:
+                '0x-prefixed keccak256 communityId of the target active conviction market.',
+            },
+            title: {
+              type: 'string',
+              maxLength: 300,
+              description: 'Short title describing the IP being offered.',
+            },
+            description: {
+              type: 'string',
+              maxLength: 10000,
+              description:
+                "Full description of the IP: what it is, why it's relevant to this market, and how it will be used.",
+            },
+            ipType: {
+              type: 'string',
+              knownValues: [
+                'visual_art',
+                'music',
+                'code',
+                'writing',
+                'brand_asset',
+                'dataset',
+                'other',
+              ],
+              description: 'Category of the IP being offered.',
+            },
+            assetUri: {
+              type: 'string',
+              description:
+                'IPFS, Arweave, or ATproto URI pointing to the IP asset or a representative preview. Should be publicly accessible.',
+            },
+            licenseType: {
+              type: 'string',
+              knownValues: [
+                'cc_by',
+                'cc_by_sa',
+                'cc_by_nc',
+                'cc_by_nc_sa',
+                'all_rights_reserved',
+                'custom',
+              ],
+              description:
+                'License under which the IP is being offered to the market.',
+            },
+            licenseTermsURI: {
+              type: 'string',
+              description:
+                "Optional URI to full license terms if licenseType is 'custom'.",
+            },
+            requestedBps: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 10000,
+              description:
+                "Basis points (out of the market's full contributorShareBps pool) requested for this IP contribution. For example, if contributorShareBps = 3000 and requestedBps = 500, the IP contributor would receive 5% of the contributor pool.",
+            },
+            onChainOfferId: {
+              type: 'string',
+              description:
+                '0x-prefixed keccak256 offerId returned by IPContributionRegistry.proposeIPOffer(), once submitted on-chain.',
+            },
+            status: {
+              type: 'string',
+              knownValues: [
+                'draft',
+                'on_chain_pending',
+                'dao_voting',
+                'accepted',
+                'rejected',
+                'claimed',
+              ],
+              description: 'Current lifecycle status of the IP offer.',
+            },
+            contributorDid: {
+              type: 'string',
+              format: 'did',
+              description: 'ATproto DID of the IP contributor.',
+            },
+            contributorWallet: {
+              type: 'string',
+              description:
+                'EVM wallet address of the IP contributor. Must match the on-chain proposer address.',
+            },
+            provenanceURI: {
+              type: 'string',
+              description:
+                'Optional URI proving original authorship or ownership of the IP (e.g., an on-chain registration, a signed statement, or a prior publication link).',
+            },
+            rightsModel: {
+              type: 'string',
+              knownValues: ['contributor_owned', 'studio_owned'],
+              description:
+                'Whether the contributor keeps copyright and licenses the IP to the studio, or intends to assign ownership to the studio or its legal wrapper.',
+            },
+            studioLicenseScope: {
+              type: 'string',
+              knownValues: [
+                'direct_license_only',
+                'studio_sublicensable',
+                'studio_assignment',
+              ],
+              description:
+                'Whether downstream projects must license directly from the contributor, the studio may sublicense the IP, or the contribution is intended to be assigned to the studio.',
+            },
+            contributorRoyaltyBps: {
+              type: 'integer',
+              minimum: 0,
+              maximum: 10000,
+              description:
+                'Contributor share of downstream licensing revenue for this IP, in basis points.',
+            },
+            studioRoyaltyBps: {
+              type: 'integer',
+              minimum: 0,
+              maximum: 10000,
+              description:
+                'Studio DAO treasury share of downstream licensing revenue for this IP, in basis points.',
+            },
+            legalEntityType: {
+              type: 'string',
+              knownValues: [
+                'individual',
+                'existing_entity',
+                'studio_unincorporated',
+                'us_llc',
+                'wyoming_una',
+                'wyoming_duna',
+                'marshall_islands_dao_llc',
+                'other',
+              ],
+              description:
+                'Legal wrapper or owner type controlling this IP or assignment right.',
+            },
+            ownerEntityName: {
+              type: 'string',
+              maxLength: 300,
+              description:
+                'Optional legal entity name when the IP owner is an LLC, DAO wrapper, or other organization.',
+            },
+            governingLaw: {
+              type: 'string',
+              maxLength: 300,
+              description:
+                "Optional governing law, arbitration forum, or dispute venue referenced by the contributor's terms.",
+            },
+            storyIpId: {
+              type: 'string',
+              description:
+                "Story Protocol IP Account address for the contributor's registered IP Asset. When provided, the IPContributionRegistry will mint a Story License Token to the market DAO treasury as enforceable proof of the right-to-use upon acceptance.",
+            },
+            storyLicenseTermsId: {
+              type: 'integer',
+              description:
+                'PIL terms ID under which the IP is being licensed to the market. Must have derivativesAllowed=true for the offer to be accepted when Story is enabled.',
+            },
+            storyLicenseTokenId: {
+              type: 'integer',
+              description:
+                'The Story License Token ID minted to the market DAO treasury after the offer is accepted. Populated after acceptance.',
+            },
+            tags: {
+              type: 'array',
+              maxLength: 10,
+              items: {
+                type: 'string',
+                maxLength: 64,
+              },
+              description:
+                "Optional domain tags, e.g. ['character-design', 'soundtrack', 'ui-kit'].",
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonMarketProject: {
+    lexicon: 1,
+    id: 'app.creaton.market.project',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'Metadata record for a conviction market project. Stores the project identity, IP classification, and visual assets. One record per market, keyed by communityUri.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['communityUri', 'name', 'createdAt'],
+          properties: {
+            communityUri: {
+              type: 'string',
+              description:
+                'The unique community URI identifying the conviction market.',
+            },
+            name: {
+              type: 'string',
+              maxLength: 300,
+              description: 'Public name of the project.',
+            },
+            description: {
+              type: 'string',
+              maxLength: 10000,
+              description: 'Description of what the project is about.',
+            },
+            genre: {
+              type: 'string',
+              knownValues: [
+                'Fantasy',
+                'Sci-Fi',
+                'Superhero',
+                'Horror',
+                'Romance',
+                'Other',
+              ],
+              description: 'Genre classification for discovery.',
+            },
+            ipType: {
+              type: 'string',
+              knownValues: [
+                'Character',
+                'World',
+                'Story',
+                'Game IP',
+                'Music',
+                'Visual Art',
+              ],
+              description: 'Type of IP being created.',
+            },
+            licenseType: {
+              type: 'string',
+              knownValues: ['CC-BY', 'CC-BY-SA', 'All Rights Reserved'],
+              description: 'Default license for the project IP.',
+            },
+            loreDescription: {
+              type: 'string',
+              maxLength: 50000,
+              description: 'Extended backstory or lore for the IP.',
+            },
+            coverImageUri: {
+              type: 'string',
+              format: 'uri',
+              description: 'URI to cover art (IPFS, Arweave, or HTTPS).',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+              description: 'Timestamp of record creation.',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonMarketRemixProposal: {
+    lexicon: 1,
+    id: 'app.creaton.market.remixProposal',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          "A proposal to remix the IP of a completed conviction market. The remix team requests a portion of the parent project's franchise token reserve in exchange for building a new creative work that extends or adapts the parent IP.",
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: [
+            'parentCommunityId',
+            'remixCommunityId',
+            'title',
+            'description',
+            'requestedTokens',
+            'remixContributorShareBps',
+            'ipLineage',
+            'status',
+            'proposerDid',
+            'proposerWallet',
+            'createdAt',
+          ],
+          properties: {
+            parentCommunityId: {
+              type: 'string',
+              description:
+                '0x-prefixed keccak256 communityId of the completed parent conviction market.',
+            },
+            remixCommunityId: {
+              type: 'string',
+              description:
+                '0x-prefixed keccak256 communityId for the proposed remix conviction market.',
+            },
+            title: {
+              type: 'string',
+              maxLength: 300,
+              description: 'Short title of the remix project.',
+            },
+            description: {
+              type: 'string',
+              maxLength: 10000,
+              description:
+                'Full description of the remix: what it is, how it builds on the parent IP, and what the remix team will deliver.',
+            },
+            ipLineage: {
+              type: 'string',
+              maxLength: 2000,
+              description:
+                "Explanation of how the new work derives from or incorporates the parent project's IP. Should reference the specific assets (characters, music, code modules, etc.) being built upon.",
+            },
+            licenseType: {
+              type: 'string',
+              knownValues: [
+                'cc_by',
+                'cc_by_sa',
+                'cc_by_nc',
+                'cc_by_nc_sa',
+                'all_rights_reserved',
+                'custom',
+              ],
+              description:
+                'License under which the remix output will be released.',
+            },
+            milestones: {
+              type: 'array',
+              description: 'Proposed milestones for the remix project.',
+              maxLength: 20,
+              items: {
+                type: 'ref',
+                ref: 'lex:app.creaton.market.remixProposal#milestone',
+              },
+            },
+            requestedTokens: {
+              type: 'string',
+              description:
+                'Absolute number of parent project tokens requested (as a decimal string to avoid integer overflow).',
+            },
+            remixContributorShareBps: {
+              type: 'integer',
+              minimum: 0,
+              maximum: 10000,
+              description:
+                'Basis points (out of 10 000) of the token allocation that goes to the remix contributors via TrustGraph. The remainder goes to remix funders.',
+            },
+            onChainRemixId: {
+              type: 'string',
+              description:
+                '0x-prefixed keccak256 remixId returned by RemixMarketFactory.submitRemixProposal(), once the proposal has been submitted on-chain.',
+            },
+            status: {
+              type: 'string',
+              knownValues: [
+                'draft',
+                'on_chain_pending',
+                'parent_dao_voting',
+                'approved',
+                'active',
+                'complete',
+                'rejected',
+              ],
+              description: 'Current lifecycle status of the remix proposal.',
+            },
+            proposerDid: {
+              type: 'string',
+              format: 'did',
+              description: 'ATproto DID of the remix proposer.',
+            },
+            proposerWallet: {
+              type: 'string',
+              description:
+                'EVM wallet address of the remix proposer. Must match the on-chain proposer.',
+            },
+            innerDAOAddress: {
+              type: 'string',
+              description:
+                'Address of the inner Majeur DAO deployed after parent DAO approval.',
+            },
+            metadataURI: {
+              type: 'string',
+              description:
+                'Canonical ATproto or IPFS URI for the on-chain metadataURI passed to RemixMarketFactory.',
+            },
+            storyIpId: {
+              type: 'string',
+              description:
+                'Story Protocol IP Account address of the remix creative work. Populated once the proposer has registered the remix NFT on Story Protocol. Enables on-chain derivative registration and PIL-governed royalty flows.',
+            },
+            storyParentIpId: {
+              type: 'string',
+              description:
+                "Story Protocol IP Account address of the parent conviction market's IP. Populated from StoryIPAdapter.communityIpId(parentCommunityId).",
+            },
+            storyLicenseTermsId: {
+              type: 'integer',
+              description:
+                'PIL terms ID from the parent IP used to register this remix as a derivative on Story Protocol.',
+            },
+            tags: {
+              type: 'array',
+              maxLength: 10,
+              items: {
+                type: 'string',
+                maxLength: 64,
+              },
+              description:
+                "Optional genre or domain tags, e.g. ['animation', 'music', 'sequel'].",
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+      milestone: {
+        type: 'object',
+        description: 'A proposed milestone for the remix project.',
+        required: ['title', 'description'],
+        properties: {
+          title: {
+            type: 'string',
+            maxLength: 200,
+          },
+          description: {
+            type: 'string',
+            maxLength: 2000,
+          },
+          estimatedWeeks: {
+            type: 'integer',
+            minimum: 1,
+            description: 'Rough estimate of weeks to complete this milestone.',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonMarketTask: {
+    lexicon: 1,
+    id: 'app.creaton.market.task',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A task within a conviction market milestone. Anyone can create tasks; the market creator can mark them accepted to canonicalise the work.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: [
+            'communityId',
+            'milestoneIdx',
+            'title',
+            'status',
+            'createdAt',
+          ],
+          properties: {
+            communityId: {
+              type: 'string',
+              description:
+                'The 0x-prefixed keccak256 communityId of the conviction market.',
+            },
+            milestoneIdx: {
+              type: 'integer',
+              description:
+                'Zero-based milestone index this task belongs to. Use -1 for backlog (not yet assigned to a milestone).',
+              minimum: -1,
+            },
+            title: {
+              type: 'string',
+              maxLength: 300,
+            },
+            description: {
+              type: 'string',
+              description:
+                'Optional rich-text body describing the task in detail.',
+              maxLength: 10000,
+            },
+            status: {
+              type: 'string',
+              knownValues: [
+                'open',
+                'in_progress',
+                'in_review',
+                'done',
+                'cancelled',
+              ],
+            },
+            assignee: {
+              type: 'string',
+              format: 'did',
+              description:
+                'DID of the assigned contributor. Optional — any DID may self-assign via a taskUpdate.',
+            },
+            tags: {
+              type: 'array',
+              items: {
+                type: 'string',
+                maxLength: 64,
+              },
+              maxLength: 10,
+              description:
+                "Optional labels, e.g. ['design', 'research', 'engineering'].",
+            },
+            accepted: {
+              type: 'boolean',
+              description:
+                'Set to true by the market creator to mark this task as canonical. Informs contributors that work on this task counts toward the milestone.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonMarketTaskAttestation: {
+    lexicon: 1,
+    id: 'app.creaton.market.taskAttestation',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A social attestation that a task was completed, reviewed, or contributed to. Free — no token staking required. Provides a low-weight signal to TAPR. For high-weight conviction, use app.creaton.market.vouchContributor (CREATE staking).',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['task', 'type', 'createdAt'],
+          properties: {
+            task: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+              description: 'AT-URI + CID of the task record being attested.',
+            },
+            type: {
+              type: 'string',
+              knownValues: ['completed', 'reviewed', 'contributed', 'blocked'],
+              description:
+                "The kind of attestation. 'completed' = I verify this is done. 'reviewed' = I reviewed the work. 'contributed' = I helped with this. 'blocked' = this task is blocked by something.",
+            },
+            body: {
+              type: 'string',
+              description:
+                'Optional short note from the attestor explaining the attestation.',
+              maxLength: 1000,
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonMarketTaskUpdate: {
+    lexicon: 1,
+    id: 'app.creaton.market.taskUpdate',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'An activity log entry on a task — a progress comment, status transition, or assignee change. Can be linked to a Bluesky post when the user chooses to share their progress publicly.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['task', 'body', 'createdAt'],
+          properties: {
+            task: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+              description: 'AT-URI + CID of the task being updated.',
+            },
+            newStatus: {
+              type: 'string',
+              knownValues: [
+                'open',
+                'in_progress',
+                'in_review',
+                'done',
+                'cancelled',
+              ],
+              description:
+                'Set when this update includes a status transition. Omit for comment-only updates.',
+            },
+            newAssignee: {
+              type: 'string',
+              format: 'did',
+              description:
+                'Set when this update changes the assignee. Omit if unchanged.',
+            },
+            body: {
+              type: 'string',
+              description:
+                'The update text — explains what changed, what was done, or what is blocked.',
+              maxLength: 3000,
+            },
+            blueskyPostUri: {
+              type: 'string',
+              format: 'at-uri',
+              description:
+                'AT-URI of the Bluesky post this update was shared to, if the user chose to post publicly. This post is eligible for token-weighted curation in the market feed.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
   ChatBskyActorDeclaration: {
     lexicon: 1,
     id: 'chat.bsky.actor.declaration',
@@ -18243,6 +19094,375 @@ export const schemaDict = {
               "The policy of who can message the account, this value is included in the keyPackage, but is duplicated here to allow applications to decide if they should show a 'Message on Germ' button to the viewer.",
             minLength: 1,
             maxLength: 100,
+  ComCreatonDiscussionCreateTopic: {
+    lexicon: 1,
+    id: 'com.creaton.discussion.createTopic',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          'Create a new discussion topic. Creates a participant list in the PDS service repo. Requires auth.',
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['topicId', 'title'],
+            properties: {
+              topicId: {
+                type: 'string',
+                description:
+                  "Unique identifier for this topic (e.g., 'task:42', 'proposal:7').",
+                maxLength: 200,
+              },
+              title: {
+                type: 'string',
+                description: 'Human-readable title for the discussion.',
+                maxLength: 500,
+              },
+              description: {
+                type: 'string',
+                description: 'Optional description or context.',
+                maxLength: 5000,
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['topicUri', 'listUri'],
+            properties: {
+              topicUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: 'URI of the created topic record.',
+              },
+              listUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: 'URI of the participant list.',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ComCreatonDiscussionGetTopicMembership: {
+    lexicon: 1,
+    id: 'com.creaton.discussion.getTopicMembership',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Check if the authenticated user is a participant in a discussion topic.',
+        parameters: {
+          type: 'params',
+          required: ['topicId'],
+          properties: {
+            topicId: {
+              type: 'string',
+              description: "The topic identifier (e.g., 'task:42').",
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['isMember'],
+            properties: {
+              isMember: {
+                type: 'boolean',
+                description: 'Whether the user is a participant in this topic.',
+              },
+              listUri: {
+                type: 'string',
+                format: 'at-uri',
+                description:
+                  "URI of the topic's participant list, if it exists.",
+              },
+              listItemUri: {
+                type: 'string',
+                format: 'at-uri',
+                description:
+                  "URI of the user's list item record, if a participant.",
+              },
+              participantCount: {
+                type: 'integer',
+                description: 'Number of participants in the topic.',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ComCreatonDiscussionJoinTopic: {
+    lexicon: 1,
+    id: 'com.creaton.discussion.joinTopic',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          "Join a discussion topic. Adds the requester to the topic's participant list. Requires auth.",
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['topicId'],
+            properties: {
+              topicId: {
+                type: 'string',
+                description: "The topic identifier to join (e.g., 'task:42').",
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['listUri', 'listItemUri'],
+            properties: {
+              listUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: "URI of the topic's participant list.",
+              },
+              listItemUri: {
+                type: 'string',
+                format: 'at-uri',
+                description: 'URI of the created list item record.',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ComCreatonDiscussionLeaveTopic: {
+    lexicon: 1,
+    id: 'com.creaton.discussion.leaveTopic',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          "Leave a discussion topic. Removes the requester from the topic's participant list. Requires auth.",
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['topicId'],
+            properties: {
+              topicId: {
+                type: 'string',
+                description: "The topic identifier to leave (e.g., 'task:42').",
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['success'],
+            properties: {
+              success: {
+                type: 'boolean',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ComCreatonDiscussionTopic: {
+    lexicon: 1,
+    id: 'com.creaton.discussionTopic',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'Defines a discussion topic. Owned by the PDS service DID. Links to a member list for tracking participants.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['topicId', 'title', 'listUri', 'createdAt'],
+          properties: {
+            topicId: {
+              type: 'string',
+              description:
+                "Unique identifier for this topic. Typically a chain reference like 'task:42' or 'proposal:7', but can be any string.",
+              maxLength: 200,
+            },
+            title: {
+              type: 'string',
+              description: 'Human-readable title for this discussion topic.',
+              maxLength: 500,
+            },
+            description: {
+              type: 'string',
+              description: 'Optional description or context for the topic.',
+              maxLength: 5000,
+            },
+            listUri: {
+              type: 'string',
+              format: 'at-uri',
+              description:
+                'URI of the canonical participant list for this topic.',
+            },
+            creator: {
+              type: 'string',
+              format: 'did',
+              description: 'DID of the user who created this topic.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  ComCreatonEvmAddressControl: {
+    lexicon: 1,
+    id: 'com.creaton.evm.addressControl',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A user-controlled EVM wallet linkage record. Stores a SIWE proof that the repo owner controls the referenced wallet address.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['address', 'signature', 'siwe'],
+          properties: {
+            address: {
+              type: 'bytes',
+              description: '20-byte EVM address controlled by the repo owner.',
+            },
+            signature: {
+              type: 'bytes',
+              description: 'Signature over the SIWE message.',
+            },
+            alsoOn: {
+              type: 'array',
+              description:
+                'Additional EVM chain IDs where the same address should be treated as linked.',
+              maxLength: 32,
+              items: {
+                type: 'integer',
+                minimum: 1,
+              },
+            },
+            siwe: {
+              type: 'ref',
+              ref: 'lex:com.creaton.evm.addressControl#siweProof',
+            },
+          },
+        },
+      },
+      siweProof: {
+        type: 'object',
+        description: 'Structured fields from the SIWE message that was signed.',
+        required: [
+          'domain',
+          'address',
+          'statement',
+          'uri',
+          'version',
+          'chainId',
+          'nonce',
+          'issuedAt',
+        ],
+        properties: {
+          domain: {
+            type: 'string',
+            maxLength: 253,
+          },
+          address: {
+            type: 'string',
+            description: 'Checksummed 0x-prefixed EVM address.',
+          },
+          statement: {
+            type: 'string',
+            maxLength: 1000,
+          },
+          uri: {
+            type: 'string',
+            format: 'uri',
+          },
+          version: {
+            type: 'string',
+            knownValues: ['1'],
+          },
+          chainId: {
+            type: 'integer',
+            minimum: 1,
+          },
+          nonce: {
+            type: 'string',
+            minLength: 8,
+            maxLength: 96,
+          },
+          issuedAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+        },
+      },
+    },
+  },
+  ComCreatonProposal: {
+    lexicon: 1,
+    id: 'com.creaton.proposal',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          "An on-chain proposal's off-chain content. Created before the on-chain call, linked via atprotoUri. Contains the human-readable details of what's being proposed.",
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['title', 'createdAt'],
+          properties: {
+            title: {
+              type: 'string',
+              description: 'Short title for the proposal.',
+              maxLength: 300,
+              minLength: 1,
+            },
+            description: {
+              type: 'string',
+              description:
+                "Detailed description of what's being proposed, scope, deliverables, etc.",
+              maxLength: 10000,
+            },
+            discussionTopicUri: {
+              type: 'string',
+              description:
+                "If this proposal originated from a discussion, the topic ID (e.g., 'task:42' or 'discussion:...').",
+            },
+            budget: {
+              type: 'string',
+              description:
+                "Requested budget as a string (to preserve BigInt precision). '0' means equity-only.",
+            },
+            tokenWeightBps: {
+              type: 'integer',
+              description: 'Requested ProjectToken allocation in basis points.',
+            },
+            deadlineDays: {
+              type: 'integer',
+              description: 'Claim deadline in days from creation.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
           },
         },
       },
@@ -23632,6 +24852,14 @@ export const ids = {
   AppCreatonCommunityLeave: 'app.creaton.community.leave',
   AppCreatonFeedGetTokenVotes: 'app.creaton.feed.getTokenVotes',
   AppCreatonFeedTokenVote: 'app.creaton.feed.tokenVote',
+  AppCreatonMarketGetTaskAttestations: 'app.creaton.market.getTaskAttestations',
+  AppCreatonMarketGetTasks: 'app.creaton.market.getTasks',
+  AppCreatonMarketIpOffer: 'app.creaton.market.ipOffer',
+  AppCreatonMarketProject: 'app.creaton.market.project',
+  AppCreatonMarketRemixProposal: 'app.creaton.market.remixProposal',
+  AppCreatonMarketTask: 'app.creaton.market.task',
+  AppCreatonMarketTaskAttestation: 'app.creaton.market.taskAttestation',
+  AppCreatonMarketTaskUpdate: 'app.creaton.market.taskUpdate',
   ChatBskyActorDeclaration: 'chat.bsky.actor.declaration',
   ChatBskyActorDefs: 'chat.bsky.actor.defs',
   ChatBskyActorDeleteAccount: 'chat.bsky.actor.deleteAccount',
@@ -23789,6 +25017,14 @@ export const ids = {
   ComAtprotoTempRevokeAccountCredentials:
     'com.atproto.temp.revokeAccountCredentials',
   ComGermnetworkDeclaration: 'com.germnetwork.declaration',
+  ComCreatonDiscussionCreateTopic: 'com.creaton.discussion.createTopic',
+  ComCreatonDiscussionGetTopicMembership:
+    'com.creaton.discussion.getTopicMembership',
+  ComCreatonDiscussionJoinTopic: 'com.creaton.discussion.joinTopic',
+  ComCreatonDiscussionLeaveTopic: 'com.creaton.discussion.leaveTopic',
+  ComCreatonDiscussionTopic: 'com.creaton.discussionTopic',
+  ComCreatonEvmAddressControl: 'com.creaton.evm.addressControl',
+  ComCreatonProposal: 'com.creaton.proposal',
   ToolsOzoneCommunicationCreateTemplate:
     'tools.ozone.communication.createTemplate',
   ToolsOzoneCommunicationDefs: 'tools.ozone.communication.defs',

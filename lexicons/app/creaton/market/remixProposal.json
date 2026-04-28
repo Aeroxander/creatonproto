@@ -1,0 +1,147 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.remixProposal",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A proposal to remix the IP of a completed conviction market. The remix team requests a portion of the parent project's franchise token reserve in exchange for building a new creative work that extends or adapts the parent IP.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "parentCommunityId",
+          "remixCommunityId",
+          "title",
+          "description",
+          "requestedTokens",
+          "remixContributorShareBps",
+          "ipLineage",
+          "status",
+          "proposerDid",
+          "proposerWallet",
+          "createdAt"
+        ],
+        "properties": {
+          "parentCommunityId": {
+            "type": "string",
+            "description": "0x-prefixed keccak256 communityId of the completed parent conviction market."
+          },
+          "remixCommunityId": {
+            "type": "string",
+            "description": "0x-prefixed keccak256 communityId for the proposed remix conviction market."
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Short title of the remix project."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 10000,
+            "description": "Full description of the remix: what it is, how it builds on the parent IP, and what the remix team will deliver."
+          },
+          "ipLineage": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Explanation of how the new work derives from or incorporates the parent project's IP. Should reference the specific assets (characters, music, code modules, etc.) being built upon."
+          },
+          "licenseType": {
+            "type": "string",
+            "knownValues": ["cc_by", "cc_by_sa", "cc_by_nc", "cc_by_nc_sa", "all_rights_reserved", "custom"],
+            "description": "License under which the remix output will be released."
+          },
+          "milestones": {
+            "type": "array",
+            "description": "Proposed milestones for the remix project.",
+            "maxLength": 20,
+            "items": {
+              "type": "ref",
+              "ref": "#milestone"
+            }
+          },
+          "requestedTokens": {
+            "type": "string",
+            "description": "Absolute number of parent project tokens requested (as a decimal string to avoid integer overflow)."
+          },
+          "remixContributorShareBps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000,
+            "description": "Basis points (out of 10 000) of the token allocation that goes to the remix contributors via TrustGraph. The remainder goes to remix funders."
+          },
+          "onChainRemixId": {
+            "type": "string",
+            "description": "0x-prefixed keccak256 remixId returned by RemixMarketFactory.submitRemixProposal(), once the proposal has been submitted on-chain."
+          },
+          "status": {
+            "type": "string",
+            "knownValues": ["draft", "on_chain_pending", "parent_dao_voting", "approved", "active", "complete", "rejected"],
+            "description": "Current lifecycle status of the remix proposal."
+          },
+          "proposerDid": {
+            "type": "string",
+            "format": "did",
+            "description": "ATproto DID of the remix proposer."
+          },
+          "proposerWallet": {
+            "type": "string",
+            "description": "EVM wallet address of the remix proposer. Must match the on-chain proposer."
+          },
+          "innerDAOAddress": {
+            "type": "string",
+            "description": "Address of the inner Majeur DAO deployed after parent DAO approval."
+          },
+          "metadataURI": {
+            "type": "string",
+            "description": "Canonical ATproto or IPFS URI for the on-chain metadataURI passed to RemixMarketFactory."
+          },
+          "storyIpId": {
+            "type": "string",
+            "description": "Story Protocol IP Account address of the remix creative work. Populated once the proposer has registered the remix NFT on Story Protocol. Enables on-chain derivative registration and PIL-governed royalty flows."
+          },
+          "storyParentIpId": {
+            "type": "string",
+            "description": "Story Protocol IP Account address of the parent conviction market's IP. Populated from StoryIPAdapter.communityIpId(parentCommunityId)."
+          },
+          "storyLicenseTermsId": {
+            "type": "integer",
+            "description": "PIL terms ID from the parent IP used to register this remix as a derivative on Story Protocol."
+          },
+          "tags": {
+            "type": "array",
+            "maxLength": 10,
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "description": "Optional genre or domain tags, e.g. ['animation', 'music', 'sequel']."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    },
+    "milestone": {
+      "type": "object",
+      "description": "A proposed milestone for the remix project.",
+      "required": ["title", "description"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "estimatedWeeks": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Rough estimate of weeks to complete this milestone."
+        }
+      }
+    }
+  }
+}

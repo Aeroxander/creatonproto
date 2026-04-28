@@ -161,6 +161,14 @@ import * as AppCreatonCommunityJoin from './types/app/creaton/community/join.js'
 import * as AppCreatonCommunityLeave from './types/app/creaton/community/leave.js'
 import * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenVotes.js'
 import * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
+import * as AppCreatonMarketGetTaskAttestations from './types/app/creaton/market/getTaskAttestations.js'
+import * as AppCreatonMarketGetTasks from './types/app/creaton/market/getTasks.js'
+import * as AppCreatonMarketIpOffer from './types/app/creaton/market/ipOffer.js'
+import * as AppCreatonMarketProject from './types/app/creaton/market/project.js'
+import * as AppCreatonMarketRemixProposal from './types/app/creaton/market/remixProposal.js'
+import * as AppCreatonMarketTask from './types/app/creaton/market/task.js'
+import * as AppCreatonMarketTaskAttestation from './types/app/creaton/market/taskAttestation.js'
+import * as AppCreatonMarketTaskUpdate from './types/app/creaton/market/taskUpdate.js'
 import * as ChatBskyActorDeclaration from './types/chat/bsky/actor/declaration.js'
 import * as ChatBskyActorDefs from './types/chat/bsky/actor/defs.js'
 import * as ChatBskyActorDeleteAccount from './types/chat/bsky/actor/deleteAccount.js'
@@ -303,6 +311,13 @@ import * as ComAtprotoTempFetchLabels from './types/com/atproto/temp/fetchLabels
 import * as ComAtprotoTempRequestPhoneVerification from './types/com/atproto/temp/requestPhoneVerification.js'
 import * as ComAtprotoTempRevokeAccountCredentials from './types/com/atproto/temp/revokeAccountCredentials.js'
 import * as ComGermnetworkDeclaration from './types/com/germnetwork/declaration.js'
+import * as ComCreatonDiscussionCreateTopic from './types/com/creaton/discussion/createTopic.js'
+import * as ComCreatonDiscussionGetTopicMembership from './types/com/creaton/discussion/getTopicMembership.js'
+import * as ComCreatonDiscussionJoinTopic from './types/com/creaton/discussion/joinTopic.js'
+import * as ComCreatonDiscussionLeaveTopic from './types/com/creaton/discussion/leaveTopic.js'
+import * as ComCreatonDiscussionTopic from './types/com/creaton/discussionTopic.js'
+import * as ComCreatonEvmAddressControl from './types/com/creaton/evm/addressControl.js'
+import * as ComCreatonProposal from './types/com/creaton/proposal.js'
 import * as ToolsOzoneCommunicationCreateTemplate from './types/tools/ozone/communication/createTemplate.js'
 import * as ToolsOzoneCommunicationDefs from './types/tools/ozone/communication/defs.js'
 import * as ToolsOzoneCommunicationDeleteTemplate from './types/tools/ozone/communication/deleteTemplate.js'
@@ -510,6 +525,14 @@ export * as AppCreatonCommunityJoin from './types/app/creaton/community/join.js'
 export * as AppCreatonCommunityLeave from './types/app/creaton/community/leave.js'
 export * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenVotes.js'
 export * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
+export * as AppCreatonMarketGetTaskAttestations from './types/app/creaton/market/getTaskAttestations.js'
+export * as AppCreatonMarketGetTasks from './types/app/creaton/market/getTasks.js'
+export * as AppCreatonMarketIpOffer from './types/app/creaton/market/ipOffer.js'
+export * as AppCreatonMarketProject from './types/app/creaton/market/project.js'
+export * as AppCreatonMarketRemixProposal from './types/app/creaton/market/remixProposal.js'
+export * as AppCreatonMarketTask from './types/app/creaton/market/task.js'
+export * as AppCreatonMarketTaskAttestation from './types/app/creaton/market/taskAttestation.js'
+export * as AppCreatonMarketTaskUpdate from './types/app/creaton/market/taskUpdate.js'
 export * as ChatBskyActorDeclaration from './types/chat/bsky/actor/declaration.js'
 export * as ChatBskyActorDefs from './types/chat/bsky/actor/defs.js'
 export * as ChatBskyActorDeleteAccount from './types/chat/bsky/actor/deleteAccount.js'
@@ -652,6 +675,13 @@ export * as ComAtprotoTempFetchLabels from './types/com/atproto/temp/fetchLabels
 export * as ComAtprotoTempRequestPhoneVerification from './types/com/atproto/temp/requestPhoneVerification.js'
 export * as ComAtprotoTempRevokeAccountCredentials from './types/com/atproto/temp/revokeAccountCredentials.js'
 export * as ComGermnetworkDeclaration from './types/com/germnetwork/declaration.js'
+export * as ComCreatonDiscussionCreateTopic from './types/com/creaton/discussion/createTopic.js'
+export * as ComCreatonDiscussionGetTopicMembership from './types/com/creaton/discussion/getTopicMembership.js'
+export * as ComCreatonDiscussionJoinTopic from './types/com/creaton/discussion/joinTopic.js'
+export * as ComCreatonDiscussionLeaveTopic from './types/com/creaton/discussion/leaveTopic.js'
+export * as ComCreatonDiscussionTopic from './types/com/creaton/discussionTopic.js'
+export * as ComCreatonEvmAddressControl from './types/com/creaton/evm/addressControl.js'
+export * as ComCreatonProposal from './types/com/creaton/proposal.js'
 export * as ToolsOzoneCommunicationCreateTemplate from './types/tools/ozone/communication/createTemplate.js'
 export * as ToolsOzoneCommunicationDefs from './types/tools/ozone/communication/defs.js'
 export * as ToolsOzoneCommunicationDeleteTemplate from './types/tools/ozone/communication/deleteTemplate.js'
@@ -3652,11 +3682,13 @@ export class AppCreatonNS {
   _client: XrpcClient
   community: AppCreatonCommunityNS
   feed: AppCreatonFeedNS
+  market: AppCreatonMarketNS
 
   constructor(client: XrpcClient) {
     this._client = client
     this.community = new AppCreatonCommunityNS(client)
     this.feed = new AppCreatonFeedNS(client)
+    this.market = new AppCreatonMarketNS(client)
   }
 }
 
@@ -3896,6 +3928,544 @@ export class AppCreatonFeedTokenVoteRecord {
       'com.atproto.repo.deleteRecord',
       undefined,
       { collection: 'app.creaton.feed.tokenVote', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonMarketNS {
+  _client: XrpcClient
+  ipOffer: AppCreatonMarketIpOfferRecord
+  project: AppCreatonMarketProjectRecord
+  remixProposal: AppCreatonMarketRemixProposalRecord
+  task: AppCreatonMarketTaskRecord
+  taskAttestation: AppCreatonMarketTaskAttestationRecord
+  taskUpdate: AppCreatonMarketTaskUpdateRecord
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.ipOffer = new AppCreatonMarketIpOfferRecord(client)
+    this.project = new AppCreatonMarketProjectRecord(client)
+    this.remixProposal = new AppCreatonMarketRemixProposalRecord(client)
+    this.task = new AppCreatonMarketTaskRecord(client)
+    this.taskAttestation = new AppCreatonMarketTaskAttestationRecord(client)
+    this.taskUpdate = new AppCreatonMarketTaskUpdateRecord(client)
+  }
+
+  getTaskAttestations(
+    params?: AppCreatonMarketGetTaskAttestations.QueryParams,
+    opts?: AppCreatonMarketGetTaskAttestations.CallOptions,
+  ): Promise<AppCreatonMarketGetTaskAttestations.Response> {
+    return this._client.call(
+      'app.creaton.market.getTaskAttestations',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  getTasks(
+    params?: AppCreatonMarketGetTasks.QueryParams,
+    opts?: AppCreatonMarketGetTasks.CallOptions,
+  ): Promise<AppCreatonMarketGetTasks.Response> {
+    return this._client.call(
+      'app.creaton.market.getTasks',
+      params,
+      undefined,
+      opts,
+    )
+  }
+}
+
+export class AppCreatonMarketIpOfferRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonMarketIpOffer.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.market.ipOffer',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonMarketIpOffer.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.market.ipOffer',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketIpOffer.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.ipOffer'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketIpOffer.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.ipOffer'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.market.ipOffer', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonMarketProjectRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonMarketProject.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.market.project',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonMarketProject.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.market.project',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketProject.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.project'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketProject.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.project'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.market.project', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonMarketRemixProposalRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonMarketRemixProposal.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.market.remixProposal',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonMarketRemixProposal.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.market.remixProposal',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketRemixProposal.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.remixProposal'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketRemixProposal.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.remixProposal'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.market.remixProposal', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonMarketTaskRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonMarketTask.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.market.task',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{ uri: string; cid: string; value: AppCreatonMarketTask.Record }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.market.task',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketTask.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.task'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketTask.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.task'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.market.task', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonMarketTaskAttestationRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonMarketTaskAttestation.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.market.taskAttestation',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonMarketTaskAttestation.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.market.taskAttestation',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketTaskAttestation.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.taskAttestation'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketTaskAttestation.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.taskAttestation'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.market.taskAttestation', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonMarketTaskUpdateRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonMarketTaskUpdate.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.market.taskUpdate',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonMarketTaskUpdate.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.market.taskUpdate',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketTaskUpdate.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.taskUpdate'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonMarketTaskUpdate.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.market.taskUpdate'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.market.taskUpdate', ...params },
       { headers },
     )
   }
@@ -4487,11 +5057,13 @@ export class ComNS {
   _client: XrpcClient
   atproto: ComAtprotoNS
   germnetwork: ComGermnetworkNS
+  creaton: ComCreatonNS
 
   constructor(client: XrpcClient) {
     this._client = client
     this.atproto = new ComAtprotoNS(client)
     this.germnetwork = new ComGermnetworkNS(client)
+    this.creaton = new ComCreatonNS(client)
   }
 }
 
@@ -5686,6 +6258,89 @@ export class ComGermnetworkNS {
 }
 
 export class ComGermnetworkDeclarationRecord {
+export class ComCreatonNS {
+  _client: XrpcClient
+  discussionTopic: ComCreatonDiscussionTopicRecord
+  proposal: ComCreatonProposalRecord
+  discussion: ComCreatonDiscussionNS
+  evm: ComCreatonEvmNS
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.discussion = new ComCreatonDiscussionNS(client)
+    this.evm = new ComCreatonEvmNS(client)
+    this.discussionTopic = new ComCreatonDiscussionTopicRecord(client)
+    this.proposal = new ComCreatonProposalRecord(client)
+  }
+}
+
+export class ComCreatonDiscussionNS {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  createTopic(
+    data?: ComCreatonDiscussionCreateTopic.InputSchema,
+    opts?: ComCreatonDiscussionCreateTopic.CallOptions,
+  ): Promise<ComCreatonDiscussionCreateTopic.Response> {
+    return this._client.call(
+      'com.creaton.discussion.createTopic',
+      opts?.qp,
+      data,
+      opts,
+    )
+  }
+
+  getTopicMembership(
+    params?: ComCreatonDiscussionGetTopicMembership.QueryParams,
+    opts?: ComCreatonDiscussionGetTopicMembership.CallOptions,
+  ): Promise<ComCreatonDiscussionGetTopicMembership.Response> {
+    return this._client.call(
+      'com.creaton.discussion.getTopicMembership',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  joinTopic(
+    data?: ComCreatonDiscussionJoinTopic.InputSchema,
+    opts?: ComCreatonDiscussionJoinTopic.CallOptions,
+  ): Promise<ComCreatonDiscussionJoinTopic.Response> {
+    return this._client.call(
+      'com.creaton.discussion.joinTopic',
+      opts?.qp,
+      data,
+      opts,
+    )
+  }
+
+  leaveTopic(
+    data?: ComCreatonDiscussionLeaveTopic.InputSchema,
+    opts?: ComCreatonDiscussionLeaveTopic.CallOptions,
+  ): Promise<ComCreatonDiscussionLeaveTopic.Response> {
+    return this._client.call(
+      'com.creaton.discussion.leaveTopic',
+      opts?.qp,
+      data,
+      opts,
+    )
+  }
+}
+
+export class ComCreatonEvmNS {
+  _client: XrpcClient
+  addressControl: ComCreatonEvmAddressControlRecord
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.addressControl = new ComCreatonEvmAddressControlRecord(client)
+  }
+}
+
+export class ComCreatonEvmAddressControlRecord {
   _client: XrpcClient
 
   constructor(client: XrpcClient) {
@@ -5700,6 +6355,10 @@ export class ComGermnetworkDeclarationRecord {
   }> {
     const res = await this._client.call('com.atproto.repo.listRecords', {
       collection: 'com.germnetwork.declaration',
+    records: { uri: string; value: ComCreatonEvmAddressControl.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'com.creaton.evm.addressControl',
       ...params,
     })
     return res.data
@@ -5714,6 +6373,10 @@ export class ComGermnetworkDeclarationRecord {
   }> {
     const res = await this._client.call('com.atproto.repo.getRecord', {
       collection: 'com.germnetwork.declaration',
+    value: ComCreatonEvmAddressControl.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'com.creaton.evm.addressControl',
       ...params,
     })
     return res.data
@@ -5737,6 +6400,14 @@ export class ComGermnetworkDeclarationRecord {
         ...params,
         record: { ...record, $type: collection },
       },
+    record: Un$Typed<ComCreatonEvmAddressControl.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.evm.addressControl'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
       { encoding: 'application/json', headers },
     )
     return res.data
@@ -5751,6 +6422,10 @@ export class ComGermnetworkDeclarationRecord {
     headers?: Record<string, string>,
   ): Promise<{ uri: string; cid: string }> {
     const collection = 'com.germnetwork.declaration'
+    record: Un$Typed<ComCreatonEvmAddressControl.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.evm.addressControl'
     const res = await this._client.call(
       'com.atproto.repo.putRecord',
       undefined,
@@ -5768,6 +6443,169 @@ export class ComGermnetworkDeclarationRecord {
       'com.atproto.repo.deleteRecord',
       undefined,
       { collection: 'com.germnetwork.declaration', ...params },
+      { collection: 'com.creaton.evm.addressControl', ...params },
+      { headers },
+    )
+  }
+}
+
+export class ComCreatonDiscussionTopicRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: ComCreatonDiscussionTopic.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'com.creaton.discussionTopic',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: ComCreatonDiscussionTopic.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'com.creaton.discussionTopic',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonDiscussionTopic.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.discussionTopic'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonDiscussionTopic.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.discussionTopic'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'com.creaton.discussionTopic', ...params },
+      { headers },
+    )
+  }
+}
+
+export class ComCreatonProposalRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: ComCreatonProposal.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'com.creaton.proposal',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{ uri: string; cid: string; value: ComCreatonProposal.Record }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'com.creaton.proposal',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonProposal.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.proposal'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonProposal.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.proposal'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'com.creaton.proposal', ...params },
       { headers },
     )
   }

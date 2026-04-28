@@ -1,0 +1,47 @@
+{
+  "lexicon": 1,
+  "id": "com.creaton.discussion.getTopicMembership",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Check if the authenticated user is a participant in a discussion topic.",
+      "parameters": {
+        "type": "params",
+        "required": ["topicId"],
+        "properties": {
+          "topicId": {
+            "type": "string",
+            "description": "The topic identifier (e.g., 'task:42')."
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["isMember"],
+          "properties": {
+            "isMember": {
+              "type": "boolean",
+              "description": "Whether the user is a participant in this topic."
+            },
+            "listUri": {
+              "type": "string",
+              "format": "at-uri",
+              "description": "URI of the topic's participant list, if it exists."
+            },
+            "listItemUri": {
+              "type": "string",
+              "format": "at-uri",
+              "description": "URI of the user's list item record, if a participant."
+            },
+            "participantCount": {
+              "type": "integer",
+              "description": "Number of participants in the topic."
+            }
+          }
+        }
+      }
+    }
+  }
+}

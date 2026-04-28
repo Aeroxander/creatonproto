@@ -1,0 +1,36 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.taskAttestation",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A social attestation that a task was completed, reviewed, or contributed to. Free — no token staking required. Provides a low-weight signal to TAPR. For high-weight conviction, use app.creaton.market.vouchContributor (CREATE staking).",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["task", "type", "createdAt"],
+        "properties": {
+          "task": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "AT-URI + CID of the task record being attested."
+          },
+          "type": {
+            "type": "string",
+            "knownValues": ["completed", "reviewed", "contributed", "blocked"],
+            "description": "The kind of attestation. 'completed' = I verify this is done. 'reviewed' = I reviewed the work. 'contributed' = I helped with this. 'blocked' = this task is blocked by something."
+          },
+          "body": {
+            "type": "string",
+            "description": "Optional short note from the attestor explaining the attestation.",
+            "maxLength": 1000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

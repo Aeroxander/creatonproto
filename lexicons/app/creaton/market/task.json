@@ -1,0 +1,61 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.task",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A task within a conviction market milestone. Anyone can create tasks; the market creator can mark them accepted to canonicalise the work.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["communityId", "milestoneIdx", "title", "status", "createdAt"],
+        "properties": {
+          "communityId": {
+            "type": "string",
+            "description": "The 0x-prefixed keccak256 communityId of the conviction market."
+          },
+          "milestoneIdx": {
+            "type": "integer",
+            "description": "Zero-based milestone index this task belongs to. Use -1 for backlog (not yet assigned to a milestone).",
+            "minimum": -1
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional rich-text body describing the task in detail.",
+            "maxLength": 10000
+          },
+          "status": {
+            "type": "string",
+            "knownValues": ["open", "in_progress", "in_review", "done", "cancelled"]
+          },
+          "assignee": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the assigned contributor. Optional — any DID may self-assign via a taskUpdate."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxLength": 10,
+            "description": "Optional labels, e.g. ['design', 'research', 'engineering']."
+          },
+          "accepted": {
+            "type": "boolean",
+            "description": "Set to true by the market creator to mark this task as canonical. Informs contributors that work on this task counts toward the milestone."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

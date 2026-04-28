@@ -1,0 +1,35 @@
+{
+  "lexicon": 1,
+  "id": "com.creaton.discussion.leaveTopic",
+  "defs": {
+    "main": {
+      "type": "procedure",
+      "description": "Leave a discussion topic. Removes the requester from the topic's participant list. Requires auth.",
+      "input": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["topicId"],
+          "properties": {
+            "topicId": {
+              "type": "string",
+              "description": "The topic identifier to leave (e.g., 'task:42')."
+            }
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["success"],
+          "properties": {
+            "success": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
+}

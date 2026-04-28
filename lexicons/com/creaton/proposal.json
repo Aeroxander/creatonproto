@@ -1,0 +1,48 @@
+{
+  "lexicon": 1,
+  "id": "com.creaton.proposal",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "An on-chain proposal's off-chain content. Created before the on-chain call, linked via atprotoUri. Contains the human-readable details of what's being proposed.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["title", "createdAt"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Short title for the proposal.",
+            "maxLength": 300,
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of what's being proposed, scope, deliverables, etc.",
+            "maxLength": 10000
+          },
+          "discussionTopicUri": {
+            "type": "string",
+            "description": "If this proposal originated from a discussion, the topic ID (e.g., 'task:42' or 'discussion:...')."
+          },
+          "budget": {
+            "type": "string",
+            "description": "Requested budget as a string (to preserve BigInt precision). '0' means equity-only."
+          },
+          "tokenWeightBps": {
+            "type": "integer",
+            "description": "Requested ProjectToken allocation in basis points."
+          },
+          "deadlineDays": {
+            "type": "integer",
+            "description": "Claim deadline in days from creation."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

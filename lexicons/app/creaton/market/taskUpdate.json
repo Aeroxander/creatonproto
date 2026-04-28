@@ -1,0 +1,46 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.taskUpdate",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "An activity log entry on a task — a progress comment, status transition, or assignee change. Can be linked to a Bluesky post when the user chooses to share their progress publicly.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["task", "body", "createdAt"],
+        "properties": {
+          "task": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "AT-URI + CID of the task being updated."
+          },
+          "newStatus": {
+            "type": "string",
+            "knownValues": ["open", "in_progress", "in_review", "done", "cancelled"],
+            "description": "Set when this update includes a status transition. Omit for comment-only updates."
+          },
+          "newAssignee": {
+            "type": "string",
+            "format": "did",
+            "description": "Set when this update changes the assignee. Omit if unchanged."
+          },
+          "body": {
+            "type": "string",
+            "description": "The update text — explains what changed, what was done, or what is blocked.",
+            "maxLength": 3000
+          },
+          "blueskyPostUri": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the Bluesky post this update was shared to, if the user chose to post publicly. This post is eligible for token-weighted curation in the market feed."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

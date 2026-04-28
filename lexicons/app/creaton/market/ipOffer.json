@@ -1,0 +1,150 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.ipOffer",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "An offer to contribute existing IP (art, music, code, brand assets, etc.) to an active conviction market, in exchange for a portion of the market's contributor token pool.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "communityId",
+          "title",
+          "description",
+          "ipType",
+          "assetUri",
+          "requestedBps",
+          "status",
+          "contributorDid",
+          "contributorWallet",
+          "createdAt"
+        ],
+        "properties": {
+          "communityId": {
+            "type": "string",
+            "description": "0x-prefixed keccak256 communityId of the target active conviction market."
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Short title describing the IP being offered."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 10000,
+            "description": "Full description of the IP: what it is, why it's relevant to this market, and how it will be used."
+          },
+          "ipType": {
+            "type": "string",
+            "knownValues": ["visual_art", "music", "code", "writing", "brand_asset", "dataset", "other"],
+            "description": "Category of the IP being offered."
+          },
+          "assetUri": {
+            "type": "string",
+            "description": "IPFS, Arweave, or ATproto URI pointing to the IP asset or a representative preview. Should be publicly accessible."
+          },
+          "licenseType": {
+            "type": "string",
+            "knownValues": ["cc_by", "cc_by_sa", "cc_by_nc", "cc_by_nc_sa", "all_rights_reserved", "custom"],
+            "description": "License under which the IP is being offered to the market."
+          },
+          "licenseTermsURI": {
+            "type": "string",
+            "description": "Optional URI to full license terms if licenseType is 'custom'."
+          },
+          "requestedBps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000,
+            "description": "Basis points (out of the market's full contributorShareBps pool) requested for this IP contribution. For example, if contributorShareBps = 3000 and requestedBps = 500, the IP contributor would receive 5% of the contributor pool."
+          },
+          "onChainOfferId": {
+            "type": "string",
+            "description": "0x-prefixed keccak256 offerId returned by IPContributionRegistry.proposeIPOffer(), once submitted on-chain."
+          },
+          "status": {
+            "type": "string",
+            "knownValues": ["draft", "on_chain_pending", "dao_voting", "accepted", "rejected", "claimed"],
+            "description": "Current lifecycle status of the IP offer."
+          },
+          "contributorDid": {
+            "type": "string",
+            "format": "did",
+            "description": "ATproto DID of the IP contributor."
+          },
+          "contributorWallet": {
+            "type": "string",
+            "description": "EVM wallet address of the IP contributor. Must match the on-chain proposer address."
+          },
+          "provenanceURI": {
+            "type": "string",
+            "description": "Optional URI proving original authorship or ownership of the IP (e.g., an on-chain registration, a signed statement, or a prior publication link)."
+          },
+          "rightsModel": {
+            "type": "string",
+            "knownValues": ["contributor_owned", "studio_owned"],
+            "description": "Whether the contributor keeps copyright and licenses the IP to the studio, or intends to assign ownership to the studio or its legal wrapper."
+          },
+          "studioLicenseScope": {
+            "type": "string",
+            "knownValues": ["direct_license_only", "studio_sublicensable", "studio_assignment"],
+            "description": "Whether downstream projects must license directly from the contributor, the studio may sublicense the IP, or the contribution is intended to be assigned to the studio."
+          },
+          "contributorRoyaltyBps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000,
+            "description": "Contributor share of downstream licensing revenue for this IP, in basis points."
+          },
+          "studioRoyaltyBps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000,
+            "description": "Studio DAO treasury share of downstream licensing revenue for this IP, in basis points."
+          },
+          "legalEntityType": {
+            "type": "string",
+            "knownValues": ["individual", "existing_entity", "studio_unincorporated", "us_llc", "wyoming_una", "wyoming_duna", "marshall_islands_dao_llc", "other"],
+            "description": "Legal wrapper or owner type controlling this IP or assignment right."
+          },
+          "ownerEntityName": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Optional legal entity name when the IP owner is an LLC, DAO wrapper, or other organization."
+          },
+          "governingLaw": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Optional governing law, arbitration forum, or dispute venue referenced by the contributor's terms."
+          },
+          "storyIpId": {
+            "type": "string",
+            "description": "Story Protocol IP Account address for the contributor's registered IP Asset. When provided, the IPContributionRegistry will mint a Story License Token to the market DAO treasury as enforceable proof of the right-to-use upon acceptance."
+          },
+          "storyLicenseTermsId": {
+            "type": "integer",
+            "description": "PIL terms ID under which the IP is being licensed to the market. Must have derivativesAllowed=true for the offer to be accepted when Story is enabled."
+          },
+          "storyLicenseTokenId": {
+            "type": "integer",
+            "description": "The Story License Token ID minted to the market DAO treasury after the offer is accepted. Populated after acceptance."
+          },
+          "tags": {
+            "type": "array",
+            "maxLength": 10,
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "description": "Optional domain tags, e.g. ['character-design', 'soundtrack', 'ui-kit']."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

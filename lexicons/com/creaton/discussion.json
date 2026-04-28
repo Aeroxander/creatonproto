@@ -1,0 +1,77 @@
+{
+  "lexicon": 1,
+  "id": "com.creaton.discussion",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A discussion post within a task or community thread. Supports threaded replies via the standard ATProto reply mechanism. Lives in the com.creaton namespace so it doesn't appear in Bluesky feeds.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["body", "createdAt"],
+        "properties": {
+          "body": {
+            "type": "string",
+            "description": "The discussion post text. Supports plain text or markdown.",
+            "maxLength": 10000,
+            "minLength": 1
+          },
+          "reply": {
+            "type": "ref",
+            "ref": "#replyRef",
+            "description": "If present, this is a reply to another discussion post. root points to the top-level post, parent points to the direct parent."
+          },
+          "topic": {
+            "type": "ref",
+            "ref": "#topicRef",
+            "description": "The topic this discussion belongs to. Links to an on-chain task, proposal, or an off-chain discussion root."
+          },
+          "mentions": {
+            "type": "array",
+            "items": {
+              "type": "ref",
+              "ref": "app.bsky.richtext.facet#mention"
+            },
+            "description": "Mentions of other users in the body text."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp when this post was created."
+          }
+        }
+      }
+    },
+    "replyRef": {
+      "type": "object",
+      "description": "Reference to parent and root posts for threading.",
+      "required": ["root", "parent"],
+      "properties": {
+        "root": {
+          "type": "ref",
+          "ref": "com.atproto.repo.strongRef"
+        },
+        "parent": {
+          "type": "ref",
+          "ref": "com.atproto.repo.strongRef"
+        }
+      }
+    },
+    "topicRef": {
+      "type": "object",
+      "description": "Reference to the topic this discussion belongs to.",
+      "required": ["uri"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "Identifier for the topic. Can be an at:// URI (for linking to an ATProto record), an on-chain reference (e.g., 'chain:1:0xabc...:42' for taskId 42), or a plain string identifier."
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Optional human-readable label for the topic (e.g., task title)."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.getTaskAttestations",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Fetch social attestations on a specific task, ordered by most recent first.",
+      "parameters": {
+        "type": "params",
+        "required": ["taskUri"],
+        "properties": {
+          "taskUri": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the task record."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50
+          },
+          "cursor": {
+            "type": "string"
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["attestations"],
+          "properties": {
+            "attestations": {
+              "type": "array",
+              "items": {
+                "type": "ref",
+                "ref": "#attestationView"
+              }
+            },
+            "cursor": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "attestationView": {
+      "type": "object",
+      "required": ["uri", "cid", "author", "record", "indexedAt"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "at-uri"
+        },
+        "cid": {
+          "type": "string",
+          "format": "cid"
+        },
+        "author": {
+          "type": "ref",
+          "ref": "app.bsky.actor.defs#profileViewBasic",
+          "description": "Hydrated profile of the attestor."
+        },
+        "record": {
+          "type": "unknown",
+          "description": "The raw app.creaton.market.taskAttestation record."
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    }
+  }
+}

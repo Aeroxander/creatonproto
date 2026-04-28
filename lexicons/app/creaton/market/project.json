@@ -1,0 +1,65 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.market.project",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Metadata record for a conviction market project. Stores the project identity, IP classification, and visual assets. One record per market, keyed by communityUri.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "communityUri",
+          "name",
+          "createdAt"
+        ],
+        "properties": {
+          "communityUri": {
+            "type": "string",
+            "description": "The unique community URI identifying the conviction market."
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Public name of the project."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 10000,
+            "description": "Description of what the project is about."
+          },
+          "genre": {
+            "type": "string",
+            "knownValues": ["Fantasy", "Sci-Fi", "Superhero", "Horror", "Romance", "Other"],
+            "description": "Genre classification for discovery."
+          },
+          "ipType": {
+            "type": "string",
+            "knownValues": ["Character", "World", "Story", "Game IP", "Music", "Visual Art"],
+            "description": "Type of IP being created."
+          },
+          "licenseType": {
+            "type": "string",
+            "knownValues": ["CC-BY", "CC-BY-SA", "All Rights Reserved"],
+            "description": "Default license for the project IP."
+          },
+          "loreDescription": {
+            "type": "string",
+            "maxLength": 50000,
+            "description": "Extended backstory or lore for the IP."
+          },
+          "coverImageUri": {
+            "type": "string",
+            "format": "uri",
+            "description": "URI to cover art (IPFS, Arweave, or HTTPS)."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of record creation."
+          }
+        }
+      }
+    }
+  }
+}
