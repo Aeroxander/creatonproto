@@ -1,6 +1,6 @@
 import { type IncomingMessage } from 'node:http'
 import { pinoHttp, stdSerializers } from 'pino-http'
-import { obfuscateHeaders, subsystemLogger } from '@creatonproto/common'
+import { obfuscateHeaders, subsystemLogger } from '@atproto/common'
 
 export const dbLogger: ReturnType<typeof subsystemLogger> =
   subsystemLogger('ozone:db')

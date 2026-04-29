@@ -1,9 +1,9 @@
-import { AtprotoDid } from '@creatonproto/did'
+import { AtprotoDid } from '@atproto/did'
 import {
   AtprotoOAuthScope,
   OAuthAuthorizationServerMetadata,
-} from '@creatonproto/oauth-types'
-import { Fetch, bindFetch } from '@creatonproto-labs/fetch'
+} from '@atproto/oauth-types'
+import { Fetch, bindFetch } from '@atproto-labs/fetch'
 import { TokenInvalidError } from './errors/token-invalid-error.js'
 import { TokenRevokedError } from './errors/token-revoked-error.js'
 import { dpopFetchWrapper } from './fetch-dpop.js'

@@ -1,4 +1,4 @@
-import { OAuthClientMetadata } from '@creatonproto/oauth-types'
+import { OAuthClientMetadata } from '@atproto/oauth-types'
 import { Awaitable, buildInterfaceChecker } from '../lib/util/type.js'
 import { ClientId } from './client-id.js'
 

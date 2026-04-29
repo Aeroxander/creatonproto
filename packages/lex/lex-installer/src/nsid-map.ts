@@ -1,4 +1,4 @@
-import { NSID } from '@creatonproto/syntax'
+import { NSID } from '@atproto/syntax'
 
 /**
  * A Map implementation that maps keys of type K to an internal representation I.

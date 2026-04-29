@@ -1,10 +1,10 @@
-import { AtpAgent } from '@creatonproto/api'
+import { AtpAgent } from '@atproto/api'
 import {
   ImageRef,
   SeedClient,
   TestNetworkNoAppView,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 
 describe('account deactivation', () => {
   let network: TestNetworkNoAppView

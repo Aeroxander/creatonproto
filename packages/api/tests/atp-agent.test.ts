@@ -1,5 +1,5 @@
-import { TID } from '@creatonproto/common-web'
-import { TestNetworkNoAppView } from '@creatonproto/dev-env'
+import { TID } from '@atproto/common-web'
+import { TestNetworkNoAppView } from '@atproto/dev-env'
 import {
   AppBskyActorDefs,
   AppBskyActorProfile,

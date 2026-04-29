@@ -1,7 +1,7 @@
 import assert from 'node:assert'
 import { Client, createOp as createPlcOp } from '@did-plc/lib'
 import { Selectable } from 'kysely'
-import { Keypair, Secp256k1Keypair } from '@creatonproto/crypto'
+import { Keypair, Secp256k1Keypair } from '@atproto/crypto'
 import {
   HandleString,
   asAtIdentifierString,
@@ -42,11 +42,11 @@ import {
   TokenInfo,
   TokenStore,
   UpdateRequestData,
-} from '@creatonproto/oauth-provider'
+} from '@atproto/oauth-provider'
 import {
   AuthRequiredError as XrpcAuthRequiredError,
   InvalidRequestError as XrpcInvalidRequestError,
-} from '@creatonproto/xrpc-server'
+} from '@atproto/xrpc-server'
 import { ActorStore } from '../actor-store/actor-store'
 import { BackgroundQueue } from '../background'
 import { fromDateISO } from '../db'

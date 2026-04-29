@@ -1,11 +1,12 @@
-import { AtUri } from '@creatonproto/syntax'
-import * as crypto from '@creatonproto/crypto'
+import { AtUri, AtUriString, DidString } from '@atproto/syntax'
+import * as crypto from '@atproto/crypto'
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { app } from '../../../../lexicons/index.js'
 import { prepareCreate } from '../../../../repo'
 
 export default function (server: Server, ctx: AppContext) {
-    server.app.creaton.community.create({
+    server.add(app.creaton.community.create, {
         auth: ctx.authVerifier.authorization({
             checkTakedown: true,
             authorize: () => {
@@ -16,7 +17,7 @@ export default function (server: Server, ctx: AppContext) {
             try {
                 const requesterDid = auth.credentials.did
                 const { daoAddress, name, symbol } = input.body
-                const serviceDid = ctx.cfg.service.did
+                const serviceDid = ctx.cfg.service.did as DidString
 
                 console.log(`[CommunityCreate] Request from ${requesterDid} for DAO ${daoAddress}`)
 
@@ -58,8 +59,8 @@ export default function (server: Server, ctx: AppContext) {
                     return {
                         encoding: 'application/json' as const,
                         body: {
-                            communityUri: community.uri,
-                            listUri: community.listUri,
+                            communityUri: community.uri as AtUriString,
+                            listUri: community.listUri as AtUriString,
                         },
                     }
                 }
@@ -136,8 +137,8 @@ export default function (server: Server, ctx: AppContext) {
                 return {
                     encoding: 'application/json' as const,
                     body: {
-                        communityUri: communityWrite.uri.toString(),
-                        listUri,
+                        communityUri: communityWrite.uri.toString() as AtUriString,
+                        listUri: listUri as AtUriString,
                     },
                 }
             } catch (err: any) {

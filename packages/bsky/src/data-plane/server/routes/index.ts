@@ -1,5 +1,5 @@
 import { ConnectRouter } from '@connectrpc/connect'
-import { IdResolver } from '@creatonproto/identity'
+import { IdResolver } from '@atproto/identity'
 import { Service } from '../../../proto/bsky_connect'
 import { Database } from '../db'
 import activitySubscription from './activity-subscription'

@@ -1,4 +1,4 @@
-import { AtprotoAudience, isAtprotoAudience } from '@creatonproto/did'
+import { AtprotoAudience, isAtprotoAudience } from '@atproto/did'
 import { LexiconPermission, LexiconPermissionSet } from '../lib/lexicon.js'
 import { Nsid, isNsid } from '../lib/nsid.js'
 import { Parser } from '../lib/parser.js'

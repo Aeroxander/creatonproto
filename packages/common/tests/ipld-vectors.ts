@@ -1,4 +1,4 @@
-import { parseCid } from '@creatonproto/lex-data'
+import { parseCid } from '@atproto/lex-data'
 
 export const vectors = [
   {

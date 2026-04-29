@@ -1,5 +1,5 @@
-import { decodeAll } from '@creatonproto/lex-cbor'
-import { LexValue } from '@creatonproto/lex-data'
+import { decodeAll } from '@atproto/lex-cbor'
+import { LexValue } from '@atproto/lex-data'
 
 /**
  * @deprecated Use {@link decodeAll} from `@atproto/lex-cbor` instead.

@@ -1,4 +1,4 @@
-import { Secp256k1Keypair } from '@creatonproto/crypto'
+import { Secp256k1Keypair } from '@atproto/crypto'
 import { Repo, WriteOpAction, blocksToCarFile, verifyProofs } from '../src'
 import { MemoryBlockstore } from '../src/storage'
 

@@ -1,5 +1,5 @@
-import { AtpAgent } from '@creatonproto/api'
-import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
+import { AtpAgent } from '@atproto/api'
+import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
 import { TOOLS_OZONE_TEAM } from '../src/lexicon'
 import { ids } from '../src/lexicon/lexicons'
 

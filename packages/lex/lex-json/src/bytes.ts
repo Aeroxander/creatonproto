@@ -1,4 +1,4 @@
-import { fromBase64, toBase64 } from '@creatonproto/lex-data'
+import { fromBase64, toBase64 } from '@atproto/lex-data'
 import { JsonValue } from './json.js'
 
 /**

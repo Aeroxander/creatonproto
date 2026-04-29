@@ -1,7 +1,7 @@
 export {
   type CreateIdentityResolverOptions,
   createIdentityResolver,
-} from '@creatonproto-labs/identity-resolver'
+} from '@atproto-labs/identity-resolver'
 
 // @TODO Currently, the `OAuthClient`'s `IdentityResolver` is an instance of
 // `AtprotoIdentityResolver`, which implements the ATProto Identity resolution

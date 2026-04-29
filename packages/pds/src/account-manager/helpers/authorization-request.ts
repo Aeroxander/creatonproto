@@ -6,7 +6,7 @@ import {
   RequestData,
   RequestId,
   UpdateRequestData,
-} from '@creatonproto/oauth-provider'
+} from '@atproto/oauth-provider'
 import { fromDateISO, fromJson, toDateISO, toJson } from '../../db'
 import { AccountDb, AuthorizationRequest } from '../db'
 

@@ -1,10 +1,10 @@
-import { WebcryptoKey } from '@creatonproto/jwk-webcrypto'
+import { WebcryptoKey } from '@atproto/jwk-webcrypto'
 import {
   DigestAlgorithm,
   Key,
   RuntimeImplementation,
   RuntimeLock,
-} from '@creatonproto/oauth-client'
+} from '@atproto/oauth-client'
 
 /**
  * @see {@link // https://developer.mozilla.org/en-US/docs/Web/API/LockManager/request}

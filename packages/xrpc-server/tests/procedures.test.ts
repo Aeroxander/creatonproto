@@ -2,8 +2,8 @@ import assert from 'node:assert'
 import * as http from 'node:http'
 import { AddressInfo } from 'node:net'
 import { Readable } from 'node:stream'
-import { LexiconDoc } from '@creatonproto/lexicon'
-import { XrpcClient } from '@creatonproto/xrpc'
+import { LexiconDoc } from '@atproto/lexicon'
+import { XrpcClient } from '@atproto/xrpc'
 import * as xrpcServer from '../src'
 import {
   buildAddLexicons,

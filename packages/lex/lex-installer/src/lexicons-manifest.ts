@@ -1,4 +1,4 @@
-import { l } from '@creatonproto/lex-schema'
+import { l } from '@atproto/lex-schema'
 
 /**
  * Schema for validating and parsing lexicons manifest files.

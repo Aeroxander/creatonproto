@@ -1,6 +1,6 @@
 import { Options as PrettierOptions, format } from 'prettier'
 import { Project, SourceFile, VariableDeclarationKind } from 'ts-morph'
-import { type LexiconDoc } from '@creatonproto/lexicon'
+import { type LexiconDoc } from '@atproto/lexicon'
 import { type GeneratedFile } from '../types'
 import { toTitleCase } from './util'
 
@@ -15,7 +15,7 @@ const PRETTIER_OPTS: PrettierOptions = {
 export const utilTs = (project) =>
   gen(project, '/util.ts', async (file) => {
     file.replaceWithText(`
-import { type ValidationResult } from '@creatonproto/lexicon'
+import { type ValidationResult } from '@atproto/lexicon'
 
 export type OmitKey<T, K extends keyof T> = {
   [K2 in keyof T as K2 extends K ? never : K2]: T[K2]
@@ -135,10 +135,10 @@ export function asPredicate<V extends Validator>(validate: V) {
 
 export const lexiconsTs = (project, lexicons: LexiconDoc[]) =>
   gen(project, '/lexicons.ts', async (file) => {
-    //= import { type LexiconDoc, Lexicons } from '@creatonproto/lexicon'
+    //= import { type LexiconDoc, Lexicons } from '@atproto/lexicon'
     file
       .addImportDeclaration({
-        moduleSpecifier: '@creatonproto/lexicon',
+        moduleSpecifier: '@atproto/lexicon',
       })
       .addNamedImports([
         { name: 'LexiconDoc', isTypeOnly: true },

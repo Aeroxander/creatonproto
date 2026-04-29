@@ -1,10 +1,11 @@
-import * as ident from '@creatonproto/syntax'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import * as ident from '@atproto/syntax'
+import { AtIdentifierString } from '@atproto/syntax'
+import { Server, InvalidRequestError } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { com } from '../../../../lexicons/index.js'
 
 export default function (server: Server, ctx: AppContext) {
-  server.com.atproto.server.createSIWELogin({
+  server.add(com.atproto.server.createSIWELogin, {
     handler: async ({ input }) => {
       let handle: string
       try {
@@ -18,7 +19,7 @@ export default function (server: Server, ctx: AppContext) {
       }
 
       let did: string | undefined
-      const user = await ctx.accountManager.getAccount(handle)
+      const user = await ctx.accountManager.getAccount(handle as AtIdentifierString)
 
       if (user) {
         did = user.did

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { ValidationError } from '@creatonproto/lexicon'
+import { ValidationError } from '@atproto/lexicon'
 
 export type QueryParams = Record<string, any>
 export type HeadersMap = Record<string, string | undefined>

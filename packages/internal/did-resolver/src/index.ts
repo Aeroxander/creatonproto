@@ -1,4 +1,4 @@
-export * from '@creatonproto/did'
+export * from '@atproto/did'
 
 export * from './create-did-resolver.js'
 export * from './did-cache-memory.js'

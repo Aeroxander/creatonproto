@@ -1,6 +1,6 @@
 import { ParamValue } from './syntax.js'
 
-// @NOTE Not types from from '@creatonproto/lex-document' because we want a readonly
+// @NOTE Not types from from '@atproto/lex-document' because we want a readonly
 // version here to prevent accidental mutation.
 
 export type LexiconPermission<P extends string = string> = {

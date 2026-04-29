@@ -1,5 +1,5 @@
-import { AppBskyFeedPost } from '@creatonproto/api'
-import type { DatabaseSchema } from '@creatonproto/bsky'
+import { AppBskyFeedPost } from '@atproto/api'
+import type { DatabaseSchema } from '@atproto/bsky'
 import { TestNetwork } from '../network'
 import { TestNetworkNoAppView } from '../network-no-appview'
 import { RecordRef, SeedClient } from './client'

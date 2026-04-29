@@ -1,8 +1,9 @@
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { com } from '../../../../lexicons/index.js'
 
 export default function (server: Server, ctx: AppContext) {
-  server.com.atproto.server.createSIWERegistration({
+  server.add(com.atproto.server.createSIWERegistration, {
     handler: async ({ input }) => {
       const siweMessage = await ctx.accountManager.siweRegistration(
         input.body.evmAddress,

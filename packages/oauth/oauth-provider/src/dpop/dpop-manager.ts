@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto'
 import { EmbeddedJWK, calculateJwkThumbprint, errors, jwtVerify } from 'jose'
 import { z } from 'zod'
-import { ValidationError } from '@creatonproto/jwk'
+import { ValidationError } from '@atproto/jwk'
 import { DPOP_NONCE_MAX_AGE } from '../constants.js'
 import { InvalidDpopProofError } from '../errors/invalid-dpop-proof-error.js'
 import { UseDpopNonceError } from '../errors/use-dpop-nonce-error.js'
@@ -39,7 +39,7 @@ export class DpopManager {
     this.dpopNonce =
       dpopSecret === false
         ? undefined
-        : new DpopNonce(dpopSecret, dpopRotationInterval)
+        : new DpopNonce(dpopSecret as DpopSecret, dpopRotationInterval)
   }
 
   nextNonce(): string | undefined {

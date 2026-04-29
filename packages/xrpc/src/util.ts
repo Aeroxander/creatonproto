@@ -3,7 +3,7 @@ import {
   LexXrpcQuery,
   jsonStringToLex,
   stringifyLex,
-} from '@creatonproto/lexicon'
+} from '@atproto/lexicon'
 import {
   CallOptions,
   ErrorResponseBody,

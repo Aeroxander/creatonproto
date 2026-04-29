@@ -1,8 +1,8 @@
 import {
   InvalidHandleError,
   normalizeAndEnsureValidHandle,
-} from '@creatonproto/syntax'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+} from '@atproto/syntax'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { reservedSubdomains } from './reserved'
 
 export const baseNormalizeAndValidate = (handle: string) => {

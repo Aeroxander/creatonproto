@@ -3,12 +3,12 @@ import {
   AppBskyActorDefs,
   AtpAgent,
   ComAtprotoRepoGetRecord,
-} from '@creatonproto/api'
-import { chunkArray, dedupeStrs } from '@creatonproto/common'
-import { Keypair } from '@creatonproto/crypto'
-import { IdResolver } from '@creatonproto/identity'
-import { BlobRef } from '@creatonproto/lexicon'
-import { AtUri, INVALID_HANDLE, normalizeDatetimeAlways } from '@creatonproto/syntax'
+} from '@atproto/api'
+import { chunkArray, dedupeStrs } from '@atproto/common'
+import { Keypair } from '@atproto/crypto'
+import { IdResolver } from '@atproto/identity'
+import { BlobRef } from '@atproto/lexicon'
+import { AtUri, INVALID_HANDLE, normalizeDatetimeAlways } from '@atproto/syntax'
 import { Database } from '../db'
 import { LabelRow } from '../db/schema/label'
 import { ids } from '../lexicon/lexicons'

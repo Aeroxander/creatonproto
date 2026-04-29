@@ -1,4 +1,4 @@
-import { AtpAgent, BSKY_LABELER_DID } from '@creatonproto/api'
+import { AtpAgent, BSKY_LABELER_DID } from '@atproto/api'
 import {
   ModeratorClient,
   RecordRef,
@@ -6,7 +6,7 @@ import {
   TestNetwork,
   TestOzone,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 import { ids } from '../src/lexicon/lexicons'
 import { TAKEDOWN_LABEL } from '../src/mod-service'
 

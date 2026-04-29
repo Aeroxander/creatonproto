@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
-import type { ActiveDeviceSession } from '@creatonproto/oauth-provider-api'
+import type { ActiveDeviceSession } from '@atproto/oauth-provider-api'
 import {
   Middleware,
   Router,

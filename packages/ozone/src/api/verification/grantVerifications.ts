@@ -1,5 +1,5 @@
 import { Selectable } from 'kysely'
-import { AuthRequiredError, InvalidRequestError } from '@creatonproto/xrpc-server'
+import { AuthRequiredError, InvalidRequestError } from '@atproto/xrpc-server'
 import { AppContext } from '../../context'
 import { Verification } from '../../db/schema/verification'
 import { Server } from '../../lexicon'

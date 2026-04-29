@@ -10,7 +10,7 @@ import {
   RefreshToken,
   Sub,
   TokenId,
-} from '@creatonproto/oauth-provider'
+} from '@atproto/oauth-provider'
 import { DateISO, JsonEncoded } from '../../../db/cast'
 
 export interface Token {

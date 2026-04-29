@@ -1,10 +1,11 @@
-import { AtUri } from '@creatonproto/syntax'
+import { AtUri, DidString } from '@atproto/syntax'
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { com } from '../../../../lexicons/index.js'
 import { prepareDelete } from '../../../../repo'
 
 export default function (server: Server, ctx: AppContext) {
-    server.com.creaton.discussion.leaveTopic({
+    server.add(com.creaton.discussion.leaveTopic, {
         auth: ctx.authVerifier.authorization({
             checkTakedown: true,
             authorize: () => {
@@ -12,9 +13,9 @@ export default function (server: Server, ctx: AppContext) {
             },
         }),
         handler: async ({ auth, input }) => {
-            const userDid = auth.credentials.did
+            const userDid = auth.credentials.did as DidString
             const { topicId } = input.body
-            const serviceDid = ctx.cfg.service.did
+            const serviceDid = ctx.cfg.service.did as DidString
 
             // Build the expected list item URI
             const listItemRkey = `participant-${topicId.replace(/[^a-zA-Z0-9]/g, '-').slice(0, 20)}-${userDid.slice(-8)}`

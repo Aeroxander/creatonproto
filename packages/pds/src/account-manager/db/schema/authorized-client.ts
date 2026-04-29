@@ -1,5 +1,5 @@
 import { Selectable } from 'kysely'
-import { AuthorizedClientData, OAuthClientId } from '@creatonproto/oauth-provider'
+import { AuthorizedClientData, OAuthClientId } from '@atproto/oauth-provider'
 import { DateISO, JsonEncoded } from '../../../db'
 
 export interface AuthorizedClient {

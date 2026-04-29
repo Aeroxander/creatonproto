@@ -11,8 +11,8 @@ import {
   cloneStream,
   createDecoders,
   isErrnoException,
-} from '@creatonproto/common'
-import { BlobNotFoundError } from '@creatonproto/repo'
+} from '@atproto/common'
+import { BlobNotFoundError } from '@atproto/repo'
 import { StreamBlobOptions, streamBlob } from '../api/blob-resolver'
 import { AppContext } from '../context'
 import { Middleware, responseSignal } from '../util/http'

@@ -1,4 +1,4 @@
-import { TestNetwork } from '@creatonproto/dev-env'
+import { TestNetwork } from '@atproto/dev-env'
 
 describe('sitemap', () => {
   let network: TestNetwork

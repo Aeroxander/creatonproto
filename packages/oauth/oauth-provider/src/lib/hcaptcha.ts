@@ -7,8 +7,8 @@ import {
   fetchJsonProcessor,
   fetchJsonZodProcessor,
   fetchOkProcessor,
-} from '@creatonproto-labs/fetch'
-import { pipe } from '@creatonproto-labs/pipe'
+} from '@atproto-labs/fetch'
+import { pipe } from '@atproto-labs/pipe'
 
 export const hcaptchaTokenSchema = z.string().min(1)
 export type HcaptchaToken = z.infer<typeof hcaptchaTokenSchema>

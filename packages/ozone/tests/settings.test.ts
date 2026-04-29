@@ -1,8 +1,8 @@
 import AtpAgent, {
   ToolsOzoneSettingListOptions,
   ToolsOzoneSettingUpsertOption,
-} from '@creatonproto/api'
-import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
+} from '@atproto/api'
+import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
 import { SettingScope } from '../dist/db/schema/setting'
 import { ids } from '../src/lexicon/lexicons'
 import { forSnapshot } from './_util'

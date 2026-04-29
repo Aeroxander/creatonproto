@@ -1,5 +1,5 @@
 import { Selectable } from 'kysely'
-import { DeviceData, DeviceId } from '@creatonproto/oauth-provider'
+import { DeviceData, DeviceId } from '@atproto/oauth-provider'
 import { fromDateISO, toDateISO } from '../../db'
 import { AccountDb, Device } from '../db'
 

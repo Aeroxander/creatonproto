@@ -3,7 +3,7 @@ import {
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 
 describe('revoke account credentials event', () => {
   let network: TestNetwork

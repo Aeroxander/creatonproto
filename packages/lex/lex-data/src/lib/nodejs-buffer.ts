@@ -1,5 +1,11 @@
 type Encoding = 'utf8' | 'base64' | 'base64url'
 
+// WithImplicitCoercion moved from global scope in newer @types/node versions
+type WithImplicitCoercion<T> =
+  | T
+  | { valueOf(): T }
+  | (T extends string ? { [Symbol.toPrimitive](hint: 'string'): T } : never)
+
 interface NodeJSBuffer<TArrayBuffer extends ArrayBufferLike = ArrayBufferLike>
   extends Uint8Array<TArrayBuffer> {
   byteLength: number

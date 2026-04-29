@@ -5,7 +5,7 @@ import {
   XrpcClient,
   type FetchHandler,
   type FetchHandlerOptions,
-} from '@creatonproto/xrpc'
+} from '@atproto/xrpc'
 import { schemas } from './lexicons.js'
 import { CID } from 'multiformats/cid'
 import { type OmitKey, type Un$Typed } from './util.js'
@@ -6258,6 +6258,13 @@ export class ComGermnetworkNS {
 }
 
 export class ComGermnetworkDeclarationRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+}
+
 export class ComCreatonNS {
   _client: XrpcClient
   discussionTopic: ComCreatonDiscussionTopicRecord
@@ -6351,10 +6358,6 @@ export class ComCreatonEvmAddressControlRecord {
     params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
   ): Promise<{
     cursor?: string
-    records: { uri: string; value: ComGermnetworkDeclaration.Record }[]
-  }> {
-    const res = await this._client.call('com.atproto.repo.listRecords', {
-      collection: 'com.germnetwork.declaration',
     records: { uri: string; value: ComCreatonEvmAddressControl.Record }[]
   }> {
     const res = await this._client.call('com.atproto.repo.listRecords', {
@@ -6369,10 +6372,6 @@ export class ComCreatonEvmAddressControlRecord {
   ): Promise<{
     uri: string
     cid: string
-    value: ComGermnetworkDeclaration.Record
-  }> {
-    const res = await this._client.call('com.atproto.repo.getRecord', {
-      collection: 'com.germnetwork.declaration',
     value: ComCreatonEvmAddressControl.Record
   }> {
     const res = await this._client.call('com.atproto.repo.getRecord', {
@@ -6387,19 +6386,6 @@ export class ComCreatonEvmAddressControlRecord {
       ComAtprotoRepoCreateRecord.InputSchema,
       'collection' | 'record'
     >,
-    record: Un$Typed<ComGermnetworkDeclaration.Record>,
-    headers?: Record<string, string>,
-  ): Promise<{ uri: string; cid: string }> {
-    const collection = 'com.germnetwork.declaration'
-    const res = await this._client.call(
-      'com.atproto.repo.createRecord',
-      undefined,
-      {
-        collection,
-        rkey: 'self',
-        ...params,
-        record: { ...record, $type: collection },
-      },
     record: Un$Typed<ComCreatonEvmAddressControl.Record>,
     headers?: Record<string, string>,
   ): Promise<{ uri: string; cid: string }> {
@@ -6418,10 +6404,6 @@ export class ComCreatonEvmAddressControlRecord {
       ComAtprotoRepoPutRecord.InputSchema,
       'collection' | 'record'
     >,
-    record: Un$Typed<ComGermnetworkDeclaration.Record>,
-    headers?: Record<string, string>,
-  ): Promise<{ uri: string; cid: string }> {
-    const collection = 'com.germnetwork.declaration'
     record: Un$Typed<ComCreatonEvmAddressControl.Record>,
     headers?: Record<string, string>,
   ): Promise<{ uri: string; cid: string }> {
@@ -6442,7 +6424,6 @@ export class ComCreatonEvmAddressControlRecord {
     await this._client.call(
       'com.atproto.repo.deleteRecord',
       undefined,
-      { collection: 'com.germnetwork.declaration', ...params },
       { collection: 'com.creaton.evm.addressControl', ...params },
       { headers },
     )

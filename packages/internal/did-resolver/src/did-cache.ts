@@ -1,5 +1,5 @@
-import { Did, DidDocument } from '@creatonproto/did'
-import { CachedGetter, SimpleStore } from '@creatonproto-labs/simple-store'
+import { Did, DidDocument } from '@atproto/did'
+import { CachedGetter, SimpleStore } from '@atproto-labs/simple-store'
 import { DidCacheMemory } from './did-cache-memory.js'
 import { DidMethod, ResolveDidOptions } from './did-method.js'
 import { DidResolver, ResolvedDocument } from './did-resolver.js'

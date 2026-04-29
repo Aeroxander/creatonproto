@@ -1,5 +1,5 @@
 import { Selectable } from 'kysely'
-import { Agent, AtUri, CredentialSession } from '@creatonproto/api'
+import { Agent, AtUri, CredentialSession } from '@atproto/api'
 import { VerifierConfig } from '../config'
 import { Verification } from '../db/schema/verification'
 

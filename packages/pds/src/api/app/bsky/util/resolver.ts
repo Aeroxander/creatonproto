@@ -1,5 +1,5 @@
-import { DidDocument, PoorlyFormattedDidDocumentError } from '@creatonproto/identity'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { DidDocument, PoorlyFormattedDidDocumentError } from '@atproto/identity'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
 
 // provides http-friendly errors during did resolution

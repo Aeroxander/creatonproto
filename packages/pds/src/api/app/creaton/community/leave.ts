@@ -1,10 +1,11 @@
-import { AtUri } from '@creatonproto/syntax'
+import { AtUri } from '@atproto/syntax'
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { app } from '../../../../lexicons/index.js'
 import { prepareDelete } from '../../../../repo'
 
 export default function (server: Server, ctx: AppContext) {
-    server.app.creaton.community.leave({
+    server.add(app.creaton.community.leave, {
         auth: ctx.authVerifier.authorization({
             checkTakedown: true,
             authorize: () => {

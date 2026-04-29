@@ -1,5 +1,5 @@
 import { DynamicModule, sql } from 'kysely'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { AnyQb, DbRef } from './types'
 
 export type Cursor = { primary: string; secondary: string }

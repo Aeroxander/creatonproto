@@ -3,10 +3,10 @@ import * as nodeCrypto from 'node:crypto'
 import * as jose from 'jose'
 import KeyEncoder from 'key-encoder'
 import * as ui8 from 'uint8arrays'
-import { AtUri, AtpAgent } from '@creatonproto/api'
-import { MINUTE } from '@creatonproto/common'
-import * as crypto from '@creatonproto/crypto'
-import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
+import { AtUri, AtpAgent } from '@atproto/api'
+import { MINUTE } from '@atproto/common'
+import * as crypto from '@atproto/crypto'
+import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
 
 const keyEncoder = new KeyEncoder('secp256k1')
 

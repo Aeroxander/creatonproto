@@ -1,11 +1,11 @@
-import AtpAgent from '@creatonproto/api'
-import { SECOND } from '@creatonproto/common'
+import AtpAgent from '@atproto/api'
+import { SECOND } from '@atproto/common'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 import { ids } from '../src/lexicon/lexicons'
 import { SeverityLevelSettingKey } from '../src/setting/constants'
 

@@ -1,4 +1,4 @@
-import { BlobStore } from '@creatonproto/repo'
+import { BlobStore } from '@atproto/repo'
 import { SyncEvtData } from '../../repo'
 import { BlobReader } from '../blob/reader'
 import { ActorDb } from '../db'

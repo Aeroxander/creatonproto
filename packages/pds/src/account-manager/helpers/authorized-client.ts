@@ -3,7 +3,7 @@ import {
   AuthorizedClients,
   ClientId,
   Sub,
-} from '@creatonproto/oauth-provider'
+} from '@atproto/oauth-provider'
 import { fromJson, toDateISO, toJson } from '../../db'
 import { AccountDb } from '../db'
 

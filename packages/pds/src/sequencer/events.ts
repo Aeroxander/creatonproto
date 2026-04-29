@@ -48,7 +48,7 @@ export const formatSeqSyncEvt = async (
   did: DidString,
   data: SyncEvtData,
 ): Promise<RepoSeqInsert> => {
-  const blocks = await blocksToCarFile(data.cid, data.blocks)
+  const blocks = await blocksToCarFile(data.cid, data.blocks) as Uint8Array<ArrayBuffer>
   const evt: SyncEvt = {
     did,
     rev: data.rev,

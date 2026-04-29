@@ -8,8 +8,11 @@ import {
   FetchRequestError,
   asRequest,
   extractUrl,
-} from '@creatonproto-labs/fetch'
+} from '@atproto-labs/fetch'
 import { isUnicastIp } from './util.js'
+
+// undici extends RequestInit with a non-standard `dispatcher` option
+type RequestInitWithDispatcher = RequestInit & { dispatcher?: unknown }
 
 const { IPv4, IPv6 } = ipaddr
 
@@ -67,7 +70,7 @@ export function unicastFetchWrap<C = FetchContext>({
     })
 
     return async function (input, init): Promise<Response> {
-      if (init?.dispatcher) {
+      if ((init as RequestInitWithDispatcher | undefined)?.dispatcher) {
         throw new FetchRequestError(
           asRequest(input, init),
           500,
@@ -86,17 +89,15 @@ export function unicastFetchWrap<C = FetchContext>({
       }
 
       if (SUPPORTS_REQUEST_INIT_DISPATCHER) {
-        // @ts-expect-error non-standard option
-        const request = new Request(input, { ...init, dispatcher })
+        const request = new Request(input, { ...init, dispatcher } as RequestInit as RequestInit)
         return fetch.call(this, request)
       } else {
-        // @ts-expect-error non-standard option
-        return fetch.call(this, input, { ...init, dispatcher })
+        return fetch.call(this, input, { ...init, dispatcher } as RequestInit as RequestInit)
       }
     }
   } else {
     return async function (input, init): Promise<Response> {
-      if (init?.dispatcher) {
+      if ((init as RequestInitWithDispatcher | undefined)?.dispatcher) {
         throw new FetchRequestError(
           asRequest(input, init),
           500,
@@ -152,7 +153,6 @@ export function unicastFetchWrap<C = FetchContext>({
             const response = await fetch.call(this, input, {
               ...init,
               headers,
-              // @ts-expect-error non-standard option
               dispatcher,
             })
 

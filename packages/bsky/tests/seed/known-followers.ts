@@ -1,4 +1,4 @@
-import { SeedClient, TestNetwork, TestNetworkNoAppView } from '@creatonproto/dev-env'
+import { SeedClient, TestNetwork, TestNetworkNoAppView } from '@atproto/dev-env'
 
 export type User = {
   email: string

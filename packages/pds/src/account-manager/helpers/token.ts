@@ -5,7 +5,7 @@ import {
   RefreshToken,
   TokenData,
   TokenId,
-} from '@creatonproto/oauth-provider'
+} from '@atproto/oauth-provider'
 import { fromDateISO, fromJson, toDateISO, toJson } from '../../db'
 import { AccountDb, Token } from '../db'
 import { selectAccountQB } from './account'

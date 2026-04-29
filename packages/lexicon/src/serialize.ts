@@ -5,7 +5,7 @@ import {
   check,
   ipldToJson,
   jsonToIpld,
-} from '@creatonproto/common-web'
+} from '@atproto/common-web'
 import { BlobRef, jsonBlobRef } from './blob-refs'
 
 /**

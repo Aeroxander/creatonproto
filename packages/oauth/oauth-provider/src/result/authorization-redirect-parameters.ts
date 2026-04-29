@@ -1,4 +1,4 @@
-import { OAuthTokenType } from '@creatonproto/oauth-types'
+import { OAuthTokenType } from '@atproto/oauth-types'
 import { Code } from '../request/code.js'
 
 /**

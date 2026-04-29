@@ -1,4 +1,4 @@
-import { isLoopbackHost } from '@creatonproto/oauth-types'
+import { isLoopbackHost } from '@atproto/oauth-types'
 
 /**
  *

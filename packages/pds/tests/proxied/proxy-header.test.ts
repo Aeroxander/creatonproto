@@ -4,9 +4,9 @@ import http from 'node:http'
 import { AddressInfo } from 'node:net'
 import * as plc from '@did-plc/lib'
 import express from 'express'
-import { Keypair } from '@creatonproto/crypto'
-import { SeedClient, TestNetworkNoAppView, usersSeed } from '@creatonproto/dev-env'
-import { verifyJwt } from '@creatonproto/xrpc-server'
+import { Keypair } from '@atproto/crypto'
+import { SeedClient, TestNetworkNoAppView, usersSeed } from '@atproto/dev-env'
+import { verifyJwt } from '@atproto/xrpc-server'
 import { parseProxyHeader } from '../../src/pipethrough'
 
 describe('proxy header', () => {

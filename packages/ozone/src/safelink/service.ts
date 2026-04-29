@@ -1,6 +1,6 @@
 import { Selectable } from 'kysely'
-import { ToolsOzoneSafelinkDefs } from '@creatonproto/api'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { ToolsOzoneSafelinkDefs } from '@atproto/api'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import {
   SafelinkActionType,
   SafelinkPatternType,

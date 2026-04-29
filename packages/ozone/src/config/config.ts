@@ -1,5 +1,5 @@
 import assert from 'node:assert'
-import { DAY, HOUR, MINUTE } from '@creatonproto/common'
+import { DAY, HOUR, MINUTE } from '@atproto/common'
 import { OzoneEnvironment } from './env'
 
 // off-config but still from env:

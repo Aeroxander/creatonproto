@@ -1,12 +1,12 @@
-import { Did, DidError, didDocumentValidator, didWebToUrl } from '@creatonproto/did'
+import { Did, DidError, didDocumentValidator, didWebToUrl } from '@atproto/did'
 import {
   Fetch,
   bindFetch,
   fetchJsonProcessor,
   fetchJsonZodProcessor,
   fetchOkProcessor,
-} from '@creatonproto-labs/fetch'
-import { pipe } from '@creatonproto-labs/pipe'
+} from '@atproto-labs/fetch'
+import { pipe } from '@atproto-labs/pipe'
 import { DidMethod, ResolveDidOptions } from '../did-method.js'
 
 const fetchSuccessHandler = pipe(

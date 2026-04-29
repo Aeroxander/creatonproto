@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { validateLanguage } from '@creatonproto/common-web'
-import { isValidNsid } from '@creatonproto/syntax'
+import { validateLanguage } from '@atproto/common-web'
+import { isValidNsid } from '@atproto/syntax'
 import { requiredPropertiesRefinement } from './util'
 
 export const languageSchema = z

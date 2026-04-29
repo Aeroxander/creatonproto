@@ -9,7 +9,7 @@
 import { IncomingHttpHeaders } from 'node:http'
 import { Readable, Writable } from 'node:stream'
 import * as undici from 'undici'
-import { isUnicastIp, unicastLookup } from '@creatonproto-labs/fetch-node'
+import { isUnicastIp, unicastLookup } from '@atproto-labs/fetch-node'
 
 // Re-export Dispatcher type for use elsewhere
 type Dispatcher = undici.Dispatcher

@@ -1,10 +1,10 @@
 import { EventEmitter, once } from 'node:events'
 import { Selectable } from 'kysely'
 import Mail from 'nodemailer/lib/mailer'
-import { AtpAgent } from '@creatonproto/api'
-import { fileExists } from '@creatonproto/common'
-import { SeedClient, TestNetworkNoAppView } from '@creatonproto/dev-env'
-import { BlobNotFoundError } from '@creatonproto/repo'
+import { AtpAgent } from '@atproto/api'
+import { fileExists } from '@atproto/common'
+import { SeedClient, TestNetworkNoAppView } from '@atproto/dev-env'
+import { BlobNotFoundError } from '@atproto/repo'
 import { AppContext } from '../src'
 import {
   Account,

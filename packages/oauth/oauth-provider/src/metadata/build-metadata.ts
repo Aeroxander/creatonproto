@@ -1,9 +1,9 @@
-import { Keyset } from '@creatonproto/jwk'
+import { Keyset } from '@atproto/jwk'
 import {
   OAuthAuthorizationServerMetadata,
   OAuthIssuerIdentifier,
   oauthAuthorizationServerMetadataValidator,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import { Client } from '../client/client.js'
 import { VERIFY_ALGOS } from '../lib/util/crypto.js'
 

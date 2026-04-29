@@ -4,7 +4,7 @@ import {
   oauthClientCredentialsSchema,
   oauthTokenIdentificationSchema,
   oauthTokenRequestSchema,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import { buildErrorPayload, buildErrorStatus } from '../errors/error-parser.js'
 import { InvalidClientError } from '../errors/invalid-client-error.js'
 import { InvalidGrantError } from '../errors/invalid-grant-error.js'

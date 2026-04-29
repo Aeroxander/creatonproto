@@ -6,7 +6,7 @@ import {
   Lexicons,
   ValidationError,
   type ValidationResult,
-} from '@creatonproto/lexicon'
+} from '@atproto/lexicon'
 import { type $Typed, is$typed, maybe$typed } from './util.js'
 
 export const schemaDict = {
@@ -19094,6 +19094,11 @@ export const schemaDict = {
               "The policy of who can message the account, this value is included in the keyPackage, but is duplicated here to allow applications to decide if they should show a 'Message on Germ' button to the viewer.",
             minLength: 1,
             maxLength: 100,
+          },
+        },
+      },
+    },
+  },
   ComCreatonDiscussionCreateTopic: {
     lexicon: 1,
     id: 'com.creaton.discussion.createTopic',

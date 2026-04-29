@@ -1,8 +1,8 @@
 import assert from 'node:assert'
 import path from 'node:path'
-import { DAY, HOUR, SECOND } from '@creatonproto/common'
-import { BrandingInput, HcaptchaConfig } from '@creatonproto/oauth-provider'
-import { ensureValidDid } from '@creatonproto/syntax'
+import { DAY, HOUR, SECOND } from '@atproto/common'
+import { BrandingInput, HcaptchaConfig } from '@atproto/oauth-provider'
+import { ensureValidDid } from '@atproto/syntax'
 import { ServerEnvironment } from './env'
 
 // off-config but still from env:

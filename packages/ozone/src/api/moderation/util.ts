@@ -1,4 +1,4 @@
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { ProtectedTagSettingKey } from '../../setting/constants'
 import { SettingService } from '../../setting/service'
 import { ProtectedTagSetting } from '../../setting/types'

@@ -3,7 +3,7 @@ import {
   InternalServerError,
   InvalidRequestError,
   MethodNotImplementedError,
-} from '@creatonproto/xrpc-server'
+} from '@atproto/xrpc-server'
 import { AppContext } from '../../../..'
 import { RolodexClient } from '../../../../rolodex'
 

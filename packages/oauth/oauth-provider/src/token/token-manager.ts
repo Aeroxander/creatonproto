@@ -1,13 +1,13 @@
-import { SignedJwt, isSignedJwt } from '@creatonproto/jwk'
-import { LexResolverError } from '@creatonproto/lex-resolver'
-import type { Account } from '@creatonproto/oauth-provider-api'
+import { SignedJwt, isSignedJwt } from '@atproto/jwk'
+import { LexResolverError } from '@atproto/lex-resolver'
+import type { Account } from '@atproto/oauth-provider-api'
 import {
   OAuthAccessToken,
   OAuthAuthorizationRequestParameters,
   OAuthScope,
   OAuthTokenResponse,
   OAuthTokenType,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import { AccessTokenMode } from '../access-token/access-token-mode.js'
 import { ClientAuth } from '../client/client-auth.js'
 import { Client } from '../client/client.js'

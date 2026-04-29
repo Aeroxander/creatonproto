@@ -2,8 +2,8 @@ import {
   AtpAgent,
   ChatBskyConvoDefs,
   ToolsOzoneModerationEmitEvent,
-} from '@creatonproto/api'
-import { HOUR } from '@creatonproto/common'
+} from '@atproto/api'
+import { HOUR } from '@atproto/common'
 import {
   ImageRef,
   ModeratorClient,
@@ -12,8 +12,8 @@ import {
   TestNetwork,
   TestOzone,
   basicSeed,
-} from '@creatonproto/dev-env'
-import { AtUri } from '@creatonproto/syntax'
+} from '@atproto/dev-env'
+import { AtUri } from '@atproto/syntax'
 import { EventReverser } from '../src'
 import { ImageInvalidator } from '../src/image-invalidator'
 import { ids } from '../src/lexicon/lexicons'

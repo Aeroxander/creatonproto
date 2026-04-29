@@ -2,7 +2,7 @@ import {
   OAuthClientIdDiscoverable,
   isLocalHostname,
   parseOAuthDiscoverableClientId,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import { InvalidClientIdError } from '../errors/invalid-client-id-error.js'
 import { InvalidRedirectUriError } from '../errors/invalid-redirect-uri-error.js'
 

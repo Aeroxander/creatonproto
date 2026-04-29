@@ -1,7 +1,7 @@
 import {
   AtprotoIdentityDidMethods,
   DidDocument,
-} from '@creatonproto-labs/did-resolver'
+} from '@atproto-labs/did-resolver'
 
 /**
  * Extract the raw, un-validated, Atproto handle from a DID document.

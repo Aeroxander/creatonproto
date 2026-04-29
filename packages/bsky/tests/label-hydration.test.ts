@@ -1,7 +1,7 @@
 import assert from 'node:assert'
-import { AtpAgent } from '@creatonproto/api'
-import { MINUTE } from '@creatonproto/common'
-import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
+import { AtpAgent } from '@atproto/api'
+import { MINUTE } from '@atproto/common'
+import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
 
 describe('label hydration', () => {
   let network: TestNetwork

@@ -1,4 +1,4 @@
-import { AuthRequiredError } from '@creatonproto/xrpc-server'
+import { AuthRequiredError } from '@atproto/xrpc-server'
 import { AppContext } from '../../context'
 import { Server } from '../../lexicon'
 import { subjectFromInput } from '../../mod-service/subject'

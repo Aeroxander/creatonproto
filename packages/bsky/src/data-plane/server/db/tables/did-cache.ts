@@ -1,4 +1,4 @@
-import { DidDocument } from '@creatonproto/identity'
+import { DidDocument } from '@atproto/identity'
 
 export interface DidCache {
   did: string

@@ -1,4 +1,4 @@
-import { NSID } from '@creatonproto/syntax'
+import { NSID } from '@atproto/syntax'
 export { NSID }
 
 export function parseNSID(value: string): NSID | null {

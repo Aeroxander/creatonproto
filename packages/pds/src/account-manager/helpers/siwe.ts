@@ -8,7 +8,7 @@ import {
 } from 'viem'
 import { abstract, abstractTestnet } from 'viem/chains'
 import { createSiweMessage, generateSiweNonce } from 'viem/siwe'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { AccountDb } from '../db'
 
 // Use abstractTestnet in development so the SIWE message chain ID matches

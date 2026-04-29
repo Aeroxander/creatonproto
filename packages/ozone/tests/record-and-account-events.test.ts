@@ -4,7 +4,7 @@ import {
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 import { isRepoRef } from '../src/lexicon/types/com/atproto/admin/defs'
 import { REASONMISLEADING } from '../src/lexicon/types/com/atproto/moderation/defs'
 import { isMain as isStrongRef } from '../src/lexicon/types/com/atproto/repo/strongRef'

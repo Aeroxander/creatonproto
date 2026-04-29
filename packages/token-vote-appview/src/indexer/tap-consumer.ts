@@ -1,4 +1,4 @@
-import { Tap, SimpleIndexer, RecordEvent } from '@creatonproto/tap'
+import { Tap, SimpleIndexer, RecordEvent } from '@atproto/tap'
 import { VoteProcessor, TokenVoteRecord } from './vote-processor'
 
 const TOKEN_VOTE_COLLECTION = 'app.creaton.feed.tokenVote'

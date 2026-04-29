@@ -1,18 +1,19 @@
-import { AtUri } from '@creatonproto/syntax'
+import { AtUri, AtUriString, DidString } from '@atproto/syntax'
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { app } from '../../../../lexicons/index.js'
 
 export default function (server: Server, ctx: AppContext) {
-    server.app.creaton.community.getMembership({
+    server.add(app.creaton.community.getMembership, {
         auth: ctx.authVerifier.authorization({
             authorize: () => {
                 // Basic auth check - user must be authenticated
             },
         }),
         handler: async ({ auth, params }) => {
-            const userDid = auth.credentials.did
+            const userDid = auth.credentials.did as DidString
             const { daoAddress } = params
-            const serviceDid = ctx.cfg.service.did
+            const serviceDid = ctx.cfg.service.did as DidString
 
             // Normalize DAO address to lowercase
             const normalizedDao = daoAddress.toLowerCase()
@@ -55,8 +56,8 @@ export default function (server: Server, ctx: AppContext) {
                 encoding: 'application/json' as const,
                 body: {
                     isMember,
-                    listUri: listUri,
-                    listItemUri: isMember ? listItemUri : undefined,
+                    listUri: listUri as AtUriString | undefined,
+                    listItemUri: isMember ? listItemUri as AtUriString : undefined,
                 },
             }
         },

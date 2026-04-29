@@ -1,4 +1,4 @@
-import { l } from '@creatonproto/lex-schema'
+import { l } from '@atproto/lex-schema'
 
 // https://atproto.com/specs/lexicon
 

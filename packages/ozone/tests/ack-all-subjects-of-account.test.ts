@@ -1,11 +1,11 @@
-import { ComAtprotoRepoStrongRef } from '@creatonproto/api'
+import { ComAtprotoRepoStrongRef } from '@atproto/api'
 import {
   ModeratorClient,
   RecordRef,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 import { isRepoRef } from '../src/lexicon/types/com/atproto/admin/defs'
 import {
   REASONAPPEAL,

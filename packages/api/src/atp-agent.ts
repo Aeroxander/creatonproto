@@ -1,4 +1,4 @@
-import { getPdsEndpoint, isValidDidDoc } from '@creatonproto/common-web'
+import { getPdsEndpoint, isValidDidDoc } from '@atproto/common-web'
 import {
   ErrorResponseBody,
   Gettable,
@@ -6,7 +6,7 @@ import {
   XRPCError,
   XrpcClient,
   errorResponseBody,
-} from '@creatonproto/xrpc'
+} from '@atproto/xrpc'
 import { Agent } from './agent'
 import {
   ComAtprotoServerCreateAccount,

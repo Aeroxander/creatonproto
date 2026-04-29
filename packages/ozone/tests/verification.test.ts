@@ -1,5 +1,5 @@
-import { AppBskyActorDefs, AtpAgent, asPredicate } from '@creatonproto/api'
-import { SeedClient, TestNetwork, basicSeed } from '@creatonproto/dev-env'
+import { AppBskyActorDefs, AtpAgent, asPredicate } from '@atproto/api'
+import { SeedClient, TestNetwork, basicSeed } from '@atproto/dev-env'
 import { forSnapshot } from './_util'
 
 const isValidProfile = asPredicate(AppBskyActorDefs.validateProfileViewDetailed)

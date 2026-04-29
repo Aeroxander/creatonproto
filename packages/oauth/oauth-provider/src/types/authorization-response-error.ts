@@ -2,7 +2,7 @@ import { z } from 'zod'
 import {
   oauthAuthorizationResponseErrorSchema,
   oidcAuthorizationResponseErrorSchema,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 
 export const authorizationResponseErrorSchema = z.union([
   oauthAuthorizationResponseErrorSchema,

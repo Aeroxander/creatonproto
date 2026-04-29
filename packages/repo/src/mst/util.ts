@@ -104,7 +104,7 @@ export const serializeNodeData = (entries: NodeEntry[]): NodeData => {
     const prefixLen = countPrefixLen(lastKey, leaf.key)
     data.e.push({
       p: prefixLen,
-      k: fromAscii(leaf.key.slice(prefixLen)),
+      k: fromAscii(leaf.key.slice(prefixLen)) as Uint8Array<ArrayBuffer>,
       v: leaf.value,
       t: subtree,
     })

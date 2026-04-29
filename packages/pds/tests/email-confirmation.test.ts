@@ -4,8 +4,8 @@ import {
   AtpAgent,
   ComAtprotoServerConfirmEmail,
   ComAtprotoServerUpdateEmail,
-} from '@creatonproto/api'
-import { SeedClient, TestNetworkNoAppView } from '@creatonproto/dev-env'
+} from '@atproto/api'
+import { SeedClient, TestNetworkNoAppView } from '@atproto/dev-env'
 import { ServerMailer } from '../src/mailer'
 import userSeed from './seeds/users'
 

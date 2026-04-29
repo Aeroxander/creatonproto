@@ -1,7 +1,7 @@
 import { DuplexOptions } from 'node:stream'
 import { WebSocket } from 'ws'
-import { createWebSocketStream } from '@creatonproto/common'
-import { ResponseType, XRPCError } from '@creatonproto/xrpc'
+import { createWebSocketStream } from '@atproto/common'
+import { ResponseType, XRPCError } from '@atproto/xrpc'
 import { Frame, MessageFrame } from './frames'
 
 export function streamByteChunks(ws: WebSocket, options?: DuplexOptions) {

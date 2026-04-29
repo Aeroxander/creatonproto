@@ -3,9 +3,10 @@ import http from 'node:http'
 import * as plc from '@did-plc/lib'
 import express from 'express'
 import getPort from 'get-port'
-import { Secp256k1Keypair } from '@creatonproto/crypto'
-import { createLexiconServer } from '@creatonproto/pds'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { Secp256k1Keypair } from '@atproto/crypto'
+import { app as lexApp } from '@atproto/pds'
+import { AtUriString, DidString } from '@atproto/syntax'
+import { InvalidRequestError, createServer } from '@atproto/xrpc-server'
 
 export interface TokenVoteFeedGenConfig {
   plcUrl: string
@@ -86,10 +87,10 @@ export class TestTokenVoteFeedGen {
 
     const feedGen = new TestTokenVoteFeedGen(port, null as unknown as http.Server, did, cfg.tokenVoteAppviewUrl)
 
-    const lexServer = createLexiconServer()
+    const xrpcServer = createServer()
 
     // getFeedSkeleton - returns posts ranked by token vote weight
-    lexServer.app.bsky.feed.getFeedSkeleton(async (args) => {
+    xrpcServer.add(lexApp.bsky.feed.getFeedSkeleton, async (args) => {
       const feedUri = args.params.feed
       const tokenAddress = feedGen.extractTokenAddress(feedUri)
 
@@ -104,29 +105,29 @@ export class TestTokenVoteFeedGen {
       const rankedPosts = feedGen.getRankedPosts(tokenAddress, limit, cursor)
 
       return {
-        encoding: 'application/json',
+        encoding: 'application/json' as const,
         body: {
-          feed: rankedPosts.posts.map((p) => ({ post: p.uri })),
+          feed: rankedPosts.posts.map((p) => ({ post: p.uri as AtUriString })),
           cursor: rankedPosts.cursor,
         },
       }
     })
 
     // describeFeedGenerator - lists available token feeds
-    lexServer.app.bsky.feed.describeFeedGenerator(async () => {
+    xrpcServer.add(lexApp.bsky.feed.describeFeedGenerator, async () => {
       const tokenAddresses = Array.from(feedGen.postWeights.keys())
       return {
-        encoding: 'application/json',
+        encoding: 'application/json' as const,
         body: {
-          did,
+          did: did as DidString,
           feeds: tokenAddresses.map((addr) => ({
-            uri: `at://${did}/app.bsky.feed.generator/token-${addr}`,
+            uri: `at://${did}/app.bsky.feed.generator/token-${addr}` as AtUriString,
           })),
         },
       }
     })
 
-    app.use(lexServer.xrpc.router)
+    app.use(xrpcServer.router)
 
     // Additional endpoint to register/update vote weights
     app.post('/admin/update-weights', (req, res) => {

@@ -1,6 +1,6 @@
 import getPort from 'get-port'
 import { WebSocketServer } from 'ws'
-import { wait } from '@creatonproto/common'
+import { wait } from '@atproto/common'
 import { CloseCode, WebSocketKeepAlive } from '../src'
 
 describe('WebSocketKeepAlive', () => {

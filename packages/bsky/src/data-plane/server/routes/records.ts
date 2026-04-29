@@ -59,7 +59,7 @@ export const getRecords = (db: Database, ns?: l.Main<l.RecordSchema>) => {
       const indexedAt = row?.indexedAt
         ? Timestamp.fromDate(new Date(row?.indexedAt))
         : undefined
-      const recordBytes = ui8.fromString(json, 'utf8')
+      const recordBytes = ui8.fromString(json, 'utf8') as Uint8Array<ArrayBuffer>
       return new Record({
         record: recordBytes,
         cid: row?.cid,

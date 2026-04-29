@@ -1,6 +1,6 @@
 import { Code, ConnectError, Interceptor } from '@connectrpc/connect'
 import * as ui8 from 'uint8arrays'
-import { getDidKeyFromMultibase } from '@creatonproto/identity'
+import { getDidKeyFromMultibase } from '@atproto/identity'
 
 export const callerInterceptor =
   (caller: string): Interceptor =>

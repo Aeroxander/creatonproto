@@ -1,7 +1,7 @@
 import assert from 'node:assert'
 import { Code, ConnectError } from '@connectrpc/connect'
 import getPort from 'get-port'
-import { wait } from '@creatonproto/common'
+import { wait } from '@atproto/common'
 import {
   BsyncClient,
   BsyncService,

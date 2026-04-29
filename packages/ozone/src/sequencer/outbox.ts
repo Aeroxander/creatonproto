@@ -1,5 +1,5 @@
-import { AsyncBuffer, AsyncBufferFullError } from '@creatonproto/common'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { AsyncBuffer, AsyncBufferFullError } from '@atproto/common'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { LabelsEvt, Sequencer } from './sequencer'
 
 export type OutboxOpts = {

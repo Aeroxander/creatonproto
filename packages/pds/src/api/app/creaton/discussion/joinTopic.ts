@@ -1,11 +1,11 @@
-import { AtUri } from '@creatonproto/syntax'
+import { AtUri, AtUriString, DidString } from '@atproto/syntax'
+import { Server, InvalidRequestError } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { com } from '../../../../lexicons/index.js'
 import { prepareCreate } from '../../../../repo'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
 
 export default function (server: Server, ctx: AppContext) {
-    server.com.creaton.discussion.joinTopic({
+    server.add(com.creaton.discussion.joinTopic, {
         auth: ctx.authVerifier.authorization({
             checkTakedown: true,
             authorize: () => {
@@ -13,9 +13,9 @@ export default function (server: Server, ctx: AppContext) {
             },
         }),
         handler: async ({ auth, input }) => {
-            const userDid = auth.credentials.did
+            const userDid = auth.credentials.did as DidString
             const { topicId } = input.body
-            const serviceDid = ctx.cfg.service.did
+            const serviceDid = ctx.cfg.service.did as DidString
 
             // Find the topic details
             let listUri: string | null = null
@@ -75,8 +75,8 @@ export default function (server: Server, ctx: AppContext) {
             return {
                 encoding: 'application/json' as const,
                 body: {
-                    listUri,
-                    listItemUri,
+                    listUri: listUri as AtUriString,
+                    listItemUri: listItemUri as AtUriString,
                 },
             }
         },

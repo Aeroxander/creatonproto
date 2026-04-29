@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { signedJwtSchema } from '@creatonproto/jwk'
+import { signedJwtSchema } from '@atproto/jwk'
 import { oauthAuthorizationDetailsSchema } from './oauth-authorization-details.js'
 import { oauthTokenTypeSchema } from './oauth-token-type.js'
 

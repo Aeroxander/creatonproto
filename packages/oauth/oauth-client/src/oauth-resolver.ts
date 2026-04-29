@@ -1,13 +1,13 @@
-import { extractPdsUrl } from '@creatonproto/did'
+import { extractPdsUrl } from '@atproto/did'
 import {
   OAuthAuthorizationServerMetadata,
   oauthIssuerIdentifierSchema,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import {
   IdentityInfo,
   IdentityResolver,
   ResolveIdentityOptions,
-} from '@creatonproto-labs/identity-resolver'
+} from '@atproto-labs/identity-resolver'
 import {
   GetCachedOptions,
   OAuthAuthorizationServerMetadataResolver,

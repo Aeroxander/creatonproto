@@ -42,9 +42,9 @@ const node_events_1 = __importDefault(require("node:events"));
 const plc = __importStar(require("@did-plc/lib"));
 const express_1 = __importDefault(require("express"));
 const get_port_1 = __importDefault(require("get-port"));
-const crypto_1 = require("@creatonproto/crypto");
-const pds_1 = require("@creatonproto/pds");
-const xrpc_server_1 = require("@creatonproto/xrpc-server");
+const crypto_1 = require("@atproto/crypto");
+const pds_1 = require("@atproto/pds");
+const xrpc_server_1 = require("@atproto/xrpc-server");
 /**
  * Compute the combined feed ranking score.
  *

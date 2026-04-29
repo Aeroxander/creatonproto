@@ -1,4 +1,4 @@
-import { HOUR } from '@creatonproto/common'
+import { HOUR } from '@atproto/common'
 import { BackgroundQueue, PeriodicBackgroundTask } from '../background'
 import { TeamService } from '../team'
 

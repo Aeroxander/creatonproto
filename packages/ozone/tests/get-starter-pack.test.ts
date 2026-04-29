@@ -1,11 +1,11 @@
-import { AtpAgent } from '@creatonproto/api'
+import { AtpAgent } from '@atproto/api'
 import {
   RecordRef,
   SeedClient,
   TestNetwork,
   TestOzone,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 import { ids } from '../src/lexicon/lexicons'
 import { TAKEDOWN_LABEL } from '../src/mod-service'
 import { forSnapshot } from './_util'

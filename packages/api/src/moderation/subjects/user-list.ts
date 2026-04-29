@@ -1,4 +1,4 @@
-import { AtUri } from '@creatonproto/syntax'
+import { AtUri } from '@atproto/syntax'
 import { AppBskyActorDefs } from '../../client/index'
 import { ModerationDecision } from '../decision'
 import { ModerationOpts, ModerationSubjectUserList } from '../types'

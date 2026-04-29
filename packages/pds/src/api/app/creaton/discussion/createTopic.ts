@@ -1,10 +1,11 @@
+import { AtUriString, DidString } from '@atproto/syntax'
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { com } from '../../../../lexicons/index.js'
 import { prepareCreate } from '../../../../repo'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
 
 export default function (server: Server, ctx: AppContext) {
-    server.com.creaton.discussion.createTopic({
+    server.add(com.creaton.discussion.createTopic, {
         auth: ctx.authVerifier.authorization({
             checkTakedown: true,
             authorize: () => {
@@ -14,14 +15,14 @@ export default function (server: Server, ctx: AppContext) {
         handler: async ({ auth, input }) => {
             const requesterDid = auth.credentials.did
             const { topicId, title, description } = input.body
-            const serviceDid = ctx.cfg.service.did
+            const serviceDid = ctx.cfg.service.did as DidString
 
             console.log(`[DiscussionCreateTopic] Request from ${requesterDid} for topic ${topicId}`)
 
             // Ensure PDS repo exists
             const pdsRepoExists = await ctx.actorStore.exists(serviceDid)
             if (!pdsRepoExists) {
-                const crypto = await import('@creatonproto/crypto')
+                const crypto = await import('@atproto/crypto')
                 const keypair = await crypto.Secp256k1Keypair.create({ exportable: true })
                 await ctx.actorStore.create(serviceDid, keypair)
             }
@@ -49,8 +50,8 @@ export default function (server: Server, ctx: AppContext) {
                 return {
                     encoding: 'application/json' as const,
                     body: {
-                        topicUri: topic.uri,
-                        listUri: topic.listUri,
+                        topicUri: topic.uri as AtUriString,
+                        listUri: topic.listUri as AtUriString,
                     },
                 }
             }
@@ -126,8 +127,8 @@ export default function (server: Server, ctx: AppContext) {
             return {
                 encoding: 'application/json' as const,
                 body: {
-                    topicUri: topicWrite.uri.toString(),
-                    listUri,
+                    topicUri: topicWrite.uri.toString() as AtUriString,
+                    listUri: listUri as AtUriString,
                 },
             }
         },

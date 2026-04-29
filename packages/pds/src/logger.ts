@@ -1,7 +1,7 @@
 import { type IncomingMessage } from 'node:http'
 import { stdSerializers } from 'pino'
 import { pinoHttp } from 'pino-http'
-import { obfuscateHeaders, subsystemLogger } from '@creatonproto/common'
+import { obfuscateHeaders, subsystemLogger } from '@atproto/common'
 
 export const blobStoreLogger = subsystemLogger('pds:blob-store')
 export const dbLogger = subsystemLogger('pds:db')

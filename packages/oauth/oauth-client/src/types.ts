@@ -4,7 +4,7 @@ import {
   oauthClientIdDiscoverableSchema,
   oauthClientIdLoopbackSchema,
   oauthClientMetadataSchema,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import { Simplify } from './util.js'
 
 // Note: These types are not prefixed with `OAuth` because they are not specific

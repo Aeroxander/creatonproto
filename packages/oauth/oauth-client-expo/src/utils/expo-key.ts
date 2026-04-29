@@ -6,7 +6,7 @@ import {
   type SignedJwt,
   type VerifyOptions,
   type VerifyResult,
-} from '@creatonproto/oauth-client'
+} from '@atproto/oauth-client'
 import type { NativeJwk } from '../ExpoAtprotoOAuthClientModule'
 import { default as NativeModule } from '../ExpoAtprotoOAuthClientModule'
 

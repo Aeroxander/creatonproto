@@ -1,8 +1,8 @@
-import { Fetch, safeFetchWrap } from '@creatonproto-labs/fetch-node'
+import { Fetch, safeFetchWrap } from '@atproto-labs/fetch-node'
 import {
   AtprotoHandleResolver,
   HandleResolver,
-} from '@creatonproto-labs/handle-resolver'
+} from '@atproto-labs/handle-resolver'
 import {
   nodeResolveTxtDefault,
   nodeResolveTxtFactory,

@@ -1,5 +1,5 @@
-import { Jwk, JwkError, jwkSchema } from '@creatonproto/jwk'
-import { GenerateKeyPairOptions, JoseKey } from '@creatonproto/jwk-jose'
+import { Jwk, JwkError, jwkSchema } from '@atproto/jwk'
+import { GenerateKeyPairOptions, JoseKey } from '@atproto/jwk-jose'
 import { fromSubtleAlgorithm, isCryptoKeyPair } from './util.js'
 
 export class WebcryptoKey<J extends Jwk = Jwk> extends JoseKey<J> {

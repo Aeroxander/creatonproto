@@ -1,13 +1,13 @@
 import {
   ComAtprotoModerationDefs,
   ToolsOzoneModerationDefs,
-} from '@creatonproto/api'
+} from '@atproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 
 describe('reporter-stats', () => {
   let network: TestNetwork

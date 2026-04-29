@@ -1,4 +1,4 @@
-import { LexiconDocument } from '@creatonproto/lex-document'
+import { LexiconDocument } from '@atproto/lex-document'
 
 export type { LexiconDocument }
 

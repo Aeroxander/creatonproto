@@ -28,8 +28,8 @@ import {
   LexiconSubscription,
   LexiconToken,
   LexiconUnknown,
-} from '@creatonproto/lex-document'
-import { l } from '@creatonproto/lex-schema'
+} from '@atproto/lex-document'
+import { l } from '@atproto/lex-schema'
 import {
   RefResolver,
   RefResolverOptions,
@@ -104,7 +104,7 @@ export class LexDefBuilder {
 
     const defs = Object.keys(this.doc.defs)
     if (defs.length) {
-      const moduleSpecifier = this.options?.lib ?? '@creatonproto/lex-schema'
+      const moduleSpecifier = this.options?.lib ?? '@atproto/lex-schema'
       this.file
         .addImportDeclaration({ moduleSpecifier })
         .addNamedImports([{ name: 'l' }])

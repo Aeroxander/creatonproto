@@ -1,5 +1,5 @@
-import { check } from '@creatonproto/common-web'
-import * as crypto from '@creatonproto/crypto'
+import { check } from '@atproto/common-web'
+import * as crypto from '@atproto/crypto'
 import { DidNotFoundError, PoorlyFormattedDidDocumentError } from '../errors'
 import {
   AtprotoData,

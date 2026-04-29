@@ -1,18 +1,19 @@
-import { AtUri } from '@creatonproto/syntax'
+import { AtUri, AtUriString, DidString } from '@atproto/syntax'
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
+import { com } from '../../../../lexicons/index.js'
 
 export default function (server: Server, ctx: AppContext) {
-    server.com.creaton.discussion.getTopicMembership({
+    server.add(com.creaton.discussion.getTopicMembership, {
         auth: ctx.authVerifier.authorization({
             authorize: () => {
                 // User must be authenticated
             },
         }),
         handler: async ({ auth, params }) => {
-            const userDid = auth.credentials.did
+            const userDid = auth.credentials.did as DidString
             const { topicId } = params
-            const serviceDid = ctx.cfg.service.did
+            const serviceDid = ctx.cfg.service.did as DidString
 
             // Find the topic details
             let listUri: string | undefined = undefined
@@ -66,8 +67,8 @@ export default function (server: Server, ctx: AppContext) {
                 encoding: 'application/json' as const,
                 body: {
                     isMember,
-                    listUri: listUri,
-                    listItemUri: isMember ? listItemUri : undefined,
+                    listUri: listUri as AtUriString | undefined,
+                    listItemUri: isMember ? listItemUri as AtUriString : undefined,
                     participantCount,
                 },
             }

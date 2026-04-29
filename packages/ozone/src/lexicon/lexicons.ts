@@ -6,7 +6,7 @@ import {
   Lexicons,
   ValidationError,
   type ValidationResult,
-} from '@creatonproto/lexicon'
+} from '@atproto/lexicon'
 import { type $Typed, is$typed, maybe$typed } from './util.js'
 
 export const schemaDict = {

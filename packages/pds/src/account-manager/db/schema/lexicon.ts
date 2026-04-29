@@ -1,4 +1,4 @@
-import type { LexiconDocument } from '@creatonproto/oauth-provider'
+import type { LexiconDocument } from '@atproto/oauth-provider'
 import { DateISO, JsonEncoded } from '../../../db/cast'
 
 export interface Lexicon {

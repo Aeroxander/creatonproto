@@ -1,12 +1,12 @@
-import { isAtprotoDid } from '@creatonproto/did'
-import { LexResolverError } from '@creatonproto/lex-resolver'
-import type { Account } from '@creatonproto/oauth-provider-api'
-import { isAtprotoOauthScope } from '@creatonproto/oauth-scopes'
+import { isAtprotoDid } from '@atproto/did'
+import { LexResolverError } from '@atproto/lex-resolver'
+import type { Account } from '@atproto/oauth-provider-api'
+import { isAtprotoOauthScope } from '@atproto/oauth-scopes'
 import {
   OAuthAuthorizationRequestParameters,
   OAuthAuthorizationServerMetadata,
-} from '@creatonproto/oauth-types'
-import { isValidHandle } from '@creatonproto/syntax'
+} from '@atproto/oauth-types'
+import { isValidHandle } from '@atproto/syntax'
 import { ClientAuth } from '../client/client-auth.js'
 import { ClientId } from '../client/client-id.js'
 import { Client } from '../client/client.js'

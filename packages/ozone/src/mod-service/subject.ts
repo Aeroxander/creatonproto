@@ -1,5 +1,5 @@
-import { AtUri } from '@creatonproto/syntax'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { AtUri } from '@atproto/syntax'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import * as ChatBskyConvoDefs from '../lexicon/types/chat/bsky/convo/defs'
 import { RepoRef, isRepoRef } from '../lexicon/types/com/atproto/admin/defs'
 import { InputSchema as ReportInput } from '../lexicon/types/com/atproto/moderation/createReport'

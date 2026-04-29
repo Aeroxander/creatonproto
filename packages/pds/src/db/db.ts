@@ -1,5 +1,5 @@
 import assert from 'node:assert'
-import { Database as BunSqliteDB } from 'bun:sqlite'
+import SqliteDB from 'better-sqlite3'
 import {
   Kysely,
   KyselyPlugin,
@@ -7,10 +7,10 @@ import {
   PluginTransformResultArgs,
   QueryResult,
   RootOperationNode,
+  SqliteDialect,
   UnknownRow,
   sql,
 } from 'kysely'
-import { BunSqliteDialect } from './bun-sqlite-dialect'
 import { dbLogger } from '../logger'
 import { retrySqlite } from './util'
 
@@ -28,16 +28,18 @@ export class Database<Schema> {
     location: string,
     opts?: { pragmas?: Record<string, string> },
   ): Database<T> {
-    const sqliteDb = new BunSqliteDB(location)
+    const sqliteDb = new SqliteDB(location, {
+      timeout: 0, // handled by application
+    })
     const pragmas = {
       ...DEFAULT_PRAGMAS,
       ...(opts?.pragmas ?? {}),
     }
     for (const pragma of Object.keys(pragmas)) {
-      sqliteDb.exec(`PRAGMA ${pragma} = ${pragmas[pragma]}`)
+      sqliteDb.pragma(`${pragma} = ${pragmas[pragma]}`)
     }
     const db = new Kysely<T>({
-      dialect: new BunSqliteDialect({
+      dialect: new SqliteDialect({
         database: sqliteDb,
       }),
     })

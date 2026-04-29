@@ -1,7 +1,7 @@
 import assert from 'node:assert'
 import { AddressInfo } from 'node:net'
-import { getPdsEndpoint, isValidDidDoc } from '@creatonproto/common-web'
-import { TestNetworkNoAppView } from '@creatonproto/dev-env'
+import { getPdsEndpoint, isValidDidDoc } from '@atproto/common-web'
+import { TestNetworkNoAppView } from '@atproto/dev-env'
 import {
   AtpAgent,
   AtpSessionData,

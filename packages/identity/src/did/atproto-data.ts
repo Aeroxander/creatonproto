@@ -5,8 +5,8 @@ import {
   getNotifEndpoint,
   getPdsEndpoint,
   getSigningKey,
-} from '@creatonproto/common-web'
-import * as crypto from '@creatonproto/crypto'
+} from '@atproto/common-web'
+import * as crypto from '@atproto/crypto'
 import { AtprotoData, DidDocument } from '../types'
 
 export {

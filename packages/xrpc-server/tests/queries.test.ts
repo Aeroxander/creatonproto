@@ -1,7 +1,7 @@
 import * as http from 'node:http'
 import { AddressInfo } from 'node:net'
-import { LexiconDoc } from '@creatonproto/lexicon'
-import { XrpcClient } from '@creatonproto/xrpc'
+import { LexiconDoc } from '@atproto/lexicon'
+import { XrpcClient } from '@atproto/xrpc'
 import * as xrpcServer from '../src'
 import {
   buildAddLexicons,

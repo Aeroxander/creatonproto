@@ -3,10 +3,10 @@ import {
   cborEncode,
   readFromGenerator,
   wait,
-} from '@creatonproto/common'
-import { randomStr } from '@creatonproto/crypto'
-import { SeedClient, TestNetworkNoAppView } from '@creatonproto/dev-env'
-import { readCarWithRoot } from '@creatonproto/repo'
+} from '@atproto/common'
+import { randomStr } from '@atproto/crypto'
+import { SeedClient, TestNetworkNoAppView } from '@atproto/dev-env'
+import { readCarWithRoot } from '@atproto/repo'
 import { sequencer } from '../../pds'
 import { SeqEvt, Sequencer, formatSeqSyncEvt } from '../src/sequencer'
 import { Outbox } from '../src/sequencer/outbox'

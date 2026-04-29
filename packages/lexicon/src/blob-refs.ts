@@ -1,6 +1,6 @@
 import { CID } from 'multiformats/cid'
 import { z } from 'zod'
-import { check, ipldToJson, schema } from '@creatonproto/common-web'
+import { check, ipldToJson, schema } from '@atproto/common-web'
 
 export const typedJsonBlobRef = z
   .object({

@@ -10,7 +10,7 @@ import {
   type LexPrimitive,
   type LexToken,
   Lexicons,
-} from '@creatonproto/lexicon'
+} from '@atproto/lexicon'
 import { toCamelCase, toScreamingSnakeCase, toTitleCase } from './util'
 
 interface Commentable {
@@ -27,10 +27,10 @@ export function genComment<T extends Commentable>(
 }
 
 export function genCommonImports(file: SourceFile, baseNsid: string) {
-  //= import {ValidationResult, BlobRef} from '@creatonproto/lexicon'
+  //= import {ValidationResult, BlobRef} from '@atproto/lexicon'
   file
     .addImportDeclaration({
-      moduleSpecifier: '@creatonproto/lexicon',
+      moduleSpecifier: '@atproto/lexicon',
     })
     .addNamedImports([
       { name: 'ValidationResult', isTypeOnly: true },

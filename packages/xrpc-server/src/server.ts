@@ -800,4 +800,4 @@ const defaultPoints: CalcPointsFn = () => 1
  *
  * @see {@link https://expressjs.com/en/guide/behind-proxies.html}
  */
-const defaultKey: CalcKeyFn<HandlerContext> = ({ req }) => req.ip
+const defaultKey: CalcKeyFn<HandlerContext> = ({ req }) => req.ip ?? null

@@ -6,7 +6,7 @@ import {
   UseDpopNonceError,
   oauthMiddleware,
   oauthProtectedResourceMetadataSchema,
-} from '@creatonproto/oauth-provider'
+} from '@atproto/oauth-provider'
 import { AppContext } from './context.js'
 import { oauthLogger, reqSerializer } from './logger.js'
 

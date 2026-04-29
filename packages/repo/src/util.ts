@@ -84,7 +84,7 @@ export const signCommit = async (
   keypair: Keypair,
 ): Promise<Commit> => {
   const encoded = cbor.encode(unsigned)
-  const sig = await keypair.sign(encoded)
+  const sig = (await keypair.sign(encoded)) as Uint8Array<ArrayBuffer>
   return {
     ...unsigned,
     sig,

@@ -1,8 +1,8 @@
-import { Did, DidDocument } from '@creatonproto/did'
+import { Did, DidDocument } from '@atproto/did'
 import {
   SimpleStoreMemory,
   SimpleStoreMemoryOptions,
-} from '@creatonproto-labs/simple-store-memory'
+} from '@atproto-labs/simple-store-memory'
 import { DidCache } from './did-cache.js'
 
 const DEFAULT_TTL = 3600 * 1000 // 1 hour

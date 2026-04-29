@@ -7,7 +7,7 @@ import {
   XRPCError as XRPCClientError,
   httpResponseCodeToName,
   httpResponseCodeToString,
-} from '@creatonproto/xrpc'
+} from '@atproto/xrpc'
 
 // @NOTE Do not depend (directly or indirectly) on "./types" here, as it would
 // create a circular dependency.

@@ -15,14 +15,14 @@ import {
   exportJWK,
   jwtVerify,
 } from 'jose'
-import { Jwks, SignedJwt, UnsignedJwt } from '@creatonproto/jwk'
+import { Jwks, SignedJwt, UnsignedJwt } from '@atproto/jwk'
 import {
   CLIENT_ASSERTION_TYPE_JWT_BEARER,
   OAuthAuthorizationRequestParameters,
   OAuthClientCredentials,
   OAuthClientMetadata,
   OAuthRedirectUri,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import { CLIENT_ASSERTION_MAX_AGE, JAR_MAX_AGE } from '../constants.js'
 import { AuthorizationError } from '../errors/authorization-error.js'
 import { InvalidAuthorizationDetailsError } from '../errors/invalid-authorization-details-error.js'

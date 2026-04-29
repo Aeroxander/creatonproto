@@ -1,4 +1,4 @@
-import { isValidTld } from '@creatonproto/syntax'
+import { isValidTld } from '@atproto/syntax'
 import { ensureHandleServiceConstraints } from '../src/handle'
 
 describe('handle validation', () => {

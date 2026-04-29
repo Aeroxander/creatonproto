@@ -1,11 +1,11 @@
 import {
   CreateDidResolverOptions,
   createDidResolver,
-} from '@creatonproto-labs/did-resolver'
+} from '@atproto-labs/did-resolver'
 import {
   CreateHandleResolverOptions,
   createHandleResolver,
-} from '@creatonproto-labs/handle-resolver'
+} from '@atproto-labs/handle-resolver'
 import { AtprotoIdentityResolver } from './atproto-identity-resolver.js'
 import { IdentityResolver } from './identity-resolver.js'
 

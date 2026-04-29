@@ -1,8 +1,8 @@
-import { ResponseType } from '@creatonproto/xrpc'
+import { ResponseType } from '@atproto/xrpc'
 import {
   InvalidRequestError,
   XRPCError as XRPCServerError,
-} from '@creatonproto/xrpc-server'
+} from '@atproto/xrpc-server'
 
 export type AcceptFlags = { q: number }
 export type Accept = [name: string, flags: AcceptFlags]

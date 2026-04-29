@@ -1,4 +1,5 @@
 import { KeyObject } from 'node:crypto'
+import { Hex } from 'viem'
 import { HOUR, wait } from '@atproto/common'
 import { IdResolver } from '@atproto/identity'
 import {

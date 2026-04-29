@@ -1,6 +1,6 @@
 import { Resolver, lookup, resolveTxt } from 'node:dns/promises'
 import { isIP } from 'node:net'
-import { ResolveTxt } from '@creatonproto-labs/handle-resolver'
+import { ResolveTxt } from '@atproto-labs/handle-resolver'
 
 export const nodeResolveTxtDefault: ResolveTxt = (hostname) =>
   resolveTxt(hostname).then(groupChunks, handleError)

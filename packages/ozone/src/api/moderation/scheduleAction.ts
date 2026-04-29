@@ -1,5 +1,5 @@
-import { ToolsOzoneModerationScheduleAction } from '@creatonproto/api'
-import { AuthRequiredError, InvalidRequestError } from '@creatonproto/xrpc-server'
+import { ToolsOzoneModerationScheduleAction } from '@atproto/api'
+import { AuthRequiredError, InvalidRequestError } from '@atproto/xrpc-server'
 import { AppContext } from '../../context'
 import { Server } from '../../lexicon'
 import { subjectFromInput } from '../../mod-service/subject'

@@ -27,7 +27,7 @@ import {
   jwkSchema,
   jwtHeaderSchema,
   jwtPayloadSchema,
-} from '@creatonproto/jwk'
+} from '@atproto/jwk'
 import { RequiredKey, either } from './util.js'
 
 const { JOSEError } = errors

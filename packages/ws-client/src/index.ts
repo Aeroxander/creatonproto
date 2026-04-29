@@ -4,7 +4,7 @@ import {
   createWebSocketStream,
   isErrnoException,
   wait,
-} from '@creatonproto/common'
+} from '@atproto/common'
 
 export class WebSocketKeepAlive {
   public ws: WebSocket | null = null

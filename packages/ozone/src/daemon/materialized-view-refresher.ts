@@ -1,5 +1,5 @@
 import { sql } from 'kysely'
-import { MINUTE } from '@creatonproto/common'
+import { MINUTE } from '@atproto/common'
 import { BackgroundQueue, PeriodicBackgroundTask } from '../background'
 import { dbLogger } from '../logger'
 

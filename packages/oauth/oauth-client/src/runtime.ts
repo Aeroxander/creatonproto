@@ -1,5 +1,5 @@
 import { base64url } from 'multiformats/bases/base64'
-import { Key } from '@creatonproto/jwk'
+import { Key } from '@atproto/jwk'
 import { requestLocalLock } from './lock.js'
 import { RuntimeImplementation, RuntimeLock } from './runtime-implementation.js'
 

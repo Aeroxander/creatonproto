@@ -1,5 +1,5 @@
 {
-  "name": "@creatonproto/crypto",
+  "name": "@atproto/crypto",
   "version": "0.4.5",
   "license": "MIT",
   "description": "Library for cryptographic keys and signing in atproto",
@@ -28,7 +28,7 @@
     "uint8arrays": "3.0.0"
   },
   "devDependencies": {
-    "@creatonproto/common": "workspace:^",
+    "@atproto/common": "workspace:^",
     "jest": "^28.1.2",
     "typescript": "^5.6.3"
   }

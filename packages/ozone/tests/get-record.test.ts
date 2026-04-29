@@ -1,12 +1,12 @@
-import { AtpAgent } from '@creatonproto/api'
+import { AtpAgent } from '@atproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   TestOzone,
   basicSeed,
-} from '@creatonproto/dev-env'
-import { AtUri } from '@creatonproto/syntax'
+} from '@atproto/dev-env'
+import { AtUri } from '@atproto/syntax'
 import { ids } from '../src/lexicon/lexicons'
 import {
   REASONOTHER,

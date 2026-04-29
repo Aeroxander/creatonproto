@@ -7,9 +7,9 @@ import {
   allFulfilled,
   createDecoders,
   getPdsEndpoint,
-} from '@creatonproto/common'
-import { IdResolver } from '@creatonproto/identity'
-import { ResponseType, XRPCError } from '@creatonproto/xrpc'
+} from '@atproto/common'
+import { IdResolver } from '@atproto/identity'
+import { ResponseType, XRPCError } from '@atproto/xrpc'
 import { BlobDivertConfig } from '../config'
 import { Database } from '../db'
 import { retryHttp } from '../util'

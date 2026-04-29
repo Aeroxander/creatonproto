@@ -1,12 +1,12 @@
 import assert from 'node:assert'
 import EventEmitter, { once } from 'node:events'
-import { ToolsOzoneModerationDefs } from '@creatonproto/api'
+import { ToolsOzoneModerationDefs } from '@atproto/api'
 import {
   ModeratorClient,
   SeedClient,
   TestNetwork,
   basicSeed,
-} from '@creatonproto/dev-env'
+} from '@atproto/dev-env'
 import { isRepoRef } from '../src/lexicon/types/com/atproto/admin/defs'
 import {
   REASONAPPEAL,

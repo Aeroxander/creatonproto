@@ -1,8 +1,8 @@
 import { createHash } from 'node:crypto'
 import type { Redis, RedisOptions } from 'ioredis'
-import { Jwks, Keyset } from '@creatonproto/jwk'
-import { LexResolver } from '@creatonproto/lex-resolver'
-import type { Account } from '@creatonproto/oauth-provider-api'
+import { Jwks, Keyset } from '@atproto/jwk'
+import { LexResolver } from '@atproto/lex-resolver'
+import type { Account } from '@atproto/oauth-provider-api'
 import {
   CLIENT_ASSERTION_TYPE_JWT_BEARER,
   OAuthAccessToken,
@@ -22,10 +22,10 @@ import {
   OAuthTokenType,
   atprotoLoopbackClientMetadata,
   oauthAuthorizationRequestParametersSchema,
-} from '@creatonproto/oauth-types'
-import { safeFetchWrap } from '@creatonproto-labs/fetch-node'
-import { SimpleStore } from '@creatonproto-labs/simple-store'
-import { SimpleStoreMemory } from '@creatonproto-labs/simple-store-memory'
+} from '@atproto/oauth-types'
+import { safeFetchWrap } from '@atproto-labs/fetch-node'
+import { SimpleStore } from '@atproto-labs/simple-store'
+import { SimpleStoreMemory } from '@atproto-labs/simple-store-memory'
 import { AccessTokenMode } from './access-token/access-token-mode.js'
 import { AccountManager } from './account/account-manager.js'
 import {

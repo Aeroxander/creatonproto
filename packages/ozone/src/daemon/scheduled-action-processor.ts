@@ -1,5 +1,5 @@
 import { Selectable } from 'kysely'
-import { MINUTE, SECOND } from '@creatonproto/common'
+import { MINUTE, SECOND } from '@atproto/common'
 import {
   assertProtectedTagAction,
   getProtectedTags,

@@ -7,7 +7,7 @@ import {
   OAuthAuthorizationRequestParameters,
   OAuthClientId,
   RequestId,
-} from '@creatonproto/oauth-provider'
+} from '@atproto/oauth-provider'
 import { DateISO, JsonEncoded } from '../../../db'
 
 export interface AuthorizationRequest {

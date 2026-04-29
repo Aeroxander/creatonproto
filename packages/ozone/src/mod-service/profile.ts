@@ -1,5 +1,5 @@
-import AtpAgent, { AppBskyLabelerDefs } from '@creatonproto/api'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import AtpAgent, { AppBskyLabelerDefs } from '@atproto/api'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { OzoneConfig } from '../config'
 import {
   REASONAPPEAL,

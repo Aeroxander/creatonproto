@@ -1,5 +1,5 @@
+import { Server } from '@atproto/xrpc-server'
 import { AppContext } from '../../../../context'
-import { Server } from '../../../../lexicon'
 import createTopic from './createTopic'
 import joinTopic from './joinTopic'
 import leaveTopic from './leaveTopic'

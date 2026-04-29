@@ -42,11 +42,11 @@ export class DpopNonce {
   #next: string
 
   constructor(
-    secret: DpopSecret = randomBytes(SECRET_BYTE_LENGTH),
+    secret: DpopSecret = randomBytes(SECRET_BYTE_LENGTH) as unknown as DpopSecret,
     rotationInterval = MAX_ROTATION_INTERVAL,
   ) {
     this.#rotationInterval = rotationIntervalSchema.parse(rotationInterval)
-    this.#secret = Uint8Array.from(dpopSecretSchema.parse(secret))
+    this.#secret = Uint8Array.from(dpopSecretSchema.parse(secret) as Uint8Array)
 
     this.#counter = this.currentCounter
     this.#prev = this.compute(this.#counter - 1)

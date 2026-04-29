@@ -8,7 +8,7 @@ import {
   type StreamConfigOrHandler,
   type MethodConfigOrHandler,
   createServer as createXrpcServer,
-} from '@creatonproto/xrpc-server'
+} from '@atproto/xrpc-server'
 import { schemas } from './lexicons.js'
 import * as AppBskyActorGetPreferences from './types/app/bsky/actor/getPreferences.js'
 import * as AppBskyActorGetProfile from './types/app/bsky/actor/getProfile.js'

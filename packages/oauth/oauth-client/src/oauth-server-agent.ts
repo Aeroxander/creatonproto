@@ -1,5 +1,5 @@
-import { AtprotoDid } from '@creatonproto/did'
-import { Key, Keyset } from '@creatonproto/jwk'
+import { AtprotoDid } from '@atproto/did'
+import { Key, Keyset } from '@atproto/jwk'
 import {
   AtprotoOAuthScope,
   AtprotoOAuthTokenResponse,
@@ -11,9 +11,9 @@ import {
   OAuthTokenRequest,
   atprotoOAuthTokenResponseSchema,
   oauthParResponseSchema,
-} from '@creatonproto/oauth-types'
-import { Fetch, Json, bindFetch, fetchJsonProcessor } from '@creatonproto-labs/fetch'
-import { SimpleStore } from '@creatonproto-labs/simple-store'
+} from '@atproto/oauth-types'
+import { Fetch, Json, bindFetch, fetchJsonProcessor } from '@atproto-labs/fetch'
+import { SimpleStore } from '@atproto-labs/simple-store'
 import { TokenRefreshError } from './errors/token-refresh-error.js'
 import { dpopFetchWrapper } from './fetch-dpop.js'
 import {

@@ -1,9 +1,9 @@
-import { Keyset } from '@creatonproto/jwk'
+import { Keyset } from '@atproto/jwk'
 import {
   OAuthClientMetadataInput,
   assertOAuthDiscoverableClientId,
   assertOAuthLoopbackClientId,
-} from '@creatonproto/oauth-types'
+} from '@atproto/oauth-types'
 import { FALLBACK_ALG } from './constants.js'
 import { ClientMetadata, clientMetadataSchema } from './types.js'
 

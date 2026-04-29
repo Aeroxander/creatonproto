@@ -1,5 +1,5 @@
-import { encode } from '@creatonproto/lex-cbor'
-import { ui8Equals } from '@creatonproto/lex-data'
+import { encode } from '@atproto/lex-cbor'
+import { ui8Equals } from '@atproto/lex-data'
 import { ErrorFrame, Frame, FrameType, MessageFrame } from '../src'
 
 describe('Frames', () => {

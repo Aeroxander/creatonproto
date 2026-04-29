@@ -1,5 +1,5 @@
 import { NativeModule, requireNativeModule } from 'expo'
-import { SignedJwt, VerifyOptions, VerifyResult } from '@creatonproto/oauth-client'
+import { SignedJwt, VerifyOptions, VerifyResult } from '@atproto/oauth-client'
 import { ExpoAtprotoOAuthClientModuleEvents } from './ExpoAtprotoOAuthClientModule.types'
 
 export type NativeJwk = {

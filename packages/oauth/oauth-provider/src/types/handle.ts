@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { ensureValidHandle, normalizeHandle } from '@creatonproto/syntax'
+import { ensureValidHandle, normalizeHandle } from '@atproto/syntax'
 
 export const handleSchema = z
   .string()

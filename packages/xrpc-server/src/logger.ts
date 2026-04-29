@@ -1,4 +1,4 @@
-import { subsystemLogger } from '@creatonproto/common'
+import { subsystemLogger } from '@atproto/common'
 
 export const LOGGER_NAME = 'xrpc-server'
 

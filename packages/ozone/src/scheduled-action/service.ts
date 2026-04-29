@@ -1,5 +1,5 @@
 import { Selectable } from 'kysely'
-import { InvalidRequestError } from '@creatonproto/xrpc-server'
+import { InvalidRequestError } from '@atproto/xrpc-server'
 import { ScheduledActionStatus, ScheduledActionType } from '../api/util'
 import { Database } from '../db'
 import { ScheduledAction } from '../db/schema/scheduled-action'
