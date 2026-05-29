@@ -25,6 +25,24 @@
             "type": "string",
             "description": "If this proposal originated from a discussion, the topic ID (e.g., 'task:42' or 'discussion:...')."
           },
+          "productionStage": {
+            "type": "string",
+            "knownValues": ["premise", "script", "storyboard", "animatic", "production", "edit", "release", "study"],
+            "description": "Creative production stage this proposal belongs to."
+          },
+          "artifactType": {
+            "type": "string",
+            "knownValues": ["brief", "script", "storyboard", "animatic", "scene", "edit", "pilot", "release", "feedback_report"],
+            "description": "Primary artifact this proposal expects to create, review, or improve."
+          },
+          "feedbackTargetUri": {
+            "type": "string",
+            "description": "Optional artifact, discussion, task, pilot, or release URI this proposal is responding to."
+          },
+          "aiAssistDisclosure": {
+            "type": "string",
+            "description": "Optional disclosure of AI tools, models, or generated material involved in the work."
+          },
           "budget": {
             "type": "string",
             "description": "Requested budget as a string (to preserve BigInt precision). '0' means equity-only."
@@ -40,7 +58,37 @@
           "createdAt": {
             "type": "string",
             "format": "datetime"
+          },
+          "review": {
+            "type": "ref",
+            "ref": "#reviewContract",
+            "description": "Optional review configuration: acceptance criteria, evidence requirements, expectations, and dispute escalation path."
           }
+        }
+      }
+    },
+    "reviewContract": {
+      "type": "object",
+      "description": "Review configuration for accepting or disputing a proposed task.",
+      "required": ["acceptanceCriteria", "evidenceRequired"],
+      "properties": {
+        "acceptanceCriteria": {
+          "type": "array",
+          "description": "Specific conditions that must be met for the proposal deliverables to be considered accepted.",
+          "items": { "type": "string" }
+        },
+        "evidenceRequired": {
+          "type": "array",
+          "description": "Types of proof or documentation the contributor must provide, such as screenshots, test results, external links, or ATProto records.",
+          "items": { "type": "string" }
+        },
+        "reviewerExpectations": {
+          "type": "string",
+          "description": "Guidance for reviewers on how to evaluate the submission, including quality standards or review process details."
+        },
+        "disputePath": {
+          "type": "string",
+          "description": "How to escalate a review disagreement, such as a DAO vote link, arbitrator DID, or dispute topic URI."
         }
       }
     }

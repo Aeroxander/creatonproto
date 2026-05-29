@@ -1,0 +1,83 @@
+{
+  "lexicon": 1,
+  "id": "com.creaton.studioLearning",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A studio learning record for decisions, retrospectives, root causes, playbooks, and Deming-style study loops.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["kind", "communityUri", "title", "body", "createdAt"],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "knownValues": ["decision", "retrospective", "root_cause", "playbook"],
+            "description": "Learning record category."
+          },
+          "communityUri": {
+            "type": "string",
+            "description": "Studio or market community URI."
+          },
+          "topicId": {
+            "type": "string",
+            "description": "Optional linked discussion topic id."
+          },
+          "productionStage": {
+            "type": "string",
+            "knownValues": ["premise", "script", "storyboard", "animatic", "production", "edit", "release", "study"],
+            "description": "Creative production stage this learning applies to."
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Short title."
+          },
+          "body": {
+            "type": "string",
+            "maxLength": 10000,
+            "description": "Summary of the decision, observation, or lesson."
+          },
+          "decision": {
+            "type": "string",
+            "description": "Decision, standard, or action chosen."
+          },
+          "rootCause": {
+            "type": "string",
+            "description": "Root cause when applicable."
+          },
+          "correctiveAction": {
+            "type": "string",
+            "description": "Corrective action or process improvement."
+          },
+          "metric": {
+            "type": "string",
+            "description": "Related metric or signal."
+          },
+          "studySignals": {
+            "type": "array",
+            "description": "Audience, funder, or crew signals studied before the decision.",
+            "items": { "type": "string" }
+          },
+          "nextExperiment": {
+            "type": "string",
+            "description": "Next Plan-Do-Study-Act experiment."
+          },
+          "linkedUris": {
+            "type": "array",
+            "description": "Linked artifacts, tasks, discussions, or proposals.",
+            "items": { "type": "string" }
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "did"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

@@ -53,6 +53,93 @@
             "format": "uri",
             "description": "URI to cover art (IPFS, Arweave, or HTTPS)."
           },
+          "creatorRights": {
+            "type": "string",
+            "knownValues": ["creator_retained", "studio_license", "studio_assignment"],
+            "description": "Default studio rights posture for project IP."
+          },
+          "storyStatus": {
+            "type": "string",
+            "knownValues": ["not_registered", "ready_to_register", "registered"],
+            "description": "Whether the project IP is ready for or already connected to Story Protocol."
+          },
+          "storyIpId": {
+            "type": "string",
+            "description": "Optional Story IP Account address or identifier."
+          },
+          "storyLicenseTermsId": {
+            "type": "string",
+            "description": "Optional Story PIL terms identifier or URI."
+          },
+          "royaltyPlan": {
+            "type": "string",
+            "knownValues": ["creator_weighted", "studio_treasury", "manual_split"],
+            "description": "Intended high-level royalty routing policy."
+          },
+          "apptokenLaunch": {
+            "type": "string",
+            "knownValues": ["membership_auction", "production_token", "later"],
+            "description": "How the studio expects to introduce apptokens."
+          },
+          "membershipCadence": {
+            "type": "string",
+            "knownValues": ["weekly", "seasonal", "manual"],
+            "description": "Cadence for recurring producer or patron auctions."
+          },
+          "patronSaleModel": {
+            "type": "string",
+            "knownValues": ["weekly_patron_auction", "long_term_cca", "weekly_cca_epochs", "final_cca_only"],
+            "description": "High-level sales mechanism for early patron receipts and token demand discovery."
+          },
+          "patronRewardModel": {
+            "type": "string",
+            "knownValues": ["time_weighted_conviction", "participation_weighted", "flat_membership"],
+            "description": "How early patron receipts should be weighted for future bounded allocation or reward eligibility."
+          },
+          "finalLaunchTrigger": {
+            "type": "string",
+            "knownValues": ["proof_plus_final_cca", "dao_vote", "manual_later"],
+            "description": "Condition expected before public apptoken liquidity launches."
+          },
+          "operationMode": {
+            "type": "string",
+            "knownValues": ["solo_creator", "creator_led_studio", "dao_studio"],
+            "description": "How the project expects to operate: solo creator, creator-led studio, or full DAO studio."
+          },
+          "fanUpsideModel": {
+            "type": "string",
+            "knownValues": ["patron_receipts", "producer_pass", "optional_royalty_pool", "access_only"],
+            "description": "What early fans receive before any legally reviewed royalty or token launch."
+          },
+          "capitalReleaseModel": {
+            "type": "string",
+            "knownValues": ["verified_drops", "milestone_escrow", "manual_creator"],
+            "description": "How patron or market capital should unlock as the creator ships work."
+          },
+          "patronStreamRecipient": {
+            "type": "string",
+            "description": "Optional wallet or treasury address expected to receive Superfluid patron streams."
+          },
+          "patronSuperTokenAddress": {
+            "type": "string",
+            "description": "Optional Superfluid Super Token address used for recurring patron streams."
+          },
+          "patronStreamNetwork": {
+            "type": "string",
+            "description": "Network name or chain id for recurring patron streams."
+          },
+          "suggestedMonthlySupport": {
+            "type": "string",
+            "description": "Suggested monthly patron support amount, stored as display text until stream execution is wired."
+          },
+          "productionStages": {
+            "type": "array",
+            "description": "Optional customized production stage ids for this studio. Clients use the default media-production spine when absent.",
+            "items": {
+              "type": "string",
+              "knownValues": ["premise", "script", "storyboard", "animatic", "production", "edit", "release", "study"]
+            }
+          },
           "createdAt": {
             "type": "string",
             "format": "datetime",

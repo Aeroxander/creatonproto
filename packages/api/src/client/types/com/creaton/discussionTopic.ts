@@ -18,6 +18,19 @@ export interface Main {
   title: string
   /** Optional description or context for the topic. */
   description?: string
+  /** Creative production stage this topic belongs to. */
+  productionStage?:
+    | 'premise'
+    | 'script'
+    | 'storyboard'
+    | 'animatic'
+    | 'production'
+    | 'edit'
+    | 'release'
+    | 'study'
+    | (string & {})
+  /** Optional artifact, pilot, task, proposal, or release URI this topic is about. */
+  artifactUri?: string
   /** URI of the canonical participant list for this topic. */
   listUri: string
   /** DID of the user who created this topic. */

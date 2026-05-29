@@ -25,6 +25,15 @@
             "description": "Optional description or context for the topic.",
             "maxLength": 5000
           },
+          "productionStage": {
+            "type": "string",
+            "knownValues": ["premise", "script", "storyboard", "animatic", "production", "edit", "release", "study"],
+            "description": "Creative production stage this topic belongs to."
+          },
+          "artifactUri": {
+            "type": "string",
+            "description": "Optional artifact, pilot, task, proposal, or release URI this topic is about."
+          },
           "listUri": {
             "type": "string",
             "format": "at-uri",

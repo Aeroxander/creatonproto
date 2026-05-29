@@ -10504,6 +10504,144 @@ export const schemaDict = {
               format: 'uri',
               description: 'URI to cover art (IPFS, Arweave, or HTTPS).',
             },
+            creatorRights: {
+              type: 'string',
+              knownValues: [
+                'creator_retained',
+                'studio_license',
+                'studio_assignment',
+              ],
+              description: 'Default studio rights posture for project IP.',
+            },
+            storyStatus: {
+              type: 'string',
+              knownValues: [
+                'not_registered',
+                'ready_to_register',
+                'registered',
+              ],
+              description:
+                'Whether the project IP is ready for or already connected to Story Protocol.',
+            },
+            storyIpId: {
+              type: 'string',
+              description: 'Optional Story IP Account address or identifier.',
+            },
+            storyLicenseTermsId: {
+              type: 'string',
+              description: 'Optional Story PIL terms identifier or URI.',
+            },
+            royaltyPlan: {
+              type: 'string',
+              knownValues: [
+                'creator_weighted',
+                'studio_treasury',
+                'manual_split',
+              ],
+              description: 'Intended high-level royalty routing policy.',
+            },
+            apptokenLaunch: {
+              type: 'string',
+              knownValues: ['membership_auction', 'production_token', 'later'],
+              description: 'How the studio expects to introduce apptokens.',
+            },
+            membershipCadence: {
+              type: 'string',
+              knownValues: ['weekly', 'seasonal', 'manual'],
+              description: 'Cadence for recurring producer or patron auctions.',
+            },
+            patronSaleModel: {
+              type: 'string',
+              knownValues: [
+                'weekly_patron_auction',
+                'long_term_cca',
+                'weekly_cca_epochs',
+                'final_cca_only',
+              ],
+              description:
+                'High-level sales mechanism for early patron receipts and token demand discovery.',
+            },
+            patronRewardModel: {
+              type: 'string',
+              knownValues: [
+                'time_weighted_conviction',
+                'participation_weighted',
+                'flat_membership',
+              ],
+              description:
+                'How early patron receipts should be weighted for future bounded allocation or reward eligibility.',
+            },
+            finalLaunchTrigger: {
+              type: 'string',
+              knownValues: ['proof_plus_final_cca', 'dao_vote', 'manual_later'],
+              description:
+                'Condition expected before public apptoken liquidity launches.',
+            },
+            operationMode: {
+              type: 'string',
+              knownValues: ['solo_creator', 'creator_led_studio', 'dao_studio'],
+              description:
+                'How the project expects to operate: solo creator, creator-led studio, or full DAO studio.',
+            },
+            fanUpsideModel: {
+              type: 'string',
+              knownValues: [
+                'patron_receipts',
+                'producer_pass',
+                'optional_royalty_pool',
+                'access_only',
+              ],
+              description:
+                'What early fans receive before any legally reviewed royalty or token launch.',
+            },
+            capitalReleaseModel: {
+              type: 'string',
+              knownValues: [
+                'verified_drops',
+                'milestone_escrow',
+                'manual_creator',
+              ],
+              description:
+                'How patron or market capital should unlock as the creator ships work.',
+            },
+            patronStreamRecipient: {
+              type: 'string',
+              description:
+                'Optional wallet or treasury address expected to receive Superfluid patron streams.',
+            },
+            patronSuperTokenAddress: {
+              type: 'string',
+              description:
+                'Optional Superfluid Super Token address used for recurring patron streams.',
+            },
+            patronStreamNetwork: {
+              type: 'string',
+              description:
+                'Network name or chain id for recurring patron streams.',
+            },
+            suggestedMonthlySupport: {
+              type: 'string',
+              description:
+                'Suggested monthly patron support amount, stored as display text until stream execution is wired.',
+            },
+            productionStages: {
+              type: 'array',
+              description:
+                'Optional customized production stage ids for this studio. Clients use the default media-production spine when absent.',
+              items: {
+                type: 'string',
+                knownValues: [
+                  'premise',
+                  'script',
+                  'storyboard',
+                  'animatic',
+                  'production',
+                  'edit',
+                  'release',
+                  'study',
+                ],
+              },
+            },
             createdAt: {
               type: 'string',
               format: 'datetime',
@@ -19030,70 +19168,84 @@ export const schemaDict = {
       },
     },
   },
-  ComGermnetworkDeclaration: {
+  ComCreatonDiscussion: {
     lexicon: 1,
-    id: 'com.germnetwork.declaration',
+    id: 'com.creaton.discussion',
     defs: {
       main: {
         type: 'record',
-        description: 'A declaration of a Germ Network account',
-        key: 'literal:self',
+        description:
+          "A discussion post within a task or community thread. Supports threaded replies via the standard ATProto reply mechanism. Lives in the com.creaton namespace so it doesn't appear in Bluesky feeds.",
+        key: 'tid',
         record: {
           type: 'object',
-          required: ['version', 'currentKey'],
+          required: ['body', 'createdAt'],
           properties: {
-            version: {
+            body: {
               type: 'string',
               description:
-                'Semver version number, without pre-release or build information, for the format of opaque content',
-              minLength: 5,
-              maxLength: 14,
+                'The discussion post text. Supports plain text or markdown.',
+              maxLength: 10000,
+              minLength: 1,
             },
-            currentKey: {
-              type: 'bytes',
-              description:
-                'Opaque value, an ed25519 public key prefixed with a byte enum',
-            },
-            messageMe: {
+            reply: {
               type: 'ref',
-              description: 'Controls who can message this account',
-              ref: 'lex:com.germnetwork.declaration#messageMe',
-            },
-            keyPackage: {
-              type: 'bytes',
+              ref: 'lex:com.creaton.discussion#replyRef',
               description:
-                'Opaque value, contains MLS KeyPackage(s), and other signature data, and is signed by the currentKey',
+                'If present, this is a reply to another discussion post. root points to the top-level post, parent points to the direct parent.',
             },
-            continuityProofs: {
+            topic: {
+              type: 'ref',
+              ref: 'lex:com.creaton.discussion#topicRef',
+              description:
+                'The topic this discussion belongs to. Links to an on-chain task, proposal, or an off-chain discussion root.',
+            },
+            mentions: {
               type: 'array',
-              description: 'Array of opaque values to allow for key rolling',
               items: {
-                type: 'bytes',
+                type: 'ref',
+                ref: 'lex:app.bsky.richtext.facet#mention',
               },
-              maxLength: 1000,
+              description: 'Mentions of other users in the body text.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+              description: 'Timestamp when this post was created.',
             },
           },
         },
       },
-      messageMe: {
+      replyRef: {
         type: 'object',
-        required: ['showButtonTo', 'messageMeUrl'],
+        description: 'Reference to parent and root posts for threading.',
+        required: ['root', 'parent'],
         properties: {
-          messageMeUrl: {
-            type: 'string',
-            description:
-              'A URL to present to an account that does not have its own com.germnetwork.declaration record, must have an empty fragment component, where the app should fill in the fragment component with the DIDs of the two accounts who wish to message each other',
-            format: 'uri',
-            minLength: 1,
-            maxLength: 2047,
+          root: {
+            type: 'ref',
+            ref: 'lex:com.atproto.repo.strongRef',
           },
-          showButtonTo: {
+          parent: {
+            type: 'ref',
+            ref: 'lex:com.atproto.repo.strongRef',
+          },
+        },
+      },
+      topicRef: {
+        type: 'object',
+        description: 'Reference to the topic this discussion belongs to.',
+        required: ['uri'],
+        properties: {
+          uri: {
             type: 'string',
-            knownValues: ['none', 'usersIFollow', 'everyone'],
             description:
-              "The policy of who can message the account, this value is included in the keyPackage, but is duplicated here to allow applications to decide if they should show a 'Message on Germ' button to the viewer.",
-            minLength: 1,
-            maxLength: 100,
+              "Identifier for the topic. Can be an at:// URI (for linking to an ATProto record), an on-chain reference (e.g., 'chain:1:0xabc...:42' for taskId 42), or a plain string identifier.",
+          },
+          label: {
+            type: 'string',
+            maxLength: 200,
+            description:
+              'Optional human-readable label for the topic (e.g., task title).',
           },
         },
       },
@@ -19312,6 +19464,25 @@ export const schemaDict = {
               description: 'Optional description or context for the topic.',
               maxLength: 5000,
             },
+            productionStage: {
+              type: 'string',
+              knownValues: [
+                'premise',
+                'script',
+                'storyboard',
+                'animatic',
+                'production',
+                'edit',
+                'release',
+                'study',
+              ],
+              description: 'Creative production stage this topic belongs to.',
+            },
+            artifactUri: {
+              type: 'string',
+              description:
+                'Optional artifact, pilot, task, proposal, or release URI this topic is about.',
+            },
             listUri: {
               type: 'string',
               format: 'at-uri',
@@ -19451,6 +19622,47 @@ export const schemaDict = {
               description:
                 "If this proposal originated from a discussion, the topic ID (e.g., 'task:42' or 'discussion:...').",
             },
+            productionStage: {
+              type: 'string',
+              knownValues: [
+                'premise',
+                'script',
+                'storyboard',
+                'animatic',
+                'production',
+                'edit',
+                'release',
+                'study',
+              ],
+              description:
+                'Creative production stage this proposal belongs to.',
+            },
+            artifactType: {
+              type: 'string',
+              knownValues: [
+                'brief',
+                'script',
+                'storyboard',
+                'animatic',
+                'scene',
+                'edit',
+                'pilot',
+                'release',
+                'feedback_report',
+              ],
+              description:
+                'Primary artifact this proposal expects to create, review, or improve.',
+            },
+            feedbackTargetUri: {
+              type: 'string',
+              description:
+                'Optional artifact, discussion, task, pilot, or release URI this proposal is responding to.',
+            },
+            aiAssistDisclosure: {
+              type: 'string',
+              description:
+                'Optional disclosure of AI tools, models, or generated material involved in the work.',
+            },
             budget: {
               type: 'string',
               description:
@@ -19468,6 +19680,220 @@ export const schemaDict = {
               type: 'string',
               format: 'datetime',
             },
+            review: {
+              type: 'ref',
+              ref: 'lex:com.creaton.proposal#reviewContract',
+              description:
+                'Optional review configuration: acceptance criteria, evidence requirements, expectations, and dispute escalation path.',
+            },
+          },
+        },
+      },
+      reviewContract: {
+        type: 'object',
+        description:
+          'Review configuration for accepting or disputing a proposed task.',
+        required: ['acceptanceCriteria', 'evidenceRequired'],
+        properties: {
+          acceptanceCriteria: {
+            type: 'array',
+            description:
+              'Specific conditions that must be met for the proposal deliverables to be considered accepted.',
+            items: {
+              type: 'string',
+            },
+          },
+          evidenceRequired: {
+            type: 'array',
+            description:
+              'Types of proof or documentation the contributor must provide, such as screenshots, test results, external links, or ATProto records.',
+            items: {
+              type: 'string',
+            },
+          },
+          reviewerExpectations: {
+            type: 'string',
+            description:
+              'Guidance for reviewers on how to evaluate the submission, including quality standards or review process details.',
+          },
+          disputePath: {
+            type: 'string',
+            description:
+              'How to escalate a review disagreement, such as a DAO vote link, arbitrator DID, or dispute topic URI.',
+          },
+        },
+      },
+    },
+  },
+  ComCreatonStudioLearning: {
+    lexicon: 1,
+    id: 'com.creaton.studioLearning',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A studio learning record for decisions, retrospectives, root causes, playbooks, and Deming-style study loops.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['kind', 'communityUri', 'title', 'body', 'createdAt'],
+          properties: {
+            kind: {
+              type: 'string',
+              knownValues: [
+                'decision',
+                'retrospective',
+                'root_cause',
+                'playbook',
+              ],
+              description: 'Learning record category.',
+            },
+            communityUri: {
+              type: 'string',
+              description: 'Studio or market community URI.',
+            },
+            topicId: {
+              type: 'string',
+              description: 'Optional linked discussion topic id.',
+            },
+            productionStage: {
+              type: 'string',
+              knownValues: [
+                'premise',
+                'script',
+                'storyboard',
+                'animatic',
+                'production',
+                'edit',
+                'release',
+                'study',
+              ],
+              description:
+                'Creative production stage this learning applies to.',
+            },
+            title: {
+              type: 'string',
+              maxLength: 300,
+              description: 'Short title.',
+            },
+            body: {
+              type: 'string',
+              maxLength: 10000,
+              description: 'Summary of the decision, observation, or lesson.',
+            },
+            decision: {
+              type: 'string',
+              description: 'Decision, standard, or action chosen.',
+            },
+            rootCause: {
+              type: 'string',
+              description: 'Root cause when applicable.',
+            },
+            correctiveAction: {
+              type: 'string',
+              description: 'Corrective action or process improvement.',
+            },
+            metric: {
+              type: 'string',
+              description: 'Related metric or signal.',
+            },
+            studySignals: {
+              type: 'array',
+              description:
+                'Audience, funder, or crew signals studied before the decision.',
+              items: {
+                type: 'string',
+              },
+            },
+            nextExperiment: {
+              type: 'string',
+              description: 'Next Plan-Do-Study-Act experiment.',
+            },
+            linkedUris: {
+              type: 'array',
+              description:
+                'Linked artifacts, tasks, discussions, or proposals.',
+              items: {
+                type: 'string',
+              },
+            },
+            createdBy: {
+              type: 'string',
+              format: 'did',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  ComGermnetworkDeclaration: {
+    lexicon: 1,
+    id: 'com.germnetwork.declaration',
+    defs: {
+      main: {
+        type: 'record',
+        description: 'A declaration of a Germ Network account',
+        key: 'literal:self',
+        record: {
+          type: 'object',
+          required: ['version', 'currentKey'],
+          properties: {
+            version: {
+              type: 'string',
+              description:
+                'Semver version number, without pre-release or build information, for the format of opaque content',
+              minLength: 5,
+              maxLength: 14,
+            },
+            currentKey: {
+              type: 'bytes',
+              description:
+                'Opaque value, an ed25519 public key prefixed with a byte enum',
+            },
+            messageMe: {
+              type: 'ref',
+              description: 'Controls who can message this account',
+              ref: 'lex:com.germnetwork.declaration#messageMe',
+            },
+            keyPackage: {
+              type: 'bytes',
+              description:
+                'Opaque value, contains MLS KeyPackage(s), and other signature data, and is signed by the currentKey',
+            },
+            continuityProofs: {
+              type: 'array',
+              description: 'Array of opaque values to allow for key rolling',
+              items: {
+                type: 'bytes',
+              },
+              maxLength: 1000,
+            },
+          },
+        },
+      },
+      messageMe: {
+        type: 'object',
+        required: ['showButtonTo', 'messageMeUrl'],
+        properties: {
+          messageMeUrl: {
+            type: 'string',
+            description:
+              'A URL to present to an account that does not have its own com.germnetwork.declaration record, must have an empty fragment component, where the app should fill in the fragment component with the DIDs of the two accounts who wish to message each other',
+            format: 'uri',
+            minLength: 1,
+            maxLength: 2047,
+          },
+          showButtonTo: {
+            type: 'string',
+            knownValues: ['none', 'usersIFollow', 'everyone'],
+            description:
+              "The policy of who can message the account, this value is included in the keyPackage, but is duplicated here to allow applications to decide if they should show a 'Message on Germ' button to the viewer.",
+            minLength: 1,
+            maxLength: 100,
           },
         },
       },
@@ -25021,7 +25447,7 @@ export const ids = {
     'com.atproto.temp.requestPhoneVerification',
   ComAtprotoTempRevokeAccountCredentials:
     'com.atproto.temp.revokeAccountCredentials',
-  ComGermnetworkDeclaration: 'com.germnetwork.declaration',
+  ComCreatonDiscussion: 'com.creaton.discussion',
   ComCreatonDiscussionCreateTopic: 'com.creaton.discussion.createTopic',
   ComCreatonDiscussionGetTopicMembership:
     'com.creaton.discussion.getTopicMembership',
@@ -25030,6 +25456,8 @@ export const ids = {
   ComCreatonDiscussionTopic: 'com.creaton.discussionTopic',
   ComCreatonEvmAddressControl: 'com.creaton.evm.addressControl',
   ComCreatonProposal: 'com.creaton.proposal',
+  ComCreatonStudioLearning: 'com.creaton.studioLearning',
+  ComGermnetworkDeclaration: 'com.germnetwork.declaration',
   ToolsOzoneCommunicationCreateTemplate:
     'tools.ozone.communication.createTemplate',
   ToolsOzoneCommunicationDefs: 'tools.ozone.communication.defs',

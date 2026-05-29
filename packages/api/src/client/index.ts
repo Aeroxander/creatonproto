@@ -310,7 +310,7 @@ import * as ComAtprotoTempDereferenceScope from './types/com/atproto/temp/derefe
 import * as ComAtprotoTempFetchLabels from './types/com/atproto/temp/fetchLabels.js'
 import * as ComAtprotoTempRequestPhoneVerification from './types/com/atproto/temp/requestPhoneVerification.js'
 import * as ComAtprotoTempRevokeAccountCredentials from './types/com/atproto/temp/revokeAccountCredentials.js'
-import * as ComGermnetworkDeclaration from './types/com/germnetwork/declaration.js'
+import * as ComCreatonDiscussion from './types/com/creaton/discussion.js'
 import * as ComCreatonDiscussionCreateTopic from './types/com/creaton/discussion/createTopic.js'
 import * as ComCreatonDiscussionGetTopicMembership from './types/com/creaton/discussion/getTopicMembership.js'
 import * as ComCreatonDiscussionJoinTopic from './types/com/creaton/discussion/joinTopic.js'
@@ -318,6 +318,8 @@ import * as ComCreatonDiscussionLeaveTopic from './types/com/creaton/discussion/
 import * as ComCreatonDiscussionTopic from './types/com/creaton/discussionTopic.js'
 import * as ComCreatonEvmAddressControl from './types/com/creaton/evm/addressControl.js'
 import * as ComCreatonProposal from './types/com/creaton/proposal.js'
+import * as ComCreatonStudioLearning from './types/com/creaton/studioLearning.js'
+import * as ComGermnetworkDeclaration from './types/com/germnetwork/declaration.js'
 import * as ToolsOzoneCommunicationCreateTemplate from './types/tools/ozone/communication/createTemplate.js'
 import * as ToolsOzoneCommunicationDefs from './types/tools/ozone/communication/defs.js'
 import * as ToolsOzoneCommunicationDeleteTemplate from './types/tools/ozone/communication/deleteTemplate.js'
@@ -674,7 +676,7 @@ export * as ComAtprotoTempDereferenceScope from './types/com/atproto/temp/derefe
 export * as ComAtprotoTempFetchLabels from './types/com/atproto/temp/fetchLabels.js'
 export * as ComAtprotoTempRequestPhoneVerification from './types/com/atproto/temp/requestPhoneVerification.js'
 export * as ComAtprotoTempRevokeAccountCredentials from './types/com/atproto/temp/revokeAccountCredentials.js'
-export * as ComGermnetworkDeclaration from './types/com/germnetwork/declaration.js'
+export * as ComCreatonDiscussion from './types/com/creaton/discussion.js'
 export * as ComCreatonDiscussionCreateTopic from './types/com/creaton/discussion/createTopic.js'
 export * as ComCreatonDiscussionGetTopicMembership from './types/com/creaton/discussion/getTopicMembership.js'
 export * as ComCreatonDiscussionJoinTopic from './types/com/creaton/discussion/joinTopic.js'
@@ -682,6 +684,8 @@ export * as ComCreatonDiscussionLeaveTopic from './types/com/creaton/discussion/
 export * as ComCreatonDiscussionTopic from './types/com/creaton/discussionTopic.js'
 export * as ComCreatonEvmAddressControl from './types/com/creaton/evm/addressControl.js'
 export * as ComCreatonProposal from './types/com/creaton/proposal.js'
+export * as ComCreatonStudioLearning from './types/com/creaton/studioLearning.js'
+export * as ComGermnetworkDeclaration from './types/com/germnetwork/declaration.js'
 export * as ToolsOzoneCommunicationCreateTemplate from './types/tools/ozone/communication/createTemplate.js'
 export * as ToolsOzoneCommunicationDefs from './types/tools/ozone/communication/defs.js'
 export * as ToolsOzoneCommunicationDeleteTemplate from './types/tools/ozone/communication/deleteTemplate.js'
@@ -5056,14 +5060,14 @@ export class ChatBskyModerationNS {
 export class ComNS {
   _client: XrpcClient
   atproto: ComAtprotoNS
-  germnetwork: ComGermnetworkNS
   creaton: ComCreatonNS
+  germnetwork: ComGermnetworkNS
 
   constructor(client: XrpcClient) {
     this._client = client
     this.atproto = new ComAtprotoNS(client)
-    this.germnetwork = new ComGermnetworkNS(client)
     this.creaton = new ComCreatonNS(client)
+    this.germnetwork = new ComGermnetworkNS(client)
   }
 }
 
@@ -6247,28 +6251,12 @@ export class ComAtprotoTempNS {
   }
 }
 
-export class ComGermnetworkNS {
-  _client: XrpcClient
-  declaration: ComGermnetworkDeclarationRecord
-
-  constructor(client: XrpcClient) {
-    this._client = client
-    this.declaration = new ComGermnetworkDeclarationRecord(client)
-  }
-}
-
-export class ComGermnetworkDeclarationRecord {
-  _client: XrpcClient
-
-  constructor(client: XrpcClient) {
-    this._client = client
-  }
-}
-
 export class ComCreatonNS {
   _client: XrpcClient
+  discussionRecord: ComCreatonDiscussionRecord
   discussionTopic: ComCreatonDiscussionTopicRecord
   proposal: ComCreatonProposalRecord
+  studioLearning: ComCreatonStudioLearningRecord
   discussion: ComCreatonDiscussionNS
   evm: ComCreatonEvmNS
 
@@ -6276,8 +6264,10 @@ export class ComCreatonNS {
     this._client = client
     this.discussion = new ComCreatonDiscussionNS(client)
     this.evm = new ComCreatonEvmNS(client)
+    this.discussionRecord = new ComCreatonDiscussionRecord(client)
     this.discussionTopic = new ComCreatonDiscussionTopicRecord(client)
     this.proposal = new ComCreatonProposalRecord(client)
+    this.studioLearning = new ComCreatonStudioLearningRecord(client)
   }
 }
 
@@ -6425,6 +6415,85 @@ export class ComCreatonEvmAddressControlRecord {
       'com.atproto.repo.deleteRecord',
       undefined,
       { collection: 'com.creaton.evm.addressControl', ...params },
+      { headers },
+    )
+  }
+}
+
+export class ComCreatonDiscussionRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: ComCreatonDiscussion.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'com.creaton.discussion',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{ uri: string; cid: string; value: ComCreatonDiscussion.Record }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'com.creaton.discussion',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonDiscussion.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.discussion'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonDiscussion.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.discussion'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'com.creaton.discussion', ...params },
       { headers },
     )
   }
@@ -6587,6 +6656,187 @@ export class ComCreatonProposalRecord {
       'com.atproto.repo.deleteRecord',
       undefined,
       { collection: 'com.creaton.proposal', ...params },
+      { headers },
+    )
+  }
+}
+
+export class ComCreatonStudioLearningRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: ComCreatonStudioLearning.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'com.creaton.studioLearning',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: ComCreatonStudioLearning.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'com.creaton.studioLearning',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonStudioLearning.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.studioLearning'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComCreatonStudioLearning.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.creaton.studioLearning'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'com.creaton.studioLearning', ...params },
+      { headers },
+    )
+  }
+}
+
+export class ComGermnetworkNS {
+  _client: XrpcClient
+  declaration: ComGermnetworkDeclarationRecord
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.declaration = new ComGermnetworkDeclarationRecord(client)
+  }
+}
+
+export class ComGermnetworkDeclarationRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: ComGermnetworkDeclaration.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'com.germnetwork.declaration',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: ComGermnetworkDeclaration.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'com.germnetwork.declaration',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComGermnetworkDeclaration.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.germnetwork.declaration'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      {
+        collection,
+        rkey: 'self',
+        ...params,
+        record: { ...record, $type: collection },
+      },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<ComGermnetworkDeclaration.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'com.germnetwork.declaration'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'com.germnetwork.declaration', ...params },
       { headers },
     )
   }
