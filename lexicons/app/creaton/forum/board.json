@@ -1,0 +1,68 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.board",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A Creaton forum board. Boards may be standalone or attached to a studio.",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["title", "scope", "createdAt"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 300,
+            "maxGraphemes": 100
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 10000,
+            "maxGraphemes": 5000
+          },
+          "slug": {
+            "type": "string",
+            "maxLength": 128,
+            "description": "Optional client-friendly board slug. Clients should not treat it as globally unique."
+          },
+          "directoryUri": {
+            "type": "string",
+            "description": "Optional shared discovery target URI for directory-style board discovery."
+          },
+          "scope": {
+            "type": "string",
+            "knownValues": ["studio", "standalone"],
+            "description": "Whether this board is attached to a studio or independent."
+          },
+          "studioUri": {
+            "type": "string",
+            "description": "Studio, market, or community URI when scope is studio. Omitted for standalone boards."
+          },
+          "rules": {
+            "type": "string",
+            "maxLength": 10000,
+            "maxGraphemes": 5000
+          },
+          "avatar": {
+            "type": "blob",
+            "accept": ["image/png", "image/jpeg"],
+            "maxSize": 1000000
+          },
+          "banner": {
+            "type": "blob",
+            "accept": ["image/png", "image/jpeg"],
+            "maxSize": 3000000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

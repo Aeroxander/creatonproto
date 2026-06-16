@@ -161,6 +161,12 @@ import * as AppCreatonCommunityJoin from './types/app/creaton/community/join.js'
 import * as AppCreatonCommunityLeave from './types/app/creaton/community/leave.js'
 import * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenVotes.js'
 import * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
+import * as AppCreatonForumBoard from './types/app/creaton/forum/board.js'
+import * as AppCreatonForumComment from './types/app/creaton/forum/comment.js'
+import * as AppCreatonForumMember from './types/app/creaton/forum/member.js'
+import * as AppCreatonForumRoleGrant from './types/app/creaton/forum/roleGrant.js'
+import * as AppCreatonForumTopic from './types/app/creaton/forum/topic.js'
+import * as AppCreatonForumVote from './types/app/creaton/forum/vote.js'
 import * as AppCreatonMarketGetTaskAttestations from './types/app/creaton/market/getTaskAttestations.js'
 import * as AppCreatonMarketGetTasks from './types/app/creaton/market/getTasks.js'
 import * as AppCreatonMarketIpOffer from './types/app/creaton/market/ipOffer.js'
@@ -311,10 +317,6 @@ import * as ComAtprotoTempFetchLabels from './types/com/atproto/temp/fetchLabels
 import * as ComAtprotoTempRequestPhoneVerification from './types/com/atproto/temp/requestPhoneVerification.js'
 import * as ComAtprotoTempRevokeAccountCredentials from './types/com/atproto/temp/revokeAccountCredentials.js'
 import * as ComCreatonDiscussion from './types/com/creaton/discussion.js'
-import * as ComCreatonDiscussionCreateTopic from './types/com/creaton/discussion/createTopic.js'
-import * as ComCreatonDiscussionGetTopicMembership from './types/com/creaton/discussion/getTopicMembership.js'
-import * as ComCreatonDiscussionJoinTopic from './types/com/creaton/discussion/joinTopic.js'
-import * as ComCreatonDiscussionLeaveTopic from './types/com/creaton/discussion/leaveTopic.js'
 import * as ComCreatonDiscussionTopic from './types/com/creaton/discussionTopic.js'
 import * as ComCreatonEvmAddressControl from './types/com/creaton/evm/addressControl.js'
 import * as ComCreatonProposal from './types/com/creaton/proposal.js'
@@ -527,6 +529,12 @@ export * as AppCreatonCommunityJoin from './types/app/creaton/community/join.js'
 export * as AppCreatonCommunityLeave from './types/app/creaton/community/leave.js'
 export * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenVotes.js'
 export * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
+export * as AppCreatonForumBoard from './types/app/creaton/forum/board.js'
+export * as AppCreatonForumComment from './types/app/creaton/forum/comment.js'
+export * as AppCreatonForumMember from './types/app/creaton/forum/member.js'
+export * as AppCreatonForumRoleGrant from './types/app/creaton/forum/roleGrant.js'
+export * as AppCreatonForumTopic from './types/app/creaton/forum/topic.js'
+export * as AppCreatonForumVote from './types/app/creaton/forum/vote.js'
 export * as AppCreatonMarketGetTaskAttestations from './types/app/creaton/market/getTaskAttestations.js'
 export * as AppCreatonMarketGetTasks from './types/app/creaton/market/getTasks.js'
 export * as AppCreatonMarketIpOffer from './types/app/creaton/market/ipOffer.js'
@@ -677,10 +685,6 @@ export * as ComAtprotoTempFetchLabels from './types/com/atproto/temp/fetchLabels
 export * as ComAtprotoTempRequestPhoneVerification from './types/com/atproto/temp/requestPhoneVerification.js'
 export * as ComAtprotoTempRevokeAccountCredentials from './types/com/atproto/temp/revokeAccountCredentials.js'
 export * as ComCreatonDiscussion from './types/com/creaton/discussion.js'
-export * as ComCreatonDiscussionCreateTopic from './types/com/creaton/discussion/createTopic.js'
-export * as ComCreatonDiscussionGetTopicMembership from './types/com/creaton/discussion/getTopicMembership.js'
-export * as ComCreatonDiscussionJoinTopic from './types/com/creaton/discussion/joinTopic.js'
-export * as ComCreatonDiscussionLeaveTopic from './types/com/creaton/discussion/leaveTopic.js'
 export * as ComCreatonDiscussionTopic from './types/com/creaton/discussionTopic.js'
 export * as ComCreatonEvmAddressControl from './types/com/creaton/evm/addressControl.js'
 export * as ComCreatonProposal from './types/com/creaton/proposal.js'
@@ -3686,12 +3690,14 @@ export class AppCreatonNS {
   _client: XrpcClient
   community: AppCreatonCommunityNS
   feed: AppCreatonFeedNS
+  forum: AppCreatonForumNS
   market: AppCreatonMarketNS
 
   constructor(client: XrpcClient) {
     this._client = client
     this.community = new AppCreatonCommunityNS(client)
     this.feed = new AppCreatonFeedNS(client)
+    this.forum = new AppCreatonForumNS(client)
     this.market = new AppCreatonMarketNS(client)
   }
 }
@@ -3932,6 +3938,512 @@ export class AppCreatonFeedTokenVoteRecord {
       'com.atproto.repo.deleteRecord',
       undefined,
       { collection: 'app.creaton.feed.tokenVote', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumNS {
+  _client: XrpcClient
+  board: AppCreatonForumBoardRecord
+  comment: AppCreatonForumCommentRecord
+  member: AppCreatonForumMemberRecord
+  roleGrant: AppCreatonForumRoleGrantRecord
+  topic: AppCreatonForumTopicRecord
+  vote: AppCreatonForumVoteRecord
+
+  constructor(client: XrpcClient) {
+    this._client = client
+    this.board = new AppCreatonForumBoardRecord(client)
+    this.comment = new AppCreatonForumCommentRecord(client)
+    this.member = new AppCreatonForumMemberRecord(client)
+    this.roleGrant = new AppCreatonForumRoleGrantRecord(client)
+    this.topic = new AppCreatonForumTopicRecord(client)
+    this.vote = new AppCreatonForumVoteRecord(client)
+  }
+}
+
+export class AppCreatonForumBoardRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumBoard.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.board',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{ uri: string; cid: string; value: AppCreatonForumBoard.Record }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.board',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumBoard.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.board'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumBoard.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.board'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.board', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumCommentRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumComment.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.comment',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonForumComment.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.comment',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumComment.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.comment'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumComment.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.comment'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.comment', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumMemberRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumMember.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.member',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonForumMember.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.member',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumMember.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.member'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumMember.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.member'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.member', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumRoleGrantRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumRoleGrant.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.roleGrant',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonForumRoleGrant.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.roleGrant',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumRoleGrant.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.roleGrant'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumRoleGrant.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.roleGrant'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.roleGrant', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumTopicRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumTopic.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.topic',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{ uri: string; cid: string; value: AppCreatonForumTopic.Record }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.topic',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumTopic.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.topic'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumTopic.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.topic'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.topic', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumVoteRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumVote.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.vote',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{ uri: string; cid: string; value: AppCreatonForumVote.Record }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.vote',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumVote.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.vote'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumVote.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.vote'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.vote', ...params },
       { headers },
     )
   }
@@ -6253,77 +6765,19 @@ export class ComAtprotoTempNS {
 
 export class ComCreatonNS {
   _client: XrpcClient
-  discussionRecord: ComCreatonDiscussionRecord
+  discussion: ComCreatonDiscussionRecord
   discussionTopic: ComCreatonDiscussionTopicRecord
   proposal: ComCreatonProposalRecord
   studioLearning: ComCreatonStudioLearningRecord
-  discussion: ComCreatonDiscussionNS
   evm: ComCreatonEvmNS
 
   constructor(client: XrpcClient) {
     this._client = client
-    this.discussion = new ComCreatonDiscussionNS(client)
     this.evm = new ComCreatonEvmNS(client)
-    this.discussionRecord = new ComCreatonDiscussionRecord(client)
+    this.discussion = new ComCreatonDiscussionRecord(client)
     this.discussionTopic = new ComCreatonDiscussionTopicRecord(client)
     this.proposal = new ComCreatonProposalRecord(client)
     this.studioLearning = new ComCreatonStudioLearningRecord(client)
-  }
-}
-
-export class ComCreatonDiscussionNS {
-  _client: XrpcClient
-
-  constructor(client: XrpcClient) {
-    this._client = client
-  }
-
-  createTopic(
-    data?: ComCreatonDiscussionCreateTopic.InputSchema,
-    opts?: ComCreatonDiscussionCreateTopic.CallOptions,
-  ): Promise<ComCreatonDiscussionCreateTopic.Response> {
-    return this._client.call(
-      'com.creaton.discussion.createTopic',
-      opts?.qp,
-      data,
-      opts,
-    )
-  }
-
-  getTopicMembership(
-    params?: ComCreatonDiscussionGetTopicMembership.QueryParams,
-    opts?: ComCreatonDiscussionGetTopicMembership.CallOptions,
-  ): Promise<ComCreatonDiscussionGetTopicMembership.Response> {
-    return this._client.call(
-      'com.creaton.discussion.getTopicMembership',
-      params,
-      undefined,
-      opts,
-    )
-  }
-
-  joinTopic(
-    data?: ComCreatonDiscussionJoinTopic.InputSchema,
-    opts?: ComCreatonDiscussionJoinTopic.CallOptions,
-  ): Promise<ComCreatonDiscussionJoinTopic.Response> {
-    return this._client.call(
-      'com.creaton.discussion.joinTopic',
-      opts?.qp,
-      data,
-      opts,
-    )
-  }
-
-  leaveTopic(
-    data?: ComCreatonDiscussionLeaveTopic.InputSchema,
-    opts?: ComCreatonDiscussionLeaveTopic.CallOptions,
-  ): Promise<ComCreatonDiscussionLeaveTopic.Response> {
-    return this._client.call(
-      'com.creaton.discussion.leaveTopic',
-      opts?.qp,
-      data,
-      opts,
-    )
   }
 }
 

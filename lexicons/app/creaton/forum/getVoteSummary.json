@@ -1,0 +1,33 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.getVoteSummary",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Get equal-weight vote totals for a forum topic or comment.",
+      "parameters": {
+        "type": "params",
+        "required": ["subjectUri"],
+        "properties": {
+          "subjectUri": {
+            "type": "string",
+            "format": "at-uri"
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["subjectUri", "up", "down", "score"],
+          "properties": {
+            "subjectUri": { "type": "string", "format": "at-uri" },
+            "up": { "type": "integer" },
+            "down": { "type": "integer" },
+            "score": { "type": "integer" }
+          }
+        }
+      }
+    }
+  }
+}

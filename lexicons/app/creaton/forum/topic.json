@@ -1,0 +1,93 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.topic",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A Creaton forum topic or thread starter.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["board", "title", "createdAt"],
+        "properties": {
+          "board": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 300,
+            "maxGraphemes": 100
+          },
+          "body": {
+            "type": "string",
+            "maxLength": 10000,
+            "maxGraphemes": 5000
+          },
+          "linkUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional external link when this topic is link-style."
+          },
+          "flair": {
+            "type": "ref",
+            "ref": "#flair"
+          },
+          "tags": {
+            "type": "array",
+            "maxLength": 10,
+            "items": {
+              "type": "string",
+              "maxLength": 64,
+              "maxGraphemes": 32
+            }
+          },
+          "productionStage": {
+            "type": "string",
+            "knownValues": [
+              "premise",
+              "script",
+              "storyboard",
+              "animatic",
+              "production",
+              "edit",
+              "release",
+              "study"
+            ]
+          },
+          "artifactUri": {
+            "type": "string",
+            "description": "Optional linked artifact, pilot, proposal, task, release, or other Creaton object."
+          },
+          "studioUri": {
+            "type": "string",
+            "description": "Denormalized studio URI for backlink discovery when the board belongs to a studio."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    },
+    "flair": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "maxLength": 64,
+          "maxGraphemes": 32
+        },
+        "backgroundColor": {
+          "type": "string",
+          "maxLength": 32
+        }
+      }
+    }
+  }
+}

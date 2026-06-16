@@ -1,0 +1,39 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.comment",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A Creaton forum comment. Comments belong to a topic and may reply to another comment.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["topic", "body", "createdAt"],
+        "properties": {
+          "topic": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef"
+          },
+          "parent": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Direct parent comment when this is a nested reply."
+          },
+          "body": {
+            "type": "string",
+            "maxLength": 10000,
+            "maxGraphemes": 5000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

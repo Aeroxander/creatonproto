@@ -1,0 +1,41 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.getRelatedTopics",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Get semantically related forum topics for a given topic URI.",
+      "parameters": {
+        "type": "params",
+        "required": ["topicUri"],
+        "properties": {
+          "topicUri": { "type": "string", "format": "at-uri" },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 20, "default": 5 }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["topics"],
+          "properties": {
+            "topics": {
+              "type": "array",
+              "items": { "type": "ref", "ref": "#relatedTopic" }
+            }
+          }
+        }
+      }
+    },
+    "relatedTopic": {
+      "type": "object",
+      "required": ["uri", "title", "boardUri", "similarity"],
+      "properties": {
+        "uri": { "type": "string", "format": "at-uri" },
+        "title": { "type": "string" },
+        "boardUri": { "type": "string", "format": "at-uri" },
+        "similarity": { "type": "number" }
+      }
+    }
+  }
+}

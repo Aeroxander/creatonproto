@@ -1,0 +1,68 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.getUpcomingEvents",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Get upcoming calendar events linked to Creaton forum boards.",
+      "parameters": {
+        "type": "params",
+        "properties": {
+          "viewerDid": {
+            "type": "string",
+            "format": "did"
+          },
+          "boardUri": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "boardUris": {
+            "type": "array",
+            "maxLength": 50,
+            "items": { "type": "string", "format": "at-uri" }
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 10
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["events"],
+          "properties": {
+            "events": {
+              "type": "array",
+              "items": { "type": "ref", "ref": "#upcomingEvent" }
+            }
+          }
+        }
+      }
+    },
+    "upcomingEvent": {
+      "type": "object",
+      "required": ["uri", "name", "startsAt", "authorDid"],
+      "properties": {
+        "uri": { "type": "string", "format": "at-uri" },
+        "name": { "type": "string" },
+        "startsAt": { "type": "string", "format": "datetime" },
+        "endsAt": { "type": "string", "format": "datetime" },
+        "boardUri": { "type": "string", "format": "at-uri" },
+        "boardTitle": { "type": "string" },
+        "authorDid": { "type": "string", "format": "did" },
+        "mode": { "type": "string" },
+        "status": { "type": "string" },
+        "goingCount": { "type": "integer", "minimum": 0 },
+        "interestedCount": { "type": "integer", "minimum": 0 },
+        "viewerRsvp": {
+          "type": "string",
+          "knownValues": ["going", "interested", "notgoing"]
+        }
+      }
+    }
+  }
+}

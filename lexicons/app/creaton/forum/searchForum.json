@@ -1,0 +1,45 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.searchForum",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Search forum topics and comments by content similarity.",
+      "parameters": {
+        "type": "params",
+        "required": ["query"],
+        "properties": {
+          "query": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 50, "default": 20 }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["results"],
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": { "type": "ref", "ref": "#searchHit" }
+            }
+          }
+        }
+      }
+    },
+    "searchHit": {
+      "type": "object",
+      "required": ["uri", "kind", "body", "authorDid", "createdAt", "score"],
+      "properties": {
+        "uri": { "type": "string", "format": "at-uri" },
+        "kind": { "type": "string", "knownValues": ["topic", "comment"] },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "boardUri": { "type": "string", "format": "at-uri" },
+        "authorDid": { "type": "string", "format": "did" },
+        "createdAt": { "type": "string", "format": "datetime" },
+        "score": { "type": "number" }
+      }
+    }
+  }
+}

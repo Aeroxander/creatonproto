@@ -1,0 +1,34 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.roleGrant",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A board owner or admin grant assigning a Creaton forum role to another DID.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["board", "subject", "role", "createdAt"],
+        "properties": {
+          "board": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef"
+          },
+          "subject": {
+            "type": "string",
+            "format": "did",
+            "description": "DID receiving this role."
+          },
+          "role": {
+            "type": "string",
+            "knownValues": ["admin", "moderator"]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}
