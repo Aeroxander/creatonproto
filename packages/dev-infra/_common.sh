@@ -26,12 +26,12 @@ export_env() {
 # Exports postgres environment variables
 export_pg_env() {
   # Based on creds in compose.yaml
-  export PGPORT=5433
+  export PGPORT=15433
   export PGHOST=localhost
   export PGUSER=pg
   export PGPASSWORD=password
   export PGDATABASE=postgres
-  export DB_POSTGRES_URL="postgresql://pg:password@127.0.0.1:5433/postgres"
+  export DB_POSTGRES_URL="postgresql://pg:password@127.0.0.1:15433/postgres"
 }
 
 # Exports redis environment variables

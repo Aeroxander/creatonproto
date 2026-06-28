@@ -10,6 +10,8 @@ import {
   type OmitKey,
 } from '../../../../util'
 import type * as ComAtprotoRepoStrongRef from '../../../com/atproto/repo/strongRef.js'
+import type * as AppCreatonForumEncryptedContent from './encryptedContent.js'
+import type * as AppCreatonForumEncryptedAttachment from './encryptedAttachment.js'
 
 const is$typed = _is$typed,
   validate = _validate
@@ -20,6 +22,8 @@ export interface Main {
   board: ComAtprotoRepoStrongRef.Main
   title: string
   body?: string
+  protectedBody?: AppCreatonForumEncryptedContent.Main
+  protectedAttachments?: AppCreatonForumEncryptedAttachment.Main[]
   /** Optional external link when this topic is link-style. */
   linkUrl?: string
   flair?: Flair

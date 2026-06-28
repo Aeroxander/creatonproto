@@ -43,6 +43,11 @@
             "maxLength": 10000,
             "maxGraphemes": 5000
           },
+          "access": {
+            "type": "ref",
+            "ref": "app.creaton.forum.board#accessPolicy",
+            "description": "Omitted for public boards. Protected boards declare their issuer, Abstract MPP terms, entitlement registry, and CREATE-staked KMS committee here."
+          },
           "avatar": {
             "type": "blob",
             "accept": ["image/png", "image/jpeg"],
@@ -62,6 +67,49 @@
             "format": "datetime"
           }
         }
+      }
+    },
+    "accessPolicy": {
+      "type": "object",
+      "required": [
+        "kind",
+        "issuerDid",
+        "issuerEndpoint",
+        "chainId",
+        "asset",
+        "amount",
+        "durationSeconds",
+        "payTo",
+        "paymentProtocol",
+        "revenueRouter",
+        "committeeRegistry",
+        "entitlementRegistry",
+        "committeeSize",
+        "committeeThreshold",
+        "historyPolicy",
+        "epochSeconds"
+      ],
+      "properties": {
+        "kind": { "type": "string", "knownValues": ["protected"] },
+        "issuerDid": { "type": "string", "maxLength": 2048 },
+        "issuerEndpoint": { "type": "string", "format": "uri" },
+        "chainId": { "type": "integer", "knownValues": [2741, 11124] },
+        "asset": { "type": "string", "maxLength": 42 },
+        "amount": {
+          "type": "string",
+          "maxLength": 78,
+          "description": "Atomic ERC-3009 payment amount as a base-10 integer string."
+        },
+        "durationSeconds": { "type": "integer", "minimum": 60 },
+        "payTo": { "type": "string", "maxLength": 42 },
+        "paymentProtocol": { "type": "string", "knownValues": ["mpp-abstract-charge"] },
+        "revenueRouter": { "type": "string", "maxLength": 42 },
+        "committeeRegistry": { "type": "string", "maxLength": 42 },
+        "entitlementRegistry": { "type": "string", "maxLength": 42 },
+        "committeeSize": { "type": "integer", "minimum": 15, "maximum": 15 },
+        "committeeThreshold": { "type": "integer", "minimum": 10, "maximum": 10 },
+        "historyPolicy": { "type": "string", "knownValues": ["full", "window", "forward"] },
+        "epochSeconds": { "type": "integer", "minimum": 86400, "maximum": 86400 }
       }
     }
   }

@@ -49,7 +49,7 @@ However, each service uses a different port, documented below, to avoid conflict
 
 The single-use `db_test` service does not have any persistent storage. When the container is removed, data in the database disappears with it.
 
-This service runs on port `5433`.
+This service runs on port `15433`.
 
 ```
 $ docker compose up db_test   # start container

@@ -1,0 +1,38 @@
+{
+  "lexicon": 1,
+  "id": "app.creaton.forum.rewardSnapshot",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "An immutable, PDS-native weekly input snapshot for WAVS poster reward computation.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["board", "epochId", "startsAt", "endsAt", "cutoffBlock", "datasetHash", "merkleRoot", "totalAllocated", "allocationCount", "chunks", "createdAt"],
+        "properties": {
+          "board": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "epochId": { "type": "integer", "minimum": 1 },
+          "startsAt": { "type": "string", "format": "datetime" },
+          "endsAt": { "type": "string", "format": "datetime" },
+          "cutoffBlock": { "type": "string", "maxLength": 32 },
+          "datasetHash": { "type": "bytes", "maxLength": 32, "minLength": 32 },
+          "merkleRoot": { "type": "bytes", "maxLength": 32, "minLength": 32 },
+          "totalAllocated": { "type": "string", "maxLength": 78 },
+          "allocationCount": { "type": "integer", "minimum": 1 },
+          "chunks": { "type": "array", "maxLength": 256, "items": { "type": "ref", "ref": "app.creaton.forum.rewardSnapshot#chunk" } },
+          "createdAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    },
+    "chunk": {
+      "type": "object",
+      "required": ["index", "blob", "sha256", "compressedBytes"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "blob": { "type": "blob", "accept": ["application/gzip"], "maxSize": 4194304 },
+        "sha256": { "type": "bytes", "maxLength": 32, "minLength": 32 },
+        "compressedBytes": { "type": "integer", "minimum": 1, "maximum": 4194304 }
+      }
+    }
+  }
+}

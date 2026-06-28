@@ -32,6 +32,7 @@ export class TapConsumer {
                     evt.did,
                     evt.collection,
                     evt.record as Record<string, unknown>,
+                    evt.cid,
                 )
             } else if (evt.action === 'delete') {
                 await this.processor.deleteRecord(

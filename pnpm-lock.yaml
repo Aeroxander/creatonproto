@@ -575,9 +575,18 @@ importers:
 
   packages/forum-appview:
     dependencies:
+      '@atproto/identity':
+        specifier: workspace:^
+        version: link:../identity
       '@atproto/tap':
         specifier: workspace:^
         version: link:../tap
+      '@atproto/xrpc-server':
+        specifier: workspace:^
+        version: link:../xrpc-server
+      '@hpke/core':
+        specifier: ^1.9.0
+        version: 1.9.0
       better-sqlite3:
         specifier: ^9.4.3
         version: 9.6.0
@@ -590,6 +599,9 @@ importers:
       node-cron:
         specifier: ^3.0.3
         version: 3.0.3
+      viem:
+        specifier: ^2.43.4
+        version: 2.48.4(typescript@5.9.3)(zod@3.25.76)
       zod:
         specifier: ^3.23.8
         version: 3.25.76
@@ -5503,6 +5515,18 @@ packages:
       react-dom: 19.2.5(react@19.2.5)
     dev: true
 
+  /@hpke/common@1.10.1:
+    resolution: {integrity: sha512-moJwhmtLtuxiUzzNp1jpfBfx8yefKoO9D/RCR9dmwrnc7qjJqId1rEtQz+lSlU5cabX8daToMSx/7HayXOiaFw==}
+    engines: {node: '>=16.0.0'}
+    dev: false
+
+  /@hpke/core@1.9.0:
+    resolution: {integrity: sha512-pFxWl1nNJeQCSUFs7+GAblHvXBCjn9EPN65vdKlYQil2aURaRxfGMO6vBKGqm1YHTKwiAxJQNEI70PbSowMP9Q==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@hpke/common': 1.10.1
+    dev: false
+
   /@humanwhocodes/config-array@0.13.0:
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
     engines: {node: '>=10.10.0'}
@@ -7364,7 +7388,7 @@ packages:
   /@scure/bip32@1.7.0:
     resolution: {integrity: sha512-E4FFX/N3f4B80AKWp5dP6ow+flD1LQZo/w8UnLGYZO674jS6YnYeepycOOksv+vLPSpgN35wgKgy+ybfTb2SMw==}
     dependencies:
-      '@noble/curves': 1.9.1
+      '@noble/curves': 1.9.7
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
     dev: false

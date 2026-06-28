@@ -10017,6 +10017,1620 @@ export const schemaDict = {
       },
     },
   },
+  AppCreatonForumBoard: {
+    lexicon: 1,
+    id: 'app.creaton.forum.board',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A Creaton forum board. Boards may be standalone or attached to a studio.',
+        key: 'any',
+        record: {
+          type: 'object',
+          required: ['title', 'scope', 'createdAt'],
+          properties: {
+            title: {
+              type: 'string',
+              maxLength: 300,
+              maxGraphemes: 100,
+            },
+            description: {
+              type: 'string',
+              maxLength: 10000,
+              maxGraphemes: 5000,
+            },
+            slug: {
+              type: 'string',
+              maxLength: 128,
+              description:
+                'Optional client-friendly board slug. Clients should not treat it as globally unique.',
+            },
+            directoryUri: {
+              type: 'string',
+              description:
+                'Optional shared discovery target URI for directory-style board discovery.',
+            },
+            scope: {
+              type: 'string',
+              knownValues: ['studio', 'standalone'],
+              description:
+                'Whether this board is attached to a studio or independent.',
+            },
+            studioUri: {
+              type: 'string',
+              description:
+                'Studio, market, or community URI when scope is studio. Omitted for standalone boards.',
+            },
+            rules: {
+              type: 'string',
+              maxLength: 10000,
+              maxGraphemes: 5000,
+            },
+            access: {
+              type: 'ref',
+              ref: 'lex:app.creaton.forum.board#accessPolicy',
+              description:
+                'Omitted for public boards. Protected boards declare their issuer, Abstract MPP terms, entitlement registry, and CREATE-staked KMS committee here.',
+            },
+            avatar: {
+              type: 'blob',
+              accept: ['image/png', 'image/jpeg'],
+              maxSize: 1000000,
+            },
+            banner: {
+              type: 'blob',
+              accept: ['image/png', 'image/jpeg'],
+              maxSize: 3000000,
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+            updatedAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+      accessPolicy: {
+        type: 'object',
+        required: [
+          'kind',
+          'issuerDid',
+          'issuerEndpoint',
+          'chainId',
+          'asset',
+          'amount',
+          'durationSeconds',
+          'payTo',
+          'paymentProtocol',
+          'revenueRouter',
+          'committeeRegistry',
+          'entitlementRegistry',
+          'committeeSize',
+          'committeeThreshold',
+          'historyPolicy',
+          'epochSeconds',
+        ],
+        properties: {
+          kind: {
+            type: 'string',
+            knownValues: ['protected'],
+          },
+          issuerDid: {
+            type: 'string',
+            maxLength: 2048,
+          },
+          issuerEndpoint: {
+            type: 'string',
+            format: 'uri',
+          },
+          chainId: {
+            type: 'integer',
+            knownValues: [2741, 11124],
+          },
+          asset: {
+            type: 'string',
+            maxLength: 42,
+          },
+          amount: {
+            type: 'string',
+            maxLength: 78,
+            description:
+              'Atomic ERC-3009 payment amount as a base-10 integer string.',
+          },
+          durationSeconds: {
+            type: 'integer',
+            minimum: 60,
+          },
+          payTo: {
+            type: 'string',
+            maxLength: 42,
+          },
+          paymentProtocol: {
+            type: 'string',
+            knownValues: ['mpp-abstract-charge'],
+          },
+          revenueRouter: {
+            type: 'string',
+            maxLength: 42,
+          },
+          committeeRegistry: {
+            type: 'string',
+            maxLength: 42,
+          },
+          entitlementRegistry: {
+            type: 'string',
+            maxLength: 42,
+          },
+          committeeSize: {
+            type: 'integer',
+            minimum: 15,
+            maximum: 15,
+          },
+          committeeThreshold: {
+            type: 'integer',
+            minimum: 10,
+            maximum: 10,
+          },
+          historyPolicy: {
+            type: 'string',
+            knownValues: ['full', 'window', 'forward'],
+          },
+          epochSeconds: {
+            type: 'integer',
+            minimum: 86400,
+            maximum: 86400,
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumComment: {
+    lexicon: 1,
+    id: 'app.creaton.forum.comment',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A Creaton forum comment. Comments belong to a topic and may reply to another comment.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['topic', 'createdAt'],
+          properties: {
+            topic: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            parent: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+              description: 'Direct parent comment when this is a nested reply.',
+            },
+            body: {
+              type: 'string',
+              maxLength: 10000,
+              maxGraphemes: 5000,
+            },
+            protectedBody: {
+              type: 'ref',
+              ref: 'lex:app.creaton.forum.encryptedContent',
+              description:
+                'Encrypted comment body for a protected board. Must not be combined with body.',
+            },
+            protectedAttachments: {
+              type: 'array',
+              maxLength: 16,
+              items: {
+                type: 'ref',
+                ref: 'lex:app.creaton.forum.encryptedAttachment',
+              },
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+            updatedAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumEncryptedAttachment: {
+    lexicon: 1,
+    id: 'app.creaton.forum.encryptedAttachment',
+    defs: {
+      main: {
+        type: 'object',
+        description:
+          'A Logos-hosted encrypted attachment whose file key is wrapped by a board epoch key.',
+        required: [
+          'version',
+          'suite',
+          'epoch',
+          'keyEpochUri',
+          'manifestUri',
+          'ciphertextHash',
+          'size',
+          'fileNonce',
+          'keyNonce',
+          'wrappedFileKey',
+        ],
+        properties: {
+          version: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 1,
+          },
+          suite: {
+            type: 'string',
+            knownValues: ['AES-256-GCM+HKDF-SHA256/AES-256-GCM'],
+          },
+          epoch: {
+            type: 'string',
+            maxLength: 10,
+          },
+          keyEpochUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          manifestUri: {
+            type: 'string',
+            format: 'uri',
+            description:
+              'Content-addressed Logos manifest for encrypted chunks.',
+          },
+          ciphertextHash: {
+            type: 'bytes',
+          },
+          size: {
+            type: 'integer',
+            minimum: 1,
+          },
+          mediaType: {
+            type: 'string',
+            maxLength: 255,
+          },
+          name: {
+            type: 'string',
+            maxLength: 255,
+            maxGraphemes: 255,
+          },
+          fileNonce: {
+            type: 'bytes',
+          },
+          keyNonce: {
+            type: 'bytes',
+          },
+          wrappedFileKey: {
+            type: 'bytes',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumEncryptedContent: {
+    lexicon: 1,
+    id: 'app.creaton.forum.encryptedContent',
+    defs: {
+      main: {
+        type: 'object',
+        description:
+          'An authenticated Creaton forum body encrypted under a board epoch key.',
+        required: ['version', 'suite', 'epoch', 'salt', 'nonce', 'ciphertext'],
+        properties: {
+          version: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 2,
+          },
+          suite: {
+            type: 'string',
+            knownValues: ['HKDF-SHA256/AES-256-GCM'],
+          },
+          epoch: {
+            type: 'string',
+            maxLength: 10,
+            description: 'UTC key epoch in YYYY-MM-DD form.',
+          },
+          salt: {
+            type: 'bytes',
+            description:
+              'Random 32-byte salt used to derive the per-record content key.',
+          },
+          nonce: {
+            type: 'bytes',
+            description: 'Random 12-byte AES-GCM nonce.',
+          },
+          ciphertext: {
+            type: 'bytes',
+            description:
+              'AES-256-GCM ciphertext including its authentication tag.',
+          },
+          committeeEpoch: {
+            type: 'integer',
+            minimum: 1,
+            description:
+              'CREATE-staked KMS committee epoch controlling release of this content key. Required by version 2.',
+          },
+          keyEpochUri: {
+            type: 'string',
+            format: 'at-uri',
+            description:
+              'Reference to the app.creaton.forum.keyEpoch record containing the threshold-wrapped board key. Required by version 2.',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumGetNetworkBoards: {
+    lexicon: 1,
+    id: 'app.creaton.forum.getNetworkBoards',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'List forum boards active among accounts the viewer follows.',
+        parameters: {
+          type: 'params',
+          required: ['viewerDid'],
+          properties: {
+            viewerDid: {
+              type: 'string',
+              format: 'did',
+            },
+            limit: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 20,
+              default: 5,
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['boards'],
+            properties: {
+              boards: {
+                type: 'array',
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.forum.getNetworkBoards#boardHint',
+                },
+              },
+            },
+          },
+        },
+      },
+      boardHint: {
+        type: 'object',
+        required: ['boardUri', 'title', 'networkActivity'],
+        properties: {
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          title: {
+            type: 'string',
+          },
+          description: {
+            type: 'string',
+          },
+          networkActivity: {
+            type: 'integer',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumGetRelatedTopics: {
+    lexicon: 1,
+    id: 'app.creaton.forum.getRelatedTopics',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Get semantically related forum topics for a given topic URI.',
+        parameters: {
+          type: 'params',
+          required: ['topicUri'],
+          properties: {
+            topicUri: {
+              type: 'string',
+              format: 'at-uri',
+            },
+            limit: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 20,
+              default: 5,
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['topics'],
+            properties: {
+              topics: {
+                type: 'array',
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.forum.getRelatedTopics#relatedTopic',
+                },
+              },
+            },
+          },
+        },
+      },
+      relatedTopic: {
+        type: 'object',
+        required: ['uri', 'title', 'boardUri', 'similarity'],
+        properties: {
+          uri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          title: {
+            type: 'string',
+          },
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          similarity: {
+            type: 'unknown',
+            description: 'JSON number between -1 and 1.',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumGetUpcomingEvents: {
+    lexicon: 1,
+    id: 'app.creaton.forum.getUpcomingEvents',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Get upcoming calendar events linked to Creaton forum boards.',
+        parameters: {
+          type: 'params',
+          properties: {
+            viewerDid: {
+              type: 'string',
+              format: 'did',
+            },
+            boardUri: {
+              type: 'string',
+              format: 'at-uri',
+            },
+            boardUris: {
+              type: 'array',
+              maxLength: 50,
+              items: {
+                type: 'string',
+                format: 'at-uri',
+              },
+            },
+            limit: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 50,
+              default: 10,
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['events'],
+            properties: {
+              events: {
+                type: 'array',
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.forum.getUpcomingEvents#upcomingEvent',
+                },
+              },
+            },
+          },
+        },
+      },
+      upcomingEvent: {
+        type: 'object',
+        required: ['uri', 'name', 'startsAt', 'authorDid'],
+        properties: {
+          uri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          name: {
+            type: 'string',
+          },
+          startsAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+          endsAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          boardTitle: {
+            type: 'string',
+          },
+          authorDid: {
+            type: 'string',
+            format: 'did',
+          },
+          mode: {
+            type: 'string',
+          },
+          status: {
+            type: 'string',
+          },
+          goingCount: {
+            type: 'integer',
+            minimum: 0,
+          },
+          interestedCount: {
+            type: 'integer',
+            minimum: 0,
+          },
+          viewerRsvp: {
+            type: 'string',
+            knownValues: ['going', 'interested', 'notgoing'],
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumGetUserKarma: {
+    lexicon: 1,
+    id: 'app.creaton.forum.getUserKarma',
+    defs: {
+      main: {
+        type: 'query',
+        description: 'Get PageRank-weighted forum karma for a user.',
+        parameters: {
+          type: 'params',
+          required: ['did'],
+          properties: {
+            did: {
+              type: 'string',
+              format: 'did',
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['did', 'postKarma', 'commentKarma', 'totalKarma'],
+            properties: {
+              did: {
+                type: 'string',
+                format: 'did',
+              },
+              postKarma: {
+                type: 'unknown',
+                description:
+                  'JSON number containing the PageRank-weighted post score.',
+              },
+              commentKarma: {
+                type: 'unknown',
+                description:
+                  'JSON number containing the PageRank-weighted comment score.',
+              },
+              totalKarma: {
+                type: 'unknown',
+                description:
+                  'JSON number containing the combined PageRank-weighted score.',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumGetVoteSummary: {
+    lexicon: 1,
+    id: 'app.creaton.forum.getVoteSummary',
+    defs: {
+      main: {
+        type: 'query',
+        description:
+          'Get equal-weight vote totals for a forum topic or comment.',
+        parameters: {
+          type: 'params',
+          required: ['subjectUri'],
+          properties: {
+            subjectUri: {
+              type: 'string',
+              format: 'at-uri',
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['subjectUri', 'up', 'down', 'score'],
+            properties: {
+              subjectUri: {
+                type: 'string',
+                format: 'at-uri',
+              },
+              up: {
+                type: 'integer',
+              },
+              down: {
+                type: 'integer',
+              },
+              score: {
+                type: 'integer',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumKeyEpoch: {
+    lexicon: 1,
+    id: 'app.creaton.forum.keyEpoch',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A public capsule containing one board epoch key wrapped to a CREATE-elected threshold committee.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: [
+            'board',
+            'epoch',
+            'committeeEpoch',
+            'version',
+            'suite',
+            'encapsulation',
+            'nonce',
+            'ciphertext',
+            'keyCommitment',
+            'policyHash',
+            'createdAt',
+          ],
+          properties: {
+            board: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            epoch: {
+              type: 'string',
+              maxLength: 10,
+              description: 'UTC key epoch in YYYY-MM-DD form.',
+            },
+            committeeEpoch: {
+              type: 'integer',
+              minimum: 1,
+            },
+            version: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 1,
+            },
+            suite: {
+              type: 'string',
+              knownValues: ['BLS12-381-THRESHOLD-KEM/AES-256-GCM'],
+            },
+            encapsulation: {
+              type: 'bytes',
+              description:
+                'Threshold KEM encapsulation under the committee public key.',
+            },
+            nonce: {
+              type: 'bytes',
+              description:
+                'Random 12-byte nonce for the wrapped epoch-key ciphertext.',
+            },
+            ciphertext: {
+              type: 'bytes',
+              description:
+                'Authenticated ciphertext containing the 32-byte board epoch key.',
+            },
+            keyCommitment: {
+              type: 'bytes',
+              description:
+                'SHA-256 commitment to the plaintext board epoch key.',
+            },
+            policyHash: {
+              type: 'bytes',
+              description:
+                'Hash of the board access policy used when this key was created.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumKeyGrant: {
+    lexicon: 1,
+    id: 'app.creaton.forum.keyGrant',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'An issuer-authored, recipient-opaque Sarma V2 grant containing encrypted forum epoch keys.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: [
+            'board',
+            'grantId',
+            'sessionKeyHash',
+            'certificateHash',
+            'epochFrom',
+            'epochTo',
+            'expiresAt',
+            'version',
+            'suite',
+            'enc',
+            'ciphertext',
+            'keyCommitment',
+            'createdAt',
+          ],
+          properties: {
+            board: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            grantId: {
+              type: 'string',
+              maxLength: 128,
+              description:
+                'Opaque, issuer-generated identifier; it must not encode a DID or wallet address.',
+            },
+            sessionKeyHash: {
+              type: 'bytes',
+              description:
+                'SHA-256 fingerprint of the temporary HPKE public key.',
+            },
+            certificateHash: {
+              type: 'bytes',
+              description:
+                'SHA-256 hash of the AGW-signed access-session certificate.',
+            },
+            epochFrom: {
+              type: 'string',
+              maxLength: 10,
+            },
+            epochTo: {
+              type: 'string',
+              maxLength: 10,
+            },
+            expiresAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+            version: {
+              type: 'integer',
+              minimum: 2,
+              maximum: 2,
+            },
+            suite: {
+              type: 'string',
+              knownValues: ['DHKEM-P256-HKDF-SHA256/HKDF-SHA256/AES-256-GCM'],
+            },
+            enc: {
+              type: 'bytes',
+              description: 'RFC 9180 encapsulated key.',
+            },
+            ciphertext: {
+              type: 'bytes',
+              description:
+                'HPKE ciphertext containing at most 256 daily epoch keys.',
+            },
+            keyCommitment: {
+              type: 'bytes',
+              description:
+                'SHA-256 commitment to the canonical plaintext epoch-key bundle.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumMember: {
+    lexicon: 1,
+    id: 'app.creaton.forum.member',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A user-authored membership or follow record for a Creaton forum board.',
+        key: 'any',
+        record: {
+          type: 'object',
+          required: ['board', 'createdAt'],
+          properties: {
+            board: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumRequestKeyGrant: {
+    lexicon: 1,
+    id: 'app.creaton.forum.requestKeyGrant',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          'Requests encrypted epoch keys for an authenticated protected-board entitlement. The HTTP endpoint may respond with an x402 Payment Required challenge.',
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['boardUri', 'certificate'],
+            properties: {
+              boardUri: {
+                type: 'string',
+                format: 'at-uri',
+              },
+              certificate: {
+                type: 'ref',
+                ref: 'lex:app.creaton.forum.requestKeyGrant#sessionCertificate',
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['grants'],
+            properties: {
+              grants: {
+                type: 'array',
+                maxLength: 15,
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.forum.requestKeyGrant#grant',
+                },
+              },
+            },
+          },
+        },
+        errors: [
+          {
+            name: 'AuthenticationRequired',
+          },
+          {
+            name: 'IdentityMismatch',
+          },
+          {
+            name: 'ProtectedBoardNotFound',
+          },
+          {
+            name: 'WrongIssuer',
+          },
+          {
+            name: 'PaymentFailed',
+          },
+          {
+            name: 'InvalidAccessCertificate',
+          },
+        ],
+      },
+      sessionCertificate: {
+        type: 'object',
+        required: [
+          'version',
+          'did',
+          'account',
+          'boardUri',
+          'issuer',
+          'publicKey',
+          'sessionKeyHash',
+          'nonce',
+          'issuedAt',
+          'expiresAt',
+          'signature',
+        ],
+        properties: {
+          version: {
+            type: 'string',
+            knownValues: ['1'],
+          },
+          did: {
+            type: 'string',
+            format: 'did',
+          },
+          account: {
+            type: 'string',
+            maxLength: 42,
+          },
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          issuer: {
+            type: 'string',
+            format: 'did',
+          },
+          publicKey: {
+            type: 'string',
+            maxLength: 256,
+            description: 'Base64url uncompressed P-256 HPKE public key.',
+          },
+          sessionKeyHash: {
+            type: 'string',
+            maxLength: 43,
+            description: 'Base64url SHA-256 fingerprint.',
+          },
+          nonce: {
+            type: 'string',
+            maxLength: 66,
+          },
+          issuedAt: {
+            type: 'integer',
+            minimum: 1,
+          },
+          expiresAt: {
+            type: 'integer',
+            minimum: 1,
+          },
+          signature: {
+            type: 'string',
+            maxLength: 16384,
+          },
+        },
+      },
+      grant: {
+        type: 'object',
+        required: [
+          'grantId',
+          'boardUri',
+          'sessionKeyHash',
+          'certificateHash',
+          'epochFrom',
+          'epochTo',
+          'expiresAt',
+          'version',
+          'suite',
+          'enc',
+          'ciphertext',
+          'keyCommitment',
+          'createdAt',
+        ],
+        properties: {
+          grantId: {
+            type: 'string',
+            maxLength: 128,
+          },
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          sessionKeyHash: {
+            type: 'string',
+            maxLength: 43,
+          },
+          certificateHash: {
+            type: 'string',
+            maxLength: 43,
+          },
+          epochFrom: {
+            type: 'string',
+            maxLength: 10,
+          },
+          epochTo: {
+            type: 'string',
+            maxLength: 10,
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+          version: {
+            type: 'integer',
+            minimum: 2,
+            maximum: 2,
+          },
+          suite: {
+            type: 'string',
+            knownValues: ['DHKEM-P256-HKDF-SHA256/HKDF-SHA256/AES-256-GCM'],
+          },
+          enc: {
+            type: 'string',
+            maxLength: 256,
+          },
+          ciphertext: {
+            type: 'string',
+            maxLength: 100000,
+          },
+          keyCommitment: {
+            type: 'string',
+            maxLength: 43,
+          },
+          createdAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumRequestKeyRelease: {
+    lexicon: 1,
+    id: 'app.creaton.forum.requestKeyRelease',
+    defs: {
+      main: {
+        type: 'procedure',
+        description:
+          'Requests private 10-of-15 threshold partial decapsulations for an MPP-backed protected-board entitlement.',
+        input: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: [
+              'boardUri',
+              'epochFrom',
+              'epochTo',
+              'committeeEpoch',
+              'eligibilityBlock',
+              'certificate',
+            ],
+            properties: {
+              boardUri: {
+                type: 'string',
+                format: 'at-uri',
+              },
+              epochFrom: {
+                type: 'string',
+                maxLength: 10,
+              },
+              epochTo: {
+                type: 'string',
+                maxLength: 10,
+              },
+              committeeEpoch: {
+                type: 'integer',
+                minimum: 1,
+              },
+              eligibilityBlock: {
+                type: 'string',
+                maxLength: 78,
+                description:
+                  'Finalized Abstract block number encoded as a base-10 string.',
+              },
+              certificate: {
+                type: 'ref',
+                ref: 'lex:app.creaton.forum.requestKeyRelease#sessionCertificate',
+              },
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['receipt', 'shares'],
+            properties: {
+              receipt: {
+                type: 'ref',
+                ref: 'lex:app.creaton.forum.requestKeyRelease#accessReceipt',
+              },
+              shares: {
+                type: 'array',
+                maxLength: 15,
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.forum.requestKeyRelease#partialShare',
+                },
+              },
+            },
+          },
+        },
+        errors: [
+          {
+            name: 'AuthenticationRequired',
+          },
+          {
+            name: 'IdentityMismatch',
+          },
+          {
+            name: 'EntitlementRequired',
+          },
+          {
+            name: 'PaymentFailed',
+          },
+          {
+            name: 'PolicyMismatch',
+          },
+          {
+            name: 'CommitteeUnavailable',
+          },
+          {
+            name: 'InvalidAccessCertificate',
+          },
+        ],
+      },
+      sessionCertificate: {
+        type: 'object',
+        required: [
+          'version',
+          'did',
+          'account',
+          'boardUri',
+          'issuer',
+          'publicKey',
+          'sessionKeyHash',
+          'nonce',
+          'issuedAt',
+          'expiresAt',
+          'signature',
+        ],
+        properties: {
+          version: {
+            type: 'string',
+            knownValues: ['1'],
+          },
+          did: {
+            type: 'string',
+            format: 'did',
+          },
+          account: {
+            type: 'string',
+            maxLength: 42,
+          },
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          issuer: {
+            type: 'string',
+            format: 'did',
+          },
+          publicKey: {
+            type: 'string',
+            maxLength: 256,
+          },
+          sessionKeyHash: {
+            type: 'string',
+            maxLength: 43,
+          },
+          nonce: {
+            type: 'string',
+            maxLength: 66,
+          },
+          issuedAt: {
+            type: 'integer',
+            minimum: 1,
+          },
+          expiresAt: {
+            type: 'integer',
+            minimum: 1,
+          },
+          signature: {
+            type: 'string',
+            maxLength: 16384,
+          },
+        },
+      },
+      accessReceipt: {
+        type: 'object',
+        required: [
+          'requestId',
+          'requestHash',
+          'boardUri',
+          'subjectHash',
+          'committeeEpoch',
+          'eligibilityBlock',
+          'policyHash',
+          'expiresAt',
+        ],
+        properties: {
+          requestId: {
+            type: 'string',
+            maxLength: 128,
+          },
+          requestHash: {
+            type: 'string',
+            maxLength: 128,
+          },
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          subjectHash: {
+            type: 'string',
+            maxLength: 128,
+          },
+          committeeEpoch: {
+            type: 'integer',
+            minimum: 1,
+          },
+          eligibilityBlock: {
+            type: 'string',
+            maxLength: 78,
+          },
+          policyHash: {
+            type: 'string',
+            maxLength: 128,
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+        },
+      },
+      partialShare: {
+        type: 'object',
+        required: [
+          'version',
+          'suite',
+          'requestHash',
+          'committeeEpoch',
+          'operatorId',
+          'shareIndex',
+          'recipientKeyHash',
+          'envelope',
+          'shareProof',
+          'operatorSignature',
+        ],
+        properties: {
+          version: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 1,
+          },
+          suite: {
+            type: 'string',
+            knownValues: ['BLS12-381-THRESHOLD-KEM-HPKE-P256'],
+          },
+          requestHash: {
+            type: 'string',
+            maxLength: 128,
+          },
+          committeeEpoch: {
+            type: 'integer',
+            minimum: 1,
+          },
+          operatorId: {
+            type: 'string',
+            maxLength: 256,
+          },
+          shareIndex: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 15,
+          },
+          recipientKeyHash: {
+            type: 'string',
+            maxLength: 43,
+          },
+          envelope: {
+            type: 'ref',
+            ref: 'lex:app.creaton.forum.requestKeyRelease#transportEnvelope',
+          },
+          shareProof: {
+            type: 'string',
+            maxLength: 4096,
+          },
+          operatorSignature: {
+            type: 'string',
+            maxLength: 4096,
+          },
+        },
+      },
+      transportEnvelope: {
+        type: 'object',
+        required: ['version', 'suite', 'enc', 'ciphertext'],
+        properties: {
+          version: {
+            type: 'integer',
+            minimum: 2,
+            maximum: 2,
+          },
+          suite: {
+            type: 'string',
+            knownValues: ['DHKEM-P256-HKDF-SHA256/HKDF-SHA256/AES-256-GCM'],
+          },
+          enc: {
+            type: 'string',
+            maxLength: 256,
+          },
+          ciphertext: {
+            type: 'string',
+            maxLength: 8192,
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumRoleGrant: {
+    lexicon: 1,
+    id: 'app.creaton.forum.roleGrant',
+    defs: {
+      main: {
+        type: 'record',
+        description:
+          'A board owner or admin grant assigning a Creaton forum role to another DID.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['board', 'subject', 'role', 'createdAt'],
+          properties: {
+            board: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            subject: {
+              type: 'string',
+              format: 'did',
+              description: 'DID receiving this role.',
+            },
+            role: {
+              type: 'string',
+              knownValues: ['admin', 'moderator'],
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumSearchForum: {
+    lexicon: 1,
+    id: 'app.creaton.forum.searchForum',
+    defs: {
+      main: {
+        type: 'query',
+        description: 'Search forum topics and comments by content similarity.',
+        parameters: {
+          type: 'params',
+          required: ['query'],
+          properties: {
+            query: {
+              type: 'string',
+              minLength: 1,
+              maxLength: 500,
+            },
+            limit: {
+              type: 'integer',
+              minimum: 1,
+              maximum: 50,
+              default: 20,
+            },
+          },
+        },
+        output: {
+          encoding: 'application/json',
+          schema: {
+            type: 'object',
+            required: ['results'],
+            properties: {
+              results: {
+                type: 'array',
+                items: {
+                  type: 'ref',
+                  ref: 'lex:app.creaton.forum.searchForum#searchHit',
+                },
+              },
+            },
+          },
+        },
+      },
+      searchHit: {
+        type: 'object',
+        required: ['uri', 'kind', 'body', 'authorDid', 'createdAt', 'score'],
+        properties: {
+          uri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          kind: {
+            type: 'string',
+            knownValues: ['topic', 'comment'],
+          },
+          title: {
+            type: 'string',
+          },
+          body: {
+            type: 'string',
+          },
+          boardUri: {
+            type: 'string',
+            format: 'at-uri',
+          },
+          authorDid: {
+            type: 'string',
+            format: 'did',
+          },
+          createdAt: {
+            type: 'string',
+            format: 'datetime',
+          },
+          score: {
+            type: 'unknown',
+            description: 'JSON number containing cosine similarity.',
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumTopic: {
+    lexicon: 1,
+    id: 'app.creaton.forum.topic',
+    defs: {
+      main: {
+        type: 'record',
+        description: 'A Creaton forum topic or thread starter.',
+        key: 'tid',
+        record: {
+          type: 'object',
+          required: ['board', 'title', 'createdAt'],
+          properties: {
+            board: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            title: {
+              type: 'string',
+              maxLength: 300,
+              maxGraphemes: 100,
+            },
+            body: {
+              type: 'string',
+              maxLength: 10000,
+              maxGraphemes: 5000,
+            },
+            protectedBody: {
+              type: 'ref',
+              ref: 'lex:app.creaton.forum.encryptedContent',
+              description:
+                'Encrypted opening body for a protected board. Must not be combined with body.',
+            },
+            protectedAttachments: {
+              type: 'array',
+              maxLength: 16,
+              items: {
+                type: 'ref',
+                ref: 'lex:app.creaton.forum.encryptedAttachment',
+              },
+            },
+            linkUrl: {
+              type: 'string',
+              format: 'uri',
+              description:
+                'Optional external link when this topic is link-style.',
+            },
+            flair: {
+              type: 'ref',
+              ref: 'lex:app.creaton.forum.topic#flair',
+            },
+            tags: {
+              type: 'array',
+              maxLength: 10,
+              items: {
+                type: 'string',
+                maxLength: 64,
+                maxGraphemes: 32,
+              },
+            },
+            productionStage: {
+              type: 'string',
+              knownValues: [
+                'premise',
+                'script',
+                'storyboard',
+                'animatic',
+                'production',
+                'edit',
+                'release',
+                'study',
+              ],
+            },
+            artifactUri: {
+              type: 'string',
+              description:
+                'Optional linked artifact, pilot, proposal, task, release, or other Creaton object.',
+            },
+            studioUri: {
+              type: 'string',
+              description:
+                'Denormalized studio URI for backlink discovery when the board belongs to a studio.',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+            updatedAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+      flair: {
+        type: 'object',
+        required: ['text'],
+        properties: {
+          text: {
+            type: 'string',
+            maxLength: 64,
+            maxGraphemes: 32,
+          },
+          backgroundColor: {
+            type: 'string',
+            maxLength: 32,
+          },
+        },
+      },
+    },
+  },
+  AppCreatonForumVote: {
+    lexicon: 1,
+    id: 'app.creaton.forum.vote',
+    defs: {
+      main: {
+        type: 'record',
+        description: 'A Creaton forum vote on a topic or comment.',
+        key: 'any',
+        record: {
+          type: 'object',
+          required: ['subject', 'direction', 'createdAt'],
+          properties: {
+            subject: {
+              type: 'ref',
+              ref: 'lex:com.atproto.repo.strongRef',
+            },
+            direction: {
+              type: 'string',
+              knownValues: ['up', 'down'],
+            },
+            createdAt: {
+              type: 'string',
+              format: 'datetime',
+            },
+          },
+        },
+      },
+    },
+  },
   AppCreatonMarketGetTaskAttestations: {
     lexicon: 1,
     id: 'app.creaton.market.getTaskAttestations',
@@ -19251,190 +20865,6 @@ export const schemaDict = {
       },
     },
   },
-  ComCreatonDiscussionCreateTopic: {
-    lexicon: 1,
-    id: 'com.creaton.discussion.createTopic',
-    defs: {
-      main: {
-        type: 'procedure',
-        description:
-          'Create a new discussion topic. Creates a participant list in the PDS service repo. Requires auth.',
-        input: {
-          encoding: 'application/json',
-          schema: {
-            type: 'object',
-            required: ['topicId', 'title'],
-            properties: {
-              topicId: {
-                type: 'string',
-                description:
-                  "Unique identifier for this topic (e.g., 'task:42', 'proposal:7').",
-                maxLength: 200,
-              },
-              title: {
-                type: 'string',
-                description: 'Human-readable title for the discussion.',
-                maxLength: 500,
-              },
-              description: {
-                type: 'string',
-                description: 'Optional description or context.',
-                maxLength: 5000,
-              },
-            },
-          },
-        },
-        output: {
-          encoding: 'application/json',
-          schema: {
-            type: 'object',
-            required: ['topicUri', 'listUri'],
-            properties: {
-              topicUri: {
-                type: 'string',
-                format: 'at-uri',
-                description: 'URI of the created topic record.',
-              },
-              listUri: {
-                type: 'string',
-                format: 'at-uri',
-                description: 'URI of the participant list.',
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-  ComCreatonDiscussionGetTopicMembership: {
-    lexicon: 1,
-    id: 'com.creaton.discussion.getTopicMembership',
-    defs: {
-      main: {
-        type: 'query',
-        description:
-          'Check if the authenticated user is a participant in a discussion topic.',
-        parameters: {
-          type: 'params',
-          required: ['topicId'],
-          properties: {
-            topicId: {
-              type: 'string',
-              description: "The topic identifier (e.g., 'task:42').",
-            },
-          },
-        },
-        output: {
-          encoding: 'application/json',
-          schema: {
-            type: 'object',
-            required: ['isMember'],
-            properties: {
-              isMember: {
-                type: 'boolean',
-                description: 'Whether the user is a participant in this topic.',
-              },
-              listUri: {
-                type: 'string',
-                format: 'at-uri',
-                description:
-                  "URI of the topic's participant list, if it exists.",
-              },
-              listItemUri: {
-                type: 'string',
-                format: 'at-uri',
-                description:
-                  "URI of the user's list item record, if a participant.",
-              },
-              participantCount: {
-                type: 'integer',
-                description: 'Number of participants in the topic.',
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-  ComCreatonDiscussionJoinTopic: {
-    lexicon: 1,
-    id: 'com.creaton.discussion.joinTopic',
-    defs: {
-      main: {
-        type: 'procedure',
-        description:
-          "Join a discussion topic. Adds the requester to the topic's participant list. Requires auth.",
-        input: {
-          encoding: 'application/json',
-          schema: {
-            type: 'object',
-            required: ['topicId'],
-            properties: {
-              topicId: {
-                type: 'string',
-                description: "The topic identifier to join (e.g., 'task:42').",
-              },
-            },
-          },
-        },
-        output: {
-          encoding: 'application/json',
-          schema: {
-            type: 'object',
-            required: ['listUri', 'listItemUri'],
-            properties: {
-              listUri: {
-                type: 'string',
-                format: 'at-uri',
-                description: "URI of the topic's participant list.",
-              },
-              listItemUri: {
-                type: 'string',
-                format: 'at-uri',
-                description: 'URI of the created list item record.',
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-  ComCreatonDiscussionLeaveTopic: {
-    lexicon: 1,
-    id: 'com.creaton.discussion.leaveTopic',
-    defs: {
-      main: {
-        type: 'procedure',
-        description:
-          "Leave a discussion topic. Removes the requester from the topic's participant list. Requires auth.",
-        input: {
-          encoding: 'application/json',
-          schema: {
-            type: 'object',
-            required: ['topicId'],
-            properties: {
-              topicId: {
-                type: 'string',
-                description: "The topic identifier to leave (e.g., 'task:42').",
-              },
-            },
-          },
-        },
-        output: {
-          encoding: 'application/json',
-          schema: {
-            type: 'object',
-            required: ['success'],
-            properties: {
-              success: {
-                type: 'boolean',
-              },
-            },
-          },
-        },
-      },
-    },
-  },
   ComCreatonDiscussionTopic: {
     lexicon: 1,
     id: 'com.creaton.discussionTopic',
@@ -25283,6 +26713,24 @@ export const ids = {
   AppCreatonCommunityLeave: 'app.creaton.community.leave',
   AppCreatonFeedGetTokenVotes: 'app.creaton.feed.getTokenVotes',
   AppCreatonFeedTokenVote: 'app.creaton.feed.tokenVote',
+  AppCreatonForumBoard: 'app.creaton.forum.board',
+  AppCreatonForumComment: 'app.creaton.forum.comment',
+  AppCreatonForumEncryptedAttachment: 'app.creaton.forum.encryptedAttachment',
+  AppCreatonForumEncryptedContent: 'app.creaton.forum.encryptedContent',
+  AppCreatonForumGetNetworkBoards: 'app.creaton.forum.getNetworkBoards',
+  AppCreatonForumGetRelatedTopics: 'app.creaton.forum.getRelatedTopics',
+  AppCreatonForumGetUpcomingEvents: 'app.creaton.forum.getUpcomingEvents',
+  AppCreatonForumGetUserKarma: 'app.creaton.forum.getUserKarma',
+  AppCreatonForumGetVoteSummary: 'app.creaton.forum.getVoteSummary',
+  AppCreatonForumKeyEpoch: 'app.creaton.forum.keyEpoch',
+  AppCreatonForumKeyGrant: 'app.creaton.forum.keyGrant',
+  AppCreatonForumMember: 'app.creaton.forum.member',
+  AppCreatonForumRequestKeyGrant: 'app.creaton.forum.requestKeyGrant',
+  AppCreatonForumRequestKeyRelease: 'app.creaton.forum.requestKeyRelease',
+  AppCreatonForumRoleGrant: 'app.creaton.forum.roleGrant',
+  AppCreatonForumSearchForum: 'app.creaton.forum.searchForum',
+  AppCreatonForumTopic: 'app.creaton.forum.topic',
+  AppCreatonForumVote: 'app.creaton.forum.vote',
   AppCreatonMarketGetTaskAttestations: 'app.creaton.market.getTaskAttestations',
   AppCreatonMarketGetTasks: 'app.creaton.market.getTasks',
   AppCreatonMarketIpOffer: 'app.creaton.market.ipOffer',
@@ -25448,11 +26896,6 @@ export const ids = {
   ComAtprotoTempRevokeAccountCredentials:
     'com.atproto.temp.revokeAccountCredentials',
   ComCreatonDiscussion: 'com.creaton.discussion',
-  ComCreatonDiscussionCreateTopic: 'com.creaton.discussion.createTopic',
-  ComCreatonDiscussionGetTopicMembership:
-    'com.creaton.discussion.getTopicMembership',
-  ComCreatonDiscussionJoinTopic: 'com.creaton.discussion.joinTopic',
-  ComCreatonDiscussionLeaveTopic: 'com.creaton.discussion.leaveTopic',
   ComCreatonDiscussionTopic: 'com.creaton.discussionTopic',
   ComCreatonEvmAddressControl: 'com.creaton.evm.addressControl',
   ComCreatonProposal: 'com.creaton.proposal',

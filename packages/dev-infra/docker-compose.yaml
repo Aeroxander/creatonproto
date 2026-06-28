@@ -9,7 +9,7 @@ services:
       - POSTGRES_USER=pg
       - POSTGRES_PASSWORD=password
     ports:
-      - '5433:5432'
+      - '15433:5432'
     # Healthcheck ensures db is queryable when `docker-compose up --wait` completes
     healthcheck:
       test: 'pg_isready -U pg'

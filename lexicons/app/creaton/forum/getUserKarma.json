@@ -19,9 +19,9 @@
           "required": ["did", "postKarma", "commentKarma", "totalKarma"],
           "properties": {
             "did": { "type": "string", "format": "did" },
-            "postKarma": { "type": "number" },
-            "commentKarma": { "type": "number" },
-            "totalKarma": { "type": "number" }
+            "postKarma": { "type": "unknown", "description": "JSON number containing the PageRank-weighted post score." },
+            "commentKarma": { "type": "unknown", "description": "JSON number containing the PageRank-weighted comment score." },
+            "totalKarma": { "type": "unknown", "description": "JSON number containing the combined PageRank-weighted score." }
           }
         }
       }

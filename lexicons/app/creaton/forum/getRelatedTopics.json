@@ -34,7 +34,7 @@
         "uri": { "type": "string", "format": "at-uri" },
         "title": { "type": "string" },
         "boardUri": { "type": "string", "format": "at-uri" },
-        "similarity": { "type": "number" }
+        "similarity": { "type": "unknown", "description": "JSON number between -1 and 1." }
       }
     }
   }

@@ -8,7 +8,7 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["topic", "body", "createdAt"],
+        "required": ["topic", "createdAt"],
         "properties": {
           "topic": {
             "type": "ref",
@@ -23,6 +23,16 @@
             "type": "string",
             "maxLength": 10000,
             "maxGraphemes": 5000
+          },
+          "protectedBody": {
+            "type": "ref",
+            "ref": "app.creaton.forum.encryptedContent",
+            "description": "Encrypted comment body for a protected board. Must not be combined with body."
+          },
+          "protectedAttachments": {
+            "type": "array",
+            "maxLength": 16,
+            "items": { "type": "ref", "ref": "app.creaton.forum.encryptedAttachment" }
           },
           "createdAt": {
             "type": "string",

@@ -27,6 +27,7 @@ export interface Main {
   /** Studio, market, or community URI when scope is studio. Omitted for standalone boards. */
   studioUri?: string
   rules?: string
+  access?: AccessPolicy
   avatar?: BlobRef
   banner?: BlobRef
   createdAt: string
@@ -48,4 +49,35 @@ export {
   type Main as Record,
   isMain as isRecord,
   validateMain as validateRecord,
+}
+
+export interface AccessPolicy {
+  $type?: 'app.creaton.forum.board#accessPolicy'
+  kind: 'protected' | (string & {})
+  issuerDid: string
+  issuerEndpoint: string
+  chainId: number
+  asset: string
+  /** Atomic ERC-3009 payment amount as a base-10 integer string. */
+  amount: string
+  durationSeconds: number
+  payTo: string
+  paymentProtocol: 'mpp-abstract-charge' | (string & {})
+  revenueRouter: string
+  committeeRegistry: string
+  entitlementRegistry: string
+  committeeSize: number
+  committeeThreshold: number
+  historyPolicy: 'full' | 'window' | 'forward' | (string & {})
+  epochSeconds: number
+}
+
+const hashAccessPolicy = 'accessPolicy'
+
+export function isAccessPolicy<V>(v: V) {
+  return is$typed(v, id, hashAccessPolicy)
+}
+
+export function validateAccessPolicy<V>(v: V) {
+  return validate<AccessPolicy & V>(v, id, hashAccessPolicy)
 }

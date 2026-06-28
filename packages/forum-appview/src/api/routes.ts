@@ -10,6 +10,57 @@ import {
 export function createRouter(db: Kysely<Database>): express.Router {
     const router = express.Router()
 
+    router.get('/xrpc/app.creaton.forum.getPosterRewards', async (req: Request, res: Response) => {
+        const did = String(req.query.did ?? '')
+        if (!did) return res.status(400).json({ error: 'Missing required parameter: did' })
+        const rows = await db.selectFrom('forum_reward_allocation as a')
+            .innerJoin('forum_reward_snapshot as s', (join) => join
+                .onRef('s.board_uri', '=', 'a.board_uri').onRef('s.epoch_id', '=', 'a.epoch_id'))
+            .select([
+                'a.board_uri as boardUri', 'a.epoch_id as epochId', 'a.amount as amount',
+                'a.weight as weight', 's.merkle_root as merkleRoot', 's.status as status',
+                's.record_uri as snapshotUri',
+            ]).where('a.did', '=', did).orderBy('a.epoch_id', 'desc').execute()
+        return res.json({ did, rewards: rows })
+    })
+
+    router.get('/xrpc/app.creaton.forum.getRewardClaim', async (req: Request, res: Response) => {
+        const boardUri = String(req.query.boardUri ?? '')
+        const did = String(req.query.did ?? '')
+        const epochId = Number(req.query.epochId)
+        if (!boardUri || !did || !Number.isSafeInteger(epochId)) {
+            return res.status(400).json({ error: 'boardUri, did, and epochId are required' })
+        }
+        const row = await db.selectFrom('forum_reward_allocation').selectAll()
+            .where('board_uri', '=', boardUri).where('epoch_id', '=', epochId).where('did', '=', did)
+            .executeTakeFirst()
+        if (!row) return res.status(404).json({ error: 'Reward allocation not found' })
+        return res.json({
+            boardUri, epochId, did, didHash: row.did_hash, amount: row.amount,
+            leaf: row.leaf, proof: JSON.parse(row.proof),
+        })
+    })
+
+    router.get('/xrpc/app.creaton.forum.getDidWalletBinding', async (req: Request, res: Response) => {
+        const did = String(req.query.did ?? '')
+        if (!did) return res.status(400).json({ error: 'Missing required parameter: did' })
+        const link = await db.selectFrom('forum_wallet_link').selectAll()
+            .where('did', '=', did).orderBy('issued_at', 'desc').executeTakeFirst()
+        if (!link) return res.json({ did, status: 'unlinked' })
+        const attestation = await db.selectFrom('forum_wallet_attestation').selectAll()
+            .where('uri', '=', link.uri).executeTakeFirst()
+        return res.json({
+            did,
+            status: attestation?.status ?? 'pending',
+            wallet: link.address,
+            chainId: link.chain_id,
+            linkUri: link.uri,
+            linkCid: link.cid,
+            version: attestation?.version ?? null,
+            updatedAt: attestation?.updated_at ?? link.indexed_at,
+        })
+    })
+
     router.get('/xrpc/app.creaton.forum.getVoteSummary', async (req: Request, res: Response) => {
         try {
             const subjectUri = req.query.subjectUri as string

@@ -24,6 +24,16 @@
             "maxLength": 10000,
             "maxGraphemes": 5000
           },
+          "protectedBody": {
+            "type": "ref",
+            "ref": "app.creaton.forum.encryptedContent",
+            "description": "Encrypted opening body for a protected board. Must not be combined with body."
+          },
+          "protectedAttachments": {
+            "type": "array",
+            "maxLength": 16,
+            "items": { "type": "ref", "ref": "app.creaton.forum.encryptedAttachment" }
+          },
           "linkUrl": {
             "type": "string",
             "format": "uri",

@@ -163,8 +163,20 @@ import * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenV
 import * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
 import * as AppCreatonForumBoard from './types/app/creaton/forum/board.js'
 import * as AppCreatonForumComment from './types/app/creaton/forum/comment.js'
+import * as AppCreatonForumEncryptedAttachment from './types/app/creaton/forum/encryptedAttachment.js'
+import * as AppCreatonForumEncryptedContent from './types/app/creaton/forum/encryptedContent.js'
+import * as AppCreatonForumGetNetworkBoards from './types/app/creaton/forum/getNetworkBoards.js'
+import * as AppCreatonForumGetRelatedTopics from './types/app/creaton/forum/getRelatedTopics.js'
+import * as AppCreatonForumGetUpcomingEvents from './types/app/creaton/forum/getUpcomingEvents.js'
+import * as AppCreatonForumGetUserKarma from './types/app/creaton/forum/getUserKarma.js'
+import * as AppCreatonForumGetVoteSummary from './types/app/creaton/forum/getVoteSummary.js'
+import * as AppCreatonForumKeyEpoch from './types/app/creaton/forum/keyEpoch.js'
+import * as AppCreatonForumKeyGrant from './types/app/creaton/forum/keyGrant.js'
 import * as AppCreatonForumMember from './types/app/creaton/forum/member.js'
+import * as AppCreatonForumRequestKeyGrant from './types/app/creaton/forum/requestKeyGrant.js'
+import * as AppCreatonForumRequestKeyRelease from './types/app/creaton/forum/requestKeyRelease.js'
 import * as AppCreatonForumRoleGrant from './types/app/creaton/forum/roleGrant.js'
+import * as AppCreatonForumSearchForum from './types/app/creaton/forum/searchForum.js'
 import * as AppCreatonForumTopic from './types/app/creaton/forum/topic.js'
 import * as AppCreatonForumVote from './types/app/creaton/forum/vote.js'
 import * as AppCreatonMarketGetTaskAttestations from './types/app/creaton/market/getTaskAttestations.js'
@@ -531,8 +543,20 @@ export * as AppCreatonFeedGetTokenVotes from './types/app/creaton/feed/getTokenV
 export * as AppCreatonFeedTokenVote from './types/app/creaton/feed/tokenVote.js'
 export * as AppCreatonForumBoard from './types/app/creaton/forum/board.js'
 export * as AppCreatonForumComment from './types/app/creaton/forum/comment.js'
+export * as AppCreatonForumEncryptedAttachment from './types/app/creaton/forum/encryptedAttachment.js'
+export * as AppCreatonForumEncryptedContent from './types/app/creaton/forum/encryptedContent.js'
+export * as AppCreatonForumGetNetworkBoards from './types/app/creaton/forum/getNetworkBoards.js'
+export * as AppCreatonForumGetRelatedTopics from './types/app/creaton/forum/getRelatedTopics.js'
+export * as AppCreatonForumGetUpcomingEvents from './types/app/creaton/forum/getUpcomingEvents.js'
+export * as AppCreatonForumGetUserKarma from './types/app/creaton/forum/getUserKarma.js'
+export * as AppCreatonForumGetVoteSummary from './types/app/creaton/forum/getVoteSummary.js'
+export * as AppCreatonForumKeyEpoch from './types/app/creaton/forum/keyEpoch.js'
+export * as AppCreatonForumKeyGrant from './types/app/creaton/forum/keyGrant.js'
 export * as AppCreatonForumMember from './types/app/creaton/forum/member.js'
+export * as AppCreatonForumRequestKeyGrant from './types/app/creaton/forum/requestKeyGrant.js'
+export * as AppCreatonForumRequestKeyRelease from './types/app/creaton/forum/requestKeyRelease.js'
 export * as AppCreatonForumRoleGrant from './types/app/creaton/forum/roleGrant.js'
+export * as AppCreatonForumSearchForum from './types/app/creaton/forum/searchForum.js'
 export * as AppCreatonForumTopic from './types/app/creaton/forum/topic.js'
 export * as AppCreatonForumVote from './types/app/creaton/forum/vote.js'
 export * as AppCreatonMarketGetTaskAttestations from './types/app/creaton/market/getTaskAttestations.js'
@@ -3947,6 +3971,8 @@ export class AppCreatonForumNS {
   _client: XrpcClient
   board: AppCreatonForumBoardRecord
   comment: AppCreatonForumCommentRecord
+  keyEpoch: AppCreatonForumKeyEpochRecord
+  keyGrant: AppCreatonForumKeyGrantRecord
   member: AppCreatonForumMemberRecord
   roleGrant: AppCreatonForumRoleGrantRecord
   topic: AppCreatonForumTopicRecord
@@ -3956,10 +3982,106 @@ export class AppCreatonForumNS {
     this._client = client
     this.board = new AppCreatonForumBoardRecord(client)
     this.comment = new AppCreatonForumCommentRecord(client)
+    this.keyEpoch = new AppCreatonForumKeyEpochRecord(client)
+    this.keyGrant = new AppCreatonForumKeyGrantRecord(client)
     this.member = new AppCreatonForumMemberRecord(client)
     this.roleGrant = new AppCreatonForumRoleGrantRecord(client)
     this.topic = new AppCreatonForumTopicRecord(client)
     this.vote = new AppCreatonForumVoteRecord(client)
+  }
+
+  getNetworkBoards(
+    params?: AppCreatonForumGetNetworkBoards.QueryParams,
+    opts?: AppCreatonForumGetNetworkBoards.CallOptions,
+  ): Promise<AppCreatonForumGetNetworkBoards.Response> {
+    return this._client.call(
+      'app.creaton.forum.getNetworkBoards',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  getRelatedTopics(
+    params?: AppCreatonForumGetRelatedTopics.QueryParams,
+    opts?: AppCreatonForumGetRelatedTopics.CallOptions,
+  ): Promise<AppCreatonForumGetRelatedTopics.Response> {
+    return this._client.call(
+      'app.creaton.forum.getRelatedTopics',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  getUpcomingEvents(
+    params?: AppCreatonForumGetUpcomingEvents.QueryParams,
+    opts?: AppCreatonForumGetUpcomingEvents.CallOptions,
+  ): Promise<AppCreatonForumGetUpcomingEvents.Response> {
+    return this._client.call(
+      'app.creaton.forum.getUpcomingEvents',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  getUserKarma(
+    params?: AppCreatonForumGetUserKarma.QueryParams,
+    opts?: AppCreatonForumGetUserKarma.CallOptions,
+  ): Promise<AppCreatonForumGetUserKarma.Response> {
+    return this._client.call(
+      'app.creaton.forum.getUserKarma',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  getVoteSummary(
+    params?: AppCreatonForumGetVoteSummary.QueryParams,
+    opts?: AppCreatonForumGetVoteSummary.CallOptions,
+  ): Promise<AppCreatonForumGetVoteSummary.Response> {
+    return this._client.call(
+      'app.creaton.forum.getVoteSummary',
+      params,
+      undefined,
+      opts,
+    )
+  }
+
+  requestKeyGrant(
+    data?: AppCreatonForumRequestKeyGrant.InputSchema,
+    opts?: AppCreatonForumRequestKeyGrant.CallOptions,
+  ): Promise<AppCreatonForumRequestKeyGrant.Response> {
+    return this._client
+      .call('app.creaton.forum.requestKeyGrant', opts?.qp, data, opts)
+      .catch((e) => {
+        throw AppCreatonForumRequestKeyGrant.toKnownErr(e)
+      })
+  }
+
+  requestKeyRelease(
+    data?: AppCreatonForumRequestKeyRelease.InputSchema,
+    opts?: AppCreatonForumRequestKeyRelease.CallOptions,
+  ): Promise<AppCreatonForumRequestKeyRelease.Response> {
+    return this._client
+      .call('app.creaton.forum.requestKeyRelease', opts?.qp, data, opts)
+      .catch((e) => {
+        throw AppCreatonForumRequestKeyRelease.toKnownErr(e)
+      })
+  }
+
+  searchForum(
+    params?: AppCreatonForumSearchForum.QueryParams,
+    opts?: AppCreatonForumSearchForum.CallOptions,
+  ): Promise<AppCreatonForumSearchForum.Response> {
+    return this._client.call(
+      'app.creaton.forum.searchForum',
+      params,
+      undefined,
+      opts,
+    )
   }
 }
 
@@ -4120,6 +4242,172 @@ export class AppCreatonForumCommentRecord {
       'com.atproto.repo.deleteRecord',
       undefined,
       { collection: 'app.creaton.forum.comment', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumKeyEpochRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumKeyEpoch.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.keyEpoch',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonForumKeyEpoch.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.keyEpoch',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumKeyEpoch.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.keyEpoch'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumKeyEpoch.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.keyEpoch'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.keyEpoch', ...params },
+      { headers },
+    )
+  }
+}
+
+export class AppCreatonForumKeyGrantRecord {
+  _client: XrpcClient
+
+  constructor(client: XrpcClient) {
+    this._client = client
+  }
+
+  async list(
+    params: OmitKey<ComAtprotoRepoListRecords.QueryParams, 'collection'>,
+  ): Promise<{
+    cursor?: string
+    records: { uri: string; value: AppCreatonForumKeyGrant.Record }[]
+  }> {
+    const res = await this._client.call('com.atproto.repo.listRecords', {
+      collection: 'app.creaton.forum.keyGrant',
+      ...params,
+    })
+    return res.data
+  }
+
+  async get(
+    params: OmitKey<ComAtprotoRepoGetRecord.QueryParams, 'collection'>,
+  ): Promise<{
+    uri: string
+    cid: string
+    value: AppCreatonForumKeyGrant.Record
+  }> {
+    const res = await this._client.call('com.atproto.repo.getRecord', {
+      collection: 'app.creaton.forum.keyGrant',
+      ...params,
+    })
+    return res.data
+  }
+
+  async create(
+    params: OmitKey<
+      ComAtprotoRepoCreateRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumKeyGrant.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.keyGrant'
+    const res = await this._client.call(
+      'com.atproto.repo.createRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async put(
+    params: OmitKey<
+      ComAtprotoRepoPutRecord.InputSchema,
+      'collection' | 'record'
+    >,
+    record: Un$Typed<AppCreatonForumKeyGrant.Record>,
+    headers?: Record<string, string>,
+  ): Promise<{ uri: string; cid: string }> {
+    const collection = 'app.creaton.forum.keyGrant'
+    const res = await this._client.call(
+      'com.atproto.repo.putRecord',
+      undefined,
+      { collection, ...params, record: { ...record, $type: collection } },
+      { encoding: 'application/json', headers },
+    )
+    return res.data
+  }
+
+  async delete(
+    params: OmitKey<ComAtprotoRepoDeleteRecord.InputSchema, 'collection'>,
+    headers?: Record<string, string>,
+  ): Promise<void> {
+    await this._client.call(
+      'com.atproto.repo.deleteRecord',
+      undefined,
+      { collection: 'app.creaton.forum.keyGrant', ...params },
       { headers },
     )
   }

@@ -38,7 +38,7 @@
         "boardUri": { "type": "string", "format": "at-uri" },
         "authorDid": { "type": "string", "format": "did" },
         "createdAt": { "type": "string", "format": "datetime" },
-        "score": { "type": "number" }
+        "score": { "type": "unknown", "description": "JSON number containing cosine similarity." }
       }
     }
   }
