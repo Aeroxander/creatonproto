@@ -3,7 +3,6 @@ import { Kysely } from 'kysely'
 import {
     createPublicClient,
     createWalletClient,
-    defineChain,
     http,
     keccak256,
     parseAbi,
@@ -13,6 +12,7 @@ import {
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import type { Database } from '../db/schema'
+import { tempoMainnet } from '../issuer/tempo'
 
 const TRIGGER_ABI = parseAbi(['function addTrigger(bytes data)'])
 const DID_WALLET_ABI = parseAbi([
@@ -51,12 +51,7 @@ export class WalletAttestationJob {
                 await this.markFailed(row.uri)
                 continue
             }
-            const chain = defineChain({
-                id: 2741,
-                name: 'Abstract',
-                nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-                rpcUrls: { default: { http: [this.rpcUrl] } },
-            })
+            const chain = tempoMainnet
             const client = createPublicClient({ chain, transport: http(this.rpcUrl) })
             if (this.didWalletRegistry) {
                 const didHash = keccak256(stringToHex(row.did))

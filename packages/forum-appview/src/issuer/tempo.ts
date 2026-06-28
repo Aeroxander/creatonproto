@@ -17,7 +17,7 @@ import {
     deriveAccessPolicyBinding,
     deriveBoardPolicyHash,
     type MppSettlementResult,
-} from './mpp'
+} from './mppPolicy'
 
 export const TEMPO_MAINNET_CHAIN_ID = 4217
 export const TEMPO_TESTNET_CHAIN_ID = 42429
@@ -329,4 +329,4 @@ function expectInteger(value: unknown, name: string): bigint {
     return BigInt(value)
 }
 
-export { deriveBoardPolicyHash }
+export { deriveBoardPolicyHash } from './mppPolicy'

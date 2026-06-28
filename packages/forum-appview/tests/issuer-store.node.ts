@@ -7,9 +7,9 @@ import { createDb, migrateDb, type Database } from '../src/db/schema'
 import { IssuerAccessStore } from '../src/issuer/access-store'
 import { EpochKeyStore } from '../src/issuer/epoch-key-store'
 import { ForumProcessor } from '../src/indexer/processor'
-import { AbstractFacilitatorAdapter, createPaymentRequired, encodePaymentRequired } from '../src/issuer/x402'
 import { createKeyReleaseHandler } from '../src/issuer/routes'
-import { deriveBoardPolicyHash, type AbstractMppSettlementAdapter } from '../src/issuer/mpp'
+import { deriveBoardPolicyHash } from '../src/issuer/mppPolicy'
+import type { TempoMppSubscriptionAdapter } from '../src/issuer/tempo'
 import type { ForumServiceAuth } from '../src/issuer/service-auth'
 import type { ForumWalletAuth } from '../src/issuer/wallet-auth'
 import { ForumGrantIssuer } from '../src/issuer/grant-issuer'
@@ -90,7 +90,7 @@ describe('issuer persistence', () => {
         assert.equal(wrongDid, undefined)
     })
 
-    test('indexes an Abstract MPP and CREATE committee board policy', async () => {
+    test('indexes a Tempo MPP and CREATE committee board policy', async () => {
         const processor = new ForumProcessor(db)
         const boardUri = 'at://did:plc:owner/app.creaton.forum.board/paid'
         await processor.processRecord(boardUri, 'did:plc:owner', 'app.creaton.forum.board', {
@@ -99,12 +99,12 @@ describe('issuer persistence', () => {
                 kind: 'protected',
                 issuerDid: 'did:web:issuer.example',
                 issuerEndpoint: 'https://issuer.example',
-                chainId: 2741,
+                chainId: 4217,
                 asset: '0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1',
                 amount: '1000000',
                 durationSeconds: 2592000,
                 payTo: '0x1111111111111111111111111111111111111111',
-                paymentProtocol: 'mpp',
+                paymentProtocol: 'tempo',
                 revenueRouter: '0x2222222222222222222222222222222222222222',
                 committeeRegistry: '0x3333333333333333333333333333333333333333',
                 entitlementRegistry: '0x4444444444444444444444444444444444444444',
@@ -119,54 +119,10 @@ describe('issuer persistence', () => {
             .selectAll()
             .where('board_uri', '=', boardUri)
             .executeTakeFirstOrThrow()
-        assert.equal(access.payment_protocol, 'mpp')
+        assert.equal(access.payment_protocol, 'tempo')
         assert.equal(access.revenue_router, '0x2222222222222222222222222222222222222222')
         assert.equal(access.committee_size, 15)
         assert.equal(access.committee_threshold, 10)
-    })
-
-    test('verifies before settlement and enforces the authenticated AGW payer', async () => {
-        const calls: string[] = []
-        const requestBodies: unknown[] = []
-        const payer = '0x1111111111111111111111111111111111111111'
-        const adapter = new AbstractFacilitatorAdapter('https://facilitator.example', async (url, init) => {
-            const path = new URL(String(url)).pathname
-            calls.push(path)
-            requestBodies.push(JSON.parse(String(init?.body)))
-            return Response.json(path === '/verify'
-                ? { isValid: true, payer }
-                : {
-                    success: true,
-                    payer,
-                    network: 'eip155:2741',
-                    transaction: `0x${'ab'.repeat(32)}`,
-                })
-        })
-        const result = await adapter.verifyAndSettle({
-            paymentPayload: Buffer.from(JSON.stringify({ x402Version: 2 }), 'utf8').toString('base64'),
-            expectedPayer: payer,
-            paymentRequired: {
-                x402Version: 2,
-                error: 'Payment required',
-                resource: {
-                    url: 'https://issuer.example/grant',
-                    description: 'Grant',
-                    mimeType: 'application/json',
-                },
-                accepts: [{
-                    scheme: 'exact',
-                    network: 'eip155:2741',
-                    amount: '1000000',
-                    asset: '0x84a71ccd554cc1b02749b35d22f684cc8ec987e1',
-                    payTo: '0x2222222222222222222222222222222222222222',
-                    maxTimeoutSeconds: 60,
-                    extra: {},
-                }],
-            },
-        })
-        assert.deepEqual(calls, ['/verify', '/settle'])
-        assert.ok(requestBodies.every((body) => (body as { x402Version?: number }).x402Version === 2))
-        assert.equal(result.payer, payer)
     })
 
     test('issues an RFC 9180 grant decryptable by the temporary recipient key', async () => {
@@ -293,7 +249,7 @@ describe('issuer persistence', () => {
         assert.match(serialized, /\"\$bytes\"/)
     })
 
-    test('does not consume service auth on 402 and issues after verified settlement', async () => {
+    test('requires an active entitlement before key release', async () => {
         const boardUri = 'at://did:plc:owner/app.creaton.forum.board/paid'
         const did = 'did:plc:member'
         const account = '0x1111111111111111111111111111111111111111'
@@ -303,12 +259,12 @@ describe('issuer persistence', () => {
             board_uri: boardUri,
             issuer_did: issuerDid,
             issuer_endpoint: 'https://issuer.example',
-            chain_id: 2741,
+            chain_id: 4217,
             asset: '0x84a71ccd554cc1b02749b35d22f684cc8ec987e1',
             amount: '1000000',
             duration_seconds: 2592000,
             pay_to: '0x2222222222222222222222222222222222222222',
-            payment_protocol: 'mpp',
+            payment_protocol: 'tempo',
             revenue_router: '0x3333333333333333333333333333333333333333',
             committee_registry: '0x4444444444444444444444444444444444444444',
             entitlement_registry: '0x5555555555555555555555555555555555555555',
@@ -346,7 +302,6 @@ describe('issuer persistence', () => {
         }).execute()
 
         let consumed = 0
-        let settled = 0
         const accessStore = new IssuerAccessStore(db)
         const serviceAuth = {
             authenticate: async () => ({
@@ -365,39 +320,25 @@ describe('issuer persistence', () => {
                 expiresAt: new Date(Date.now() + 86_400_000),
             }),
         } as unknown as ForumWalletAuth
-        const settlement = {
-            verifyAndSettle: async ({ authorization }: { authorization?: string }) => {
-                if (!authorization?.includes('Payment ')) return { id: 'challenge' }
-                settled += 1
-                return {
-                    transaction: `0x${'cd'.repeat(32)}`,
-                    paymentRef: `0x${'ef'.repeat(32)}`,
-                    payer: account,
-                }
-            },
-            challengeHeader: () => 'Payment id="challenge"',
-        } as unknown as AbstractMppSettlementAdapter
         const handler = createKeyReleaseHandler({
             db,
             serviceDid: issuerDid,
             accessStore,
             serviceAuth,
             walletAuth,
-            settlement,
             tempoSubscription: {
                 verifyAndActivate: async () => {
                     throw new Error('tempo subscription should not run in this test')
                 },
                 challengeHeader: () => 'Payment id="tempo-challenge"',
             },
-            revenueRouter: '0x3333333333333333333333333333333333333333',
             kms: {
                 requestRelease: async () => ({
                     receipt: { requestId: 'one' },
                     shares: Array.from({ length: 10 }, (_, index) => ({ shareIndex: index + 1 })),
                 }),
             },
-        })
+        } as Parameters<typeof createKeyReleaseHandler>[0])
         const body = {
             boardUri,
             committeeEpoch: 1,
@@ -424,18 +365,21 @@ describe('issuer persistence', () => {
         const challenge = mockResponse()
         await handler(mockRequest(body), challenge.response)
         assert.equal(challenge.statusCode, 402)
-        assert.ok(challenge.headers.get('www-authenticate'))
         assert.equal(consumed, 0)
 
+        await accessStore.createEntitlement({
+            boardUri,
+            did,
+            walletAddress: account,
+            startsAt: new Date(Date.now() - 60_000),
+            expiresAt: new Date(Date.now() + 86_400_000),
+            source: 'tempo',
+        })
+
         const paid = mockResponse()
-        await handler(
-            mockRequest(body, 'credential'),
-            paid.response,
-        )
+        await handler(mockRequest(body), paid.response)
         assert.equal(paid.statusCode, 200)
         assert.equal((paid.body as { shares: unknown[] }).shares.length, 10)
-        assert.ok(paid.headers.get('payment-receipt'))
-        assert.equal(settled, 1)
         assert.equal(consumed, 1)
         assert.ok(await accessStore.findActiveEntitlement(boardUri, did, account))
     })

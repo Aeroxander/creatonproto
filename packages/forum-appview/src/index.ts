@@ -9,10 +9,9 @@ import { IssuerAccessStore } from './issuer/access-store'
 import { createIssuerRouter } from './issuer/routes'
 import { ForumServiceAuth } from './issuer/service-auth'
 import { ForumWalletAuth } from './issuer/wallet-auth'
-import { AbstractMppSettlementAdapter } from './issuer/mpp'
 import { TempoMppSubscriptionAdapter } from './issuer/tempo'
 import { ForumKmsClient } from './issuer/kms-client'
-import type { Address, Hex } from 'viem'
+import type { Hex } from 'viem'
 import { AtprotoSnapshotPublisher } from './issuer/snapshot-publisher'
 import { RewardSnapshotJob } from './jobs/reward-snapshot'
 import { WalletAttestationJob } from './jobs/wallet-attestation'
@@ -56,20 +55,20 @@ async function main() {
         new RewardSnapshotJob(
             db,
             publisher,
-            config.ABSTRACT_RPC_URL,
-            config.FORUM_OPERATOR_REGISTRY as Address,
+            config.TEMPO_RPC_URL,
+            config.FORUM_OPERATOR_REGISTRY,
             config.FORUM_SERVICE_DID,
             config.FORUM_REWARD_PDS_URL,
-            config.FORUM_REWARD_TRIGGER as Address,
+            config.FORUM_REWARD_TRIGGER,
             config.FORUM_REWARD_TRIGGER_PRIVATE_KEY as Hex,
         ).schedule()
         new WalletAttestationJob(
             db,
-            config.ABSTRACT_RPC_URL,
+            config.TEMPO_RPC_URL,
             config.FORUM_REWARD_PDS_URL,
-            config.FORUM_REWARD_TRIGGER as Address,
+            config.FORUM_REWARD_TRIGGER,
             config.FORUM_REWARD_TRIGGER_PRIVATE_KEY as Hex,
-            config.FORUM_DID_WALLET_REGISTRY as Address | undefined,
+            config.FORUM_DID_WALLET_REGISTRY,
         ).schedule()
         console.log('Weekly PDS reward snapshots enabled')
         console.log('WAVS DID-wallet attestations enabled')
@@ -79,17 +78,17 @@ async function main() {
     app.use(express.json())
     const issuerConfigured = Boolean(
         config.FORUM_SERVICE_DID || config.FORUM_MPP_SECRET ||
-        config.FORUM_MPP_SETTLER_PRIVATE_KEY || config.FORUM_REVENUE_ROUTER ||
+        config.FORUM_MPP_SETTLER_PRIVATE_KEY ||
         config.FORUM_KMS_ENDPOINTS || config.FORUM_KMS_ENDPOINT,
     )
     if (issuerConfigured) {
         if (
             !config.FORUM_SERVICE_DID || !config.FORUM_MPP_SECRET ||
-            !config.FORUM_MPP_SETTLER_PRIVATE_KEY || !config.FORUM_REVENUE_ROUTER ||
+            !config.FORUM_MPP_SETTLER_PRIVATE_KEY ||
             !(config.FORUM_KMS_ENDPOINTS || config.FORUM_KMS_ENDPOINT)
         ) {
             throw new Error(
-                'The forum issuer requires its service DID, MPP secret, settler key, revenue router, and KMS endpoint',
+                'The forum issuer requires its service DID, MPP secret, settler key, and KMS endpoint',
             )
         }
         const accessStore = new IssuerAccessStore(db)
@@ -100,21 +99,14 @@ async function main() {
             serviceAuth: new ForumServiceAuth(config.FORUM_SERVICE_DID, accessStore, config.PLC_URL),
             walletAuth: new ForumWalletAuth(
                 config.FORUM_SERVICE_DID,
-                config.ABSTRACT_RPC_URL,
                 config.PLC_URL,
                 config.TEMPO_RPC_URL,
-            ),
-            settlement: new AbstractMppSettlementAdapter(
-                config.FORUM_MPP_SECRET,
-                config.FORUM_MPP_SETTLER_PRIVATE_KEY as Hex,
-                config.ABSTRACT_RPC_URL,
             ),
             tempoSubscription: new TempoMppSubscriptionAdapter(
                 config.FORUM_MPP_SECRET,
                 config.FORUM_MPP_SETTLER_PRIVATE_KEY as Hex,
                 config.TEMPO_RPC_URL,
             ),
-            revenueRouter: config.FORUM_REVENUE_ROUTER as Address,
             kms: new ForumKmsClient(
                 config.FORUM_KMS_ENDPOINTS || config.FORUM_KMS_ENDPOINT,
                 config.FORUM_KMS_BEARER_TOKEN,

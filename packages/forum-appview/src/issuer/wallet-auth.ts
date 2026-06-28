@@ -7,20 +7,15 @@ import {
     type Address,
     type Hex,
 } from 'viem'
-import { abstract } from 'viem/chains'
 import { createSiweMessage } from 'viem/siwe'
 import { tempoMainnet, tempoTestnet, TEMPO_MAINNET_CHAIN_ID, TEMPO_TESTNET_CHAIN_ID } from './tempo'
 
 const ADDRESS_CONTROL_COLLECTION = 'com.creaton.evm.addressControl'
 const SESSION_VERSION = '1'
 const SESSION_TTL_SECONDS = 24 * 60 * 60
-const ABSTRACT_MAINNET_CHAIN_ID = 2741
-const ABSTRACT_TESTNET_CHAIN_ID = 11124
 const SUPPORTED_LINK_CHAIN_IDS = [
     TEMPO_MAINNET_CHAIN_ID,
     TEMPO_TESTNET_CHAIN_ID,
-    ABSTRACT_MAINNET_CHAIN_ID,
-    ABSTRACT_TESTNET_CHAIN_ID,
 ] as const
 
 const SESSION_TYPES = {
@@ -77,28 +72,25 @@ type AddressControlRecord = {
 
 export class ForumWalletAuth {
     private readonly resolver: DidResolver
-    private readonly abstractClient
     private readonly tempoRpcUrl
 
     constructor(
         private readonly serviceDid: string,
-        abstractRpcUrl = 'https://api.mainnet.abs.xyz',
         plcUrl = 'https://plc.directory',
         tempoRpcUrl = 'https://rpc.tempo.xyz',
     ) {
         this.resolver = new DidResolver({ plcUrl, timeout: 5_000 })
-        this.abstractClient = createPublicClient({ chain: abstract, transport: http(abstractRpcUrl) })
         this.tempoRpcUrl = tempoRpcUrl
     }
 
     private clientForChain(chainId: number) {
-        if (chainId === TEMPO_MAINNET_CHAIN_ID || chainId === TEMPO_TESTNET_CHAIN_ID) {
-            return createPublicClient({
-                chain: chainId === TEMPO_TESTNET_CHAIN_ID ? tempoTestnet : tempoMainnet,
-                transport: http(this.tempoRpcUrl),
-            })
+        if (chainId !== TEMPO_MAINNET_CHAIN_ID && chainId !== TEMPO_TESTNET_CHAIN_ID) {
+            throw new Error(`Unsupported Tempo chain ID: ${chainId}`)
         }
-        return this.abstractClient
+        return createPublicClient({
+            chain: chainId === TEMPO_TESTNET_CHAIN_ID ? tempoTestnet : tempoMainnet,
+            transport: http(this.tempoRpcUrl),
+        })
     }
 
     async verify(
@@ -116,7 +108,7 @@ export class ForumWalletAuth {
             ...typedData,
             signature: certificate.signature,
         })
-        if (!signatureValid) throw new Error('Invalid AGW forum-session signature')
+        if (!signatureValid) throw new Error('Invalid Tempo forum-session signature')
 
         return {
             account: certificate.account.toLowerCase() as Address,
@@ -139,7 +131,7 @@ export class ForumWalletAuth {
         for (const entry of body.records ?? []) {
             if (await this.isValidWalletLink(did, account, entry.value)) return
         }
-        throw new Error('The authenticated DID is not linked to a supported EVM wallet')
+        throw new Error('The authenticated DID is not linked to a supported Tempo wallet')
     }
 
     private async isValidWalletLink(did: string, account: Address, value: unknown): Promise<boolean> {
@@ -201,7 +193,7 @@ function validateCertificate(did: string, serviceDid: string, certificate: Forum
     ) throw new Error('Invalid forum-session certificate')
 }
 
-function sessionTypedData(certificate: ForumSessionCertificate, chainId = 2741) {
+function sessionTypedData(certificate: ForumSessionCertificate, chainId = TEMPO_MAINNET_CHAIN_ID) {
     return {
         domain: { name: 'Creaton Forum Access', version: SESSION_VERSION, chainId },
         types: SESSION_TYPES,

@@ -21,15 +21,15 @@ FORUM_REWARD_PDS_IDENTIFIER=rewards.example
 FORUM_REWARD_PDS_APP_PASSWORD=xxxx-xxxx-xxxx-xxxx
 FORUM_REWARD_TRIGGER=0x...
 FORUM_REWARD_TRIGGER_PRIVATE_KEY=0x...
-ABSTRACT_RPC_URL=https://api.mainnet.abs.xyz
+TEMPO_RPC_URL=https://rpc.tempo.xyz
 PLC_URL=https://plc.directory
 ```
 
-The `app.creaton.forum.requestKeyRelease` procedure authenticates the ATProto
-DID and its Abstract Global Wallet, returns an Abstract MPP `charge` challenge
-when no entitlement exists, and atomically settles ERC-3009 payment through the
-configured `AccessRevenueRouter`. The router deposits 90% into the board's
-`ForumPosterRewardVault` balance and 10% into the CREATE KMS reward vault.
+Protected boards use Tempo MPP subscriptions (`paymentProtocol: tempo`). The
+`app.creaton.forum.confirmBoardPayment` procedure verifies a Tempo MPP
+subscription payment and records an entitlement. `app.creaton.forum.requestKeyRelease`
+then authenticates the ATProto DID and linked wallet, requires an active
+entitlement, and forwards fixed-block eligibility evidence to `creaton-kms`.
 
 At 00:00 UTC each Monday, the AppView writes the prior week's canonical vote
 dataset to deterministic gzip blobs in the issuer PDS and publishes an
@@ -41,17 +41,12 @@ Claims remain available indefinitely through `ForumPosterRewardVault`.
 ## Crossmint onramp
 
 When `CROSSMINT_SERVER_API_KEY` and `CROSSMINT_TOKEN_LOCATOR` are set, the AppView
-also serves `POST /onramp/orders` for card-funded USDC checkout. See
-`../red-dwarf/docs/crossmint-onramp.md` and `.env.example` in this package.
+also serves `POST /onramp/orders` for card-funded PathUSD checkout on Tempo
+testnet (chain ID 42429 by default). See `.env.example` in this package.
 
-Creator boards with `paymentProtocol: direct-usdc` also expose
-`POST /xrpc/app.creaton.forum.confirmBoardPayment` after a wallet USDC transfer.
-
-After settlement, the AppView forwards the fixed-block entitlement evidence to
-`POST /v1/releases` on `creaton-kms`. It returns only independently signed,
-HPKE-encrypted 10-of-15 partial shares. The old x402/key-grant source remains in
-the tree solely for database and deployment migration; it is not mounted by the
-running AppView.
+After entitlement activation, the AppView forwards the fixed-block entitlement
+evidence to `POST /v1/releases` on `creaton-kms`. It returns only independently
+signed, HPKE-encrypted 10-of-15 partial shares.
 
 ## Verification
 

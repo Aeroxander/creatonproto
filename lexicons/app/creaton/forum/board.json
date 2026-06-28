@@ -46,7 +46,7 @@
           "access": {
             "type": "ref",
             "ref": "app.creaton.forum.board#accessPolicy",
-            "description": "Omitted for public boards. Protected boards declare their issuer, Abstract MPP terms, entitlement registry, and CREATE-staked KMS committee here."
+            "description": "Omitted for public boards. Protected boards declare Tempo MPP subscription terms and the CREATE-staked KMS committee here."
           },
           "avatar": {
             "type": "blob",
@@ -93,16 +93,16 @@
         "kind": { "type": "string", "knownValues": ["protected"] },
         "issuerDid": { "type": "string", "maxLength": 2048 },
         "issuerEndpoint": { "type": "string", "format": "uri" },
-        "chainId": { "type": "integer", "knownValues": [2741, 11124] },
-        "asset": { "type": "string", "maxLength": 42 },
+        "chainId": { "type": "integer", "knownValues": [4217, 42429] },
+        "asset": { "type": "string", "maxLength": 42, "description": "PathUSD contract on Tempo." },
         "amount": {
           "type": "string",
           "maxLength": 78,
-          "description": "Atomic ERC-3009 payment amount as a base-10 integer string."
+          "description": "Atomic PathUSD subscription amount as a base-10 integer string."
         },
         "durationSeconds": { "type": "integer", "minimum": 60 },
         "payTo": { "type": "string", "maxLength": 42 },
-        "paymentProtocol": { "type": "string", "knownValues": ["mpp-abstract-charge"] },
+        "paymentProtocol": { "type": "string", "knownValues": ["tempo"], "description": "Tempo MPP subscription." },
         "revenueRouter": { "type": "string", "maxLength": 42 },
         "committeeRegistry": { "type": "string", "maxLength": 42 },
         "entitlementRegistry": { "type": "string", "maxLength": 42 },

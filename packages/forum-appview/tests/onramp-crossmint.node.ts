@@ -13,7 +13,7 @@ const config: CrossmintOnrampConfig = {
     serverApiKey: 'test-server-key',
     env: 'staging',
     tokenLocator: 'base-sepolia:0x036CbD53842c5426634e7929541eC2318f3dCF7e',
-    allowedChainId: 11124,
+    allowedChainId: 42429,
     minAmountUsd: 1,
     maxAmountUsd: 100,
 }
@@ -21,7 +21,7 @@ const config: CrossmintOnrampConfig = {
 const validRequest = {
     recipientDid: 'did:plc:example',
     recipientWallet: '0x0000000000000000000000000000000000000001',
-    chainId: 11124,
+    chainId: 42429,
     receiptEmail: 'user@example.com',
     amount: '10',
 }
@@ -43,7 +43,7 @@ describe('crossmint onramp', () => {
 
     test('validateOnrampRequest rejects unsupported chain', () => {
         assert.throws(
-            () => validateOnrampRequest({ ...validRequest, chainId: 2741 }, config),
+            () => validateOnrampRequest({ ...validRequest, chainId: 1 }, config),
             OnrampValidationError,
         )
     })

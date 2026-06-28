@@ -31,12 +31,12 @@ type BoardAccess = {
     kind: 'protected'
     issuerDid: string
     issuerEndpoint: string
-    chainId: 2741 | 11124
+    chainId: 4217 | 42429
     asset: string
     amount: string
     durationSeconds: number
     payTo: string
-    paymentProtocol: 'mpp' | 'tempo'
+    paymentProtocol: 'tempo'
     revenueRouter: string
     committeeRegistry: string
     entitlementRegistry: string
@@ -53,7 +53,7 @@ function readBoardAccess(value: unknown): BoardAccess | null {
         access.kind !== 'protected' ||
         typeof access.issuerDid !== 'string' ||
         typeof access.issuerEndpoint !== 'string' ||
-        (access.chainId !== 2741 && access.chainId !== 11124) ||
+        (access.chainId !== 4217 && access.chainId !== 42429) ||
         typeof access.asset !== 'string' ||
         !/^0x[0-9a-fA-F]{40}$/.test(access.asset) ||
         typeof access.amount !== 'string' ||
@@ -63,7 +63,7 @@ function readBoardAccess(value: unknown): BoardAccess | null {
         access.durationSeconds < 60 ||
         typeof access.payTo !== 'string' ||
         !/^0x[0-9a-fA-F]{40}$/.test(access.payTo) ||
-        (access.paymentProtocol !== 'mpp' && access.paymentProtocol !== 'tempo') ||
+        access.paymentProtocol !== 'tempo' ||
         typeof access.revenueRouter !== 'string' ||
         !/^0x[0-9a-fA-F]{40}$/.test(access.revenueRouter) ||
         typeof access.committeeRegistry !== 'string' ||

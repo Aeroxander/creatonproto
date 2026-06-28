@@ -2,21 +2,15 @@ import { createHash } from 'node:crypto'
 import express, { type Request, type Response } from 'express'
 import { type Kysely } from 'kysely'
 import { z } from 'zod'
-import type { Address } from 'viem'
 import type { Database } from '../db/schema'
 import { IssuerAccessStore } from './access-store'
 import { ForumKmsClient } from './kms-client'
-import {
-    AbstractMppSettlementAdapter,
-    deriveAccessPolicyBinding,
-    deriveBoardPolicyHash,
-    paymentReceiptHeader,
-    type MppSettlementResult,
-} from './mpp'
+import { deriveAccessPolicyBinding, deriveBoardPolicyHash } from './mppPolicy'
 import {
     TempoMppSubscriptionAdapter,
     tempoSubscriptionReceiptHeader,
 } from './tempo'
+import type { MppSettlementResult } from './mppPolicy'
 import { ForumServiceAuth } from './service-auth'
 import { ForumWalletAuth, type ForumSessionCertificate } from './wallet-auth'
 
@@ -58,9 +52,7 @@ export interface IssuerRouterOptions {
     serviceAuth: ForumServiceAuth
     walletAuth: ForumWalletAuth
     accessStore: IssuerAccessStore
-    settlement: AbstractMppSettlementAdapter
     tempoSubscription: TempoMppSubscriptionAdapter
-    revenueRouter: Address
     kms: ForumKmsClient
 }
 
@@ -71,14 +63,14 @@ function isProtectedBoardPolicy(access: {
     committee_registry: string | null
     entitlement_registry: string | null
 }): access is {
-    payment_protocol: 'mpp' | 'tempo'
+    payment_protocol: 'tempo'
     committee_size: number
     committee_threshold: number
     committee_registry: string
     entitlement_registry: string
 } {
     return (
-        (access.payment_protocol === 'mpp' || access.payment_protocol === 'tempo') &&
+        access.payment_protocol === 'tempo' &&
         access.committee_size === 15 &&
         access.committee_threshold === 10 &&
         !!access.committee_registry &&
@@ -109,13 +101,11 @@ export function createIssuerRouter(options: IssuerRouterOptions): express.Router
 
 async function grantEntitlementFromSettlement(input: {
     accessStore: IssuerAccessStore
-    access: { board_uri: string; amount: string; asset: string; chain_id: number; duration_seconds: number }
+    access: { board_uri: string; amount: string; asset: string; chain_id: number; duration_seconds: number; pay_to: string }
     boardUri: string
     did: string
     walletAddress: string
     settlement: MppSettlementResult
-    source: 'mpp' | 'tempo'
-    payTo: string
 }) {
     const receiptId = input.settlement.paymentRef.slice(2)
     let receipt = await input.accessStore.getReceipt(receiptId)
@@ -129,7 +119,7 @@ async function grantEntitlementFromSettlement(input: {
             txHash: input.settlement.transaction,
             amount: input.access.amount,
             asset: input.access.asset,
-            payTo: input.payTo,
+            payTo: input.access.pay_to,
             status: 'settled',
         })
     }
@@ -142,7 +132,7 @@ async function grantEntitlementFromSettlement(input: {
             walletAddress: input.walletAddress,
             startsAt,
             expiresAt: new Date(startsAt.getTime() + input.access.duration_seconds * 1_000),
-            source: input.source,
+            source: 'tempo',
             paymentRef: receiptId,
         })
     }
@@ -166,12 +156,6 @@ export function createKeyReleaseHandler(options: IssuerRouterOptions) {
                 return res.status(403).json({ error: 'WrongIssuer' })
             }
             if (!isProtectedBoardPolicy(access)) {
-                return res.status(409).json({ error: 'PolicyMismatch' })
-            }
-            if (
-                access.payment_protocol === 'mpp' &&
-                access.revenue_router?.toLowerCase() !== options.revenueRouter.toLowerCase()
-            ) {
                 return res.status(409).json({ error: 'PolicyMismatch' })
             }
 
@@ -209,42 +193,16 @@ export function createKeyReleaseHandler(options: IssuerRouterOptions) {
                 input.certificate as ForumSessionCertificate,
                 { chainId: access.chain_id ?? undefined },
             )
-            let entitlement = await options.accessStore.findActiveEntitlement(input.boardUri, auth.did, session.account)
-            let settlement: MppSettlementResult | undefined
+            const entitlement = await options.accessStore.findActiveEntitlement(input.boardUri, auth.did, session.account)
             if (!entitlement) {
-                if (access.payment_protocol === 'tempo') {
-                    return res.status(402).json({
-                        error: 'EntitlementRequired',
-                        message: 'Subscribe to this creator board before unlocking encrypted posts.',
-                    })
-                }
-                const resourceUrl = new URL(`/xrpc/${REQUEST_KEY_RELEASE_NSID}`, access.issuer_endpoint).toString()
-                const result = await options.settlement.verifyAndSettle({
-                    authorization: req.get('authorization'), access,
-                    expectedPayer: session.account as Address, resourceUrl,
-                    revenueRouter: options.revenueRouter,
-                    subjectDid: auth.did,
-                    entitlementRegistry: access.entitlement_registry as Address,
-                })
-                if (!('transaction' in result)) {
-                    return res.status(402).set('WWW-Authenticate', options.settlement.challengeHeader(result))
-                        .json({ error: 'EntitlementRequired' })
-                }
-                settlement = result
-                entitlement = await grantEntitlementFromSettlement({
-                    accessStore: options.accessStore,
-                    access,
-                    boardUri: input.boardUri,
-                    did: auth.did,
-                    walletAddress: session.account,
-                    settlement,
-                    source: 'mpp',
-                    payTo: options.revenueRouter,
+                return res.status(402).json({
+                    error: 'EntitlementRequired',
+                    message: 'Subscribe to this board before unlocking encrypted posts.',
                 })
             }
 
             const certificateHash = createHash('sha256').update(JSON.stringify(input.certificate)).digest('hex')
-            const binding = deriveAccessPolicyBinding(access, auth.did, session.account as Address)
+            const binding = deriveAccessPolicyBinding(access, auth.did, session.account)
             const release = await options.kms.requestRelease({
                 boardUri: input.boardUri, boardId: binding.boardId, capsules,
                 committeeEpoch: input.committeeEpoch, eligibilityBlock: input.eligibilityBlock,
@@ -258,14 +216,13 @@ export function createKeyReleaseHandler(options: IssuerRouterOptions) {
                     entitlementRegistry: access.entitlement_registry },
             })
             await options.serviceAuth.consume(auth)
-            if (settlement) res.set('Payment-Receipt', paymentReceiptHeader(settlement))
             return res.json(release)
         } catch (error) {
             console.error('Key-release request failed:', error)
             const message = error instanceof Error ? error.message : 'Unknown error'
             if (/service-auth|JWT|bearer token/i.test(message)) return res.status(401).json({ error: 'AuthenticationRequired' })
             if (/MPP|payment|authorization/i.test(message)) return res.status(402).json({ error: 'PaymentFailed' })
-            if (/wallet|AGW|certificate|signature|DID/i.test(message)) return res.status(403).json({ error: 'InvalidAccessCertificate' })
+            if (/wallet|certificate|signature|DID/i.test(message)) return res.status(403).json({ error: 'InvalidAccessCertificate' })
             if (/KMS|threshold/i.test(message)) return res.status(503).json({ error: 'CommitteeUnavailable' })
             return res.status(500).json({ error: 'InternalError' })
         }
@@ -293,7 +250,7 @@ export function createConfirmBoardPaymentHandler(options: IssuerRouterOptions) {
             if (access.issuer_did !== options.serviceDid || input.certificate.issuer !== options.serviceDid) {
                 return res.status(403).json({ error: 'WrongIssuer' })
             }
-            if (!isProtectedBoardPolicy(access) || access.payment_protocol !== 'tempo') {
+            if (!isProtectedBoardPolicy(access)) {
                 return res.status(409).json({ error: 'PolicyMismatch' })
             }
 
@@ -322,10 +279,10 @@ export function createConfirmBoardPaymentHandler(options: IssuerRouterOptions) {
             const result = await options.tempoSubscription.verifyAndActivate({
                 authorization: paymentHeader,
                 access,
-                expectedPayer: session.account as Address,
+                expectedPayer: session.account,
                 subjectDid: auth.did,
                 resourceUrl,
-                entitlementRegistry: access.entitlement_registry as Address,
+                entitlementRegistry: access.entitlement_registry,
             })
             if (!('transaction' in result)) {
                 return res.status(402).set('WWW-Authenticate', options.tempoSubscription.challengeHeader(result))
@@ -339,8 +296,6 @@ export function createConfirmBoardPaymentHandler(options: IssuerRouterOptions) {
                 did: auth.did,
                 walletAddress: session.account,
                 settlement: result,
-                source: 'tempo',
-                payTo: access.pay_to,
             })
             await options.accessStore.upsertBillingProfile({
                 did: auth.did,
@@ -365,7 +320,7 @@ export function createConfirmBoardPaymentHandler(options: IssuerRouterOptions) {
             if (/MPP|payment|authorization/i.test(message)) {
                 return res.status(402).json({ error: 'PaymentFailed', message })
             }
-            if (/wallet|AGW|certificate|signature|DID/i.test(message)) {
+            if (/wallet|certificate|signature|DID/i.test(message)) {
                 return res.status(403).json({ error: 'InvalidAccessCertificate' })
             }
             return res.status(500).json({ error: 'InternalError', message })

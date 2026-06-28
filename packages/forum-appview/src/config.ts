@@ -12,7 +12,6 @@ export const config = {
     FORUM_KMS_ENDPOINT: process.env.FORUM_KMS_ENDPOINT,
     FORUM_KMS_ENDPOINTS: process.env.FORUM_KMS_ENDPOINTS,
     FORUM_KMS_BEARER_TOKEN: process.env.FORUM_KMS_BEARER_TOKEN,
-    ABSTRACT_RPC_URL: process.env.ABSTRACT_RPC_URL ?? 'https://api.mainnet.abs.xyz',
     TEMPO_RPC_URL: process.env.TEMPO_RPC_URL ?? 'https://rpc.tempo.xyz',
     CREATON_DAO_TREASURY: process.env.CREATON_DAO_TREASURY,
     PLC_URL: process.env.PLC_URL ?? 'https://plc.directory',
@@ -26,7 +25,7 @@ export const config = {
     CROSSMINT_SERVER_API_KEY: process.env.CROSSMINT_SERVER_API_KEY,
     CROSSMINT_ENV: process.env.CROSSMINT_ENV === 'production' ? 'production' as const : 'staging' as const,
     CROSSMINT_TOKEN_LOCATOR: process.env.CROSSMINT_TOKEN_LOCATOR,
-    CROSSMINT_ALLOWED_CHAIN_ID: Number(process.env.CROSSMINT_ALLOWED_CHAIN_ID ?? '11124'),
+    CROSSMINT_ALLOWED_CHAIN_ID: Number(process.env.CROSSMINT_ALLOWED_CHAIN_ID ?? '42429'),
     CROSSMINT_MIN_AMOUNT_USD: Number(process.env.CROSSMINT_MIN_AMOUNT_USD ?? '1'),
     CROSSMINT_MAX_AMOUNT_USD: Number(process.env.CROSSMINT_MAX_AMOUNT_USD ?? '100'),
 }
